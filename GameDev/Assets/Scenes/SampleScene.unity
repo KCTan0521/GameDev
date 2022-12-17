@@ -176,16 +176,16 @@ MonoBehaviour:
   m_YDamping: 1
   m_ZDamping: 1
   m_TargetMovementOnly: 1
-  m_ScreenX: 0.11
-  m_ScreenY: 0.5
+  m_ScreenX: 0.09
+  m_ScreenY: 0.75
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.62
+  m_SoftZoneWidth: 0.4
   m_SoftZoneHeight: 0.8
-  m_BiasX: -0.00000016823891
+  m_BiasX: 0.5
   m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
@@ -316,7 +316,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 9.81
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ccda8991c3fa8404d9b5499974769696, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -346,7 +346,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.1
 --- !u!114 &224176808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,13 +362,13 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  standing: {fileID: 0}
-  sliding: {fileID: 0}
+  standing: {fileID: 224176807}
+  sliding: {fileID: 224176809}
   moveSpeed: 10
   jumpForce: 10
   sprintVelocity: 10
   dashTranslate: 20
-  jumpDuration: 0.25
+  slideDuration: 0.1
 --- !u!61 &224176809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2, y: 0.5}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.1
 --- !u!61 &224176810
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.1
 --- !u!1 &242971793
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.694183, y: 1, z: -10}
+  m_LocalPosition: {x: 11.38188, y: 3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -711,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976825042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.694183, y: 1, z: -10}
+  m_LocalPosition: {x: 11.38188, y: 3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

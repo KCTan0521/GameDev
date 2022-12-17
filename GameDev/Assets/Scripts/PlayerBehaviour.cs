@@ -12,12 +12,13 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpForce = 10f;
     public float sprintVelocity = 10f;
     public float dashTranslate = 20f;
-    public float jumpDuration = .25f;
+    public float slideDuration = 1f;
 
-    private float distanceToGround = 0.1f;
+    private float groundAndTopCheck = 0.5f;
     private float firstTap;
-    private bool isInAir;
-    private float jumpTimeCounter;
+    private bool isJumping;
+    private bool isDashing;
+    private bool isSliding;
 
     private Rigidbody2D _rb;
     private BoxCollider2D _col;
@@ -26,39 +27,24 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<BoxCollider2D>();
+        standing.enabled = true;
+        sliding.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+        IsDashing();
+        IsGrounded();
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isInAir = true;
-            jumpTimeCounter = jumpDuration;
-            _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            isJumping = true;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isInAir)
+        if (Input.GetKeyDown(KeyCode.DownArrow) || IsUnder())
         {
-            if (jumpTimeCounter > 0)
-            {
-                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Force);
-                jumpTimeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                isInAir = false;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isInAir = false;
-        }
-
-        if (IsDashing()/* && !IsCoolDown()*/)
-        {
-            _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
+            isSliding = true;
         }
 
         else
@@ -67,22 +53,48 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
             }
+
+            if (isSliding)
+            {
+                IsSliding();
+            }
         }
     }
     
     void FixedUpdate()
     {
+        if (IsGrounded() && isJumping)
+        {
+            _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            isJumping = false;
+        }
+
+        if (isDashing)
+        {
+            _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
+            isDashing = false;
+        }
+        
+        else if (_rb.velocity.x > moveSpeed)
+        {
+            _rb.AddForce(Vector2.left * 0.4f, ForceMode2D.Impulse);
+        }
     }
 
     private bool IsGrounded()
     {
-        RaycastHit2D grounded = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.down, distanceToGround, platformLayerMask);
+        RaycastHit2D grounded = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.down, groundAndTopCheck, platformLayerMask);
         return grounded.collider != null;
     }
 
-    private bool IsDashing()
+    private bool IsUnder()
     {
-        bool isDashing = false;
+        RaycastHit2D under = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.up, groundAndTopCheck, platformLayerMask);
+        return under.collider != null;
+    }
+
+    private void IsDashing()
+    {
         const float TIME_INTERVAL = 0.2f;
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -94,6 +106,23 @@ public class PlayerBehaviour : MonoBehaviour
                 isDashing = true;
             }
         }
-        return isDashing;
+    }
+
+    private void IsSliding()
+    {
+        if (slideDuration > 0)
+        {
+            standing.enabled = false;
+            sliding.enabled = true;
+            slideDuration -= Time.deltaTime;
+        }
+
+        else
+        {
+            standing.enabled = true;
+            sliding.enabled = false;
+            slideDuration = 1f;
+            isSliding = false;
+        }
     }
 }
