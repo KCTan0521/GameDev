@@ -768,8 +768,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04916893, y: 0}
-  m_Size: {x: 0.3569634, y: 0.8600001}
+  m_Offset: {x: 0.04916893, y: -0.010525639}
+  m_Size: {x: 0.3569634, y: 0.8389489}
   m_Direction: 0
 --- !u!1 &1633667554
 GameObject:
@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 1633667555}
   - component: {fileID: 1633667556}
   - component: {fileID: 1633667557}
+  - component: {fileID: 1633667558}
   m_Layer: 0
   m_Name: Monster_Woman
   m_TagString: Untagged
@@ -877,6 +878,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &1633667558
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633667554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.015551787, y: -0.008482737}
+  m_Size: {x: 0.17103456, y: 0.3930345}
+  m_Direction: 0
 --- !u!1 &1976825042
 GameObject:
   m_ObjectHideFlags: 0
