@@ -8,8 +8,7 @@ public class Monster_Giant : MonoBehaviour
     private bool isGrounded = true;
     private Rigidbody2D myBody;
 
-    [SerializeField]
-    private float jumpForce = 11f;
+    private float jumpForce = 15f;
 
     // Start is called before the first frame update
     void Start()
