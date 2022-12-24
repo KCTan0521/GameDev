@@ -609,6 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  myBody: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,21 +748,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7109401142607327018, guid: 627fe5dc375d37b47aaf695d1b5b1827, type: 3}
   m_PrefabInstance: {fileID: 7109401143785840731}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1270992758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270992753}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79608c90a8d65e44394c99002af472ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterReference: []
-  leftPos: {fileID: 0}
-  rightPos: {fileID: 0}
 --- !u!114 &1270992759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,6 +761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  myBody: {fileID: 0}
 --- !u!1 &1976825042
 GameObject:
   m_ObjectHideFlags: 0
