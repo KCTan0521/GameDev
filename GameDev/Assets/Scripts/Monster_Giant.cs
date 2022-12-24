@@ -41,9 +41,9 @@ public class Monster_Giant : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) // need collision.gameObject
+    private void OnCollisionEnter2D(Collision2D collision) 
     {
-        if (collision.gameObject.CompareTag("tempGround")) // here
+        if (collision.gameObject.CompareTag("tempGround")) 
         {
             isGrounded = true;
         }
