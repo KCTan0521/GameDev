@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5523133527003087894}
   - component: {fileID: 5523133527003087895}
   - component: {fileID: 5523133527003087892}
+  - component: {fileID: 1845050814}
   m_Layer: 0
   m_Name: Monster_Woman
   m_TagString: Untagged
@@ -123,3 +124,15 @@ CapsuleCollider2D:
   m_Offset: {x: -0.015551787, y: -0.008482737}
   m_Size: {x: 0.17103456, y: 0.3930345}
   m_Direction: 0
+--- !u!114 &1845050814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5523133527003087888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a31c92a7d8df6459fe4f57cd448cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

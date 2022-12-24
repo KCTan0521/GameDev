@@ -37,7 +37,7 @@ public class GroundGeneration : MonoBehaviour
     {
         camEnd = GetComponent<Transform>().position.x - leftScreen;
         leftMostGround = grounds[0].transform.position.x + 20f;
-        Debug.Log(camEnd);
+        // Debug.Log(camEnd);
         if (camEnd > leftMostGround)
         {
             Destroy(grounds[0]);
