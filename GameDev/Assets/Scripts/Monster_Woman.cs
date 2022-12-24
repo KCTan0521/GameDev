@@ -10,12 +10,12 @@ public class Monster_Woman : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindWithTag("tempGround").transform;
     }
 
     // Update is called once per frame
     void Update()
-    {/*
+    {
         if (!player)
         {
             return;
@@ -29,10 +29,10 @@ public class Monster_Woman : MonoBehaviour
         }
 
 
-        if (Mathf.Abs(player.position.x - transform.position.x) <= 5 || 
-            Mathf.Abs(player.position.y - transform.position.y) <= 5)
+        if (Mathf.Abs(player.position.x - transform.position.x) <= 1 || 
+            Mathf.Abs(player.position.y - transform.position.y) <= 1)
         {
             Debug.Log("Hello too near");
-        }*/
+        }
     }
 }
