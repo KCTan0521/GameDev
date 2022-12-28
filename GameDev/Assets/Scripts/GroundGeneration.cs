@@ -14,11 +14,6 @@ public class GroundGeneration : MonoBehaviour
     private float leftMostGround;
     private List<GameObject> grounds = new List<GameObject> ();
 
-    private void Start()
-    {
-        
-        
-    }
     private void Awake()
     {
         playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
@@ -37,7 +32,6 @@ public class GroundGeneration : MonoBehaviour
     {
         camEnd = GetComponent<Transform>().position.x - leftScreen;
         leftMostGround = grounds[0].transform.position.x + 20f;
-        Debug.Log(camEnd);
         if (camEnd > leftMostGround)
         {
             Destroy(grounds[0]);
