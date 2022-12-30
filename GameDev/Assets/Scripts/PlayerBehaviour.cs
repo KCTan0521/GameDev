@@ -6,43 +6,57 @@ public class PlayerBehaviour : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private LayerMask platformLayerMask;
+    [SerializeField] private BoxCollider2D _col;
     [SerializeField] private BoxCollider2D standing;
     [SerializeField] private BoxCollider2D sliding;
+    public Animator animator;
     public float moveSpeed = 10f;
     public float jumpForce = 10f;
-    public float sprintVelocity = 10f;
-    public float dashTranslate = 20f;
+    public float dashTranslate = 10f;
     public float slideDuration = 1f;
 
-    private float groundAndTopCheck = 0.5f;
+    private float groundAndTopCheck = 0.2f;
     private float firstTap;
-    private bool isJumping;
+    private bool canJump;
+    private bool canDoubleJump;
     private bool isDashing;
     private bool isSliding;
 
     private Rigidbody2D _rb;
-    private BoxCollider2D _col;
+    private float playerStamina;
 
-    void Start()
+    private void Awake()
+    {
+        gameObject.AddComponent<Stamina>();
+    }
+    private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _col = GetComponent<BoxCollider2D>();
         standing.enabled = true;
         sliding.enabled = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        playerStamina = gameObject.GetComponent<Stamina>().stamina;
+
         IsDashing();
         IsGrounded();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !canDoubleJump && !IsGrounded())
         {
-            isJumping = true;
+            canDoubleJump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) || IsUnder())
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            canJump = true;
+            canDoubleJump = false;
+            animator.SetBool("IsJumping", true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)/* || IsUnder()*/)
         {
             isSliding = true;
         }
@@ -52,21 +66,33 @@ public class PlayerBehaviour : MonoBehaviour
             if (_rb.velocity.x <= moveSpeed)
             {
                 _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+                animator.SetFloat("Speed", _rb.velocity.x);
             }
 
             if (isSliding)
             {
                 IsSliding();
             }
+
+            if (!canJump && IsGrounded())
+            {
+                animator.SetBool("IsJumping", false);
+            }
         }
     }
     
     void FixedUpdate()
     {
-        if (IsGrounded() && isJumping)
+        if (canJump && IsGrounded())
         {
+            canJump = false;
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
-            isJumping = false;
+        }
+
+        if (canDoubleJump)
+        {
+            canDoubleJump = false;
+            _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
         }
 
         if (isDashing)
@@ -97,13 +123,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         const float TIME_INTERVAL = 0.2f;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && playerStamina >= 2)
         {
             float timeSinceLastTap = Time.time - firstTap;
             firstTap = Time.time;
             if (timeSinceLastTap <= TIME_INTERVAL)
             {
                 isDashing = true;
+                gameObject.GetComponent<Stamina>().Exhaust(2f);
             }
         }
     }
@@ -115,6 +142,7 @@ public class PlayerBehaviour : MonoBehaviour
             standing.enabled = false;
             sliding.enabled = true;
             slideDuration -= Time.deltaTime;
+            animator.SetBool("IsSliding", true);
         }
 
         else
@@ -123,6 +151,7 @@ public class PlayerBehaviour : MonoBehaviour
             sliding.enabled = false;
             slideDuration = 1f;
             isSliding = false;
+            animator.SetBool("IsSliding", false);
         }
     }
 }

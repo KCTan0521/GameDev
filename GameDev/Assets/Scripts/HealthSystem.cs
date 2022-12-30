@@ -17,7 +17,7 @@ public class HealthSystem : MonoBehaviour
 
     public HealthSystem()
     {
-        this.health = MAX_HEALTH;
+        health = MAX_HEALTH;
     }
 
     public void Damage(float damage)
