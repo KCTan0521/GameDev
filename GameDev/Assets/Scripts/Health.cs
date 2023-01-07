@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour
+public class Health : MonoBehaviour
 {
     private const float MAX_HEALTH = 3;
     private const float HEALTH_REGEN = .5f;
@@ -15,7 +15,7 @@ public class HealthSystem : MonoBehaviour
         HealthRegen();
     }
 
-    public HealthSystem()
+    public Health()
     {
         health = MAX_HEALTH;
     }

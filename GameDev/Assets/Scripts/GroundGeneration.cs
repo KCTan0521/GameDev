@@ -12,7 +12,7 @@ public class GroundGeneration : MonoBehaviour
     private float aspectRatio;
     private float camEnd;
     private float leftMostGround;
-    private List<GameObject> grounds = new List<GameObject> ();
+    private List<GameObject> grounds = new List<GameObject>();
 
     private void Awake()
     {

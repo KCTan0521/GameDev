@@ -19,6 +19,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float firstTap;
     private bool canJump;
     private bool canDoubleJump;
+    private int jumpCount;
     private bool isDashing;
     private bool isSliding;
 
@@ -44,19 +45,19 @@ public class PlayerBehaviour : MonoBehaviour
         IsDashing();
         IsGrounded();
 
-        if (Input.GetKeyDown(KeyCode.Space) && !canDoubleJump && !IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) && !canDoubleJump && !IsGrounded() && jumpCount == 1)
         {
             canDoubleJump = true;
+            gameObject.GetComponent<Stamina>().Exhaust(1f);
         }
 
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             canJump = true;
-            canDoubleJump = false;
             animator.SetBool("IsJumping", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)/* || IsUnder()*/)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             isSliding = true;
         }
@@ -86,12 +87,14 @@ public class PlayerBehaviour : MonoBehaviour
         if (canJump && IsGrounded())
         {
             canJump = false;
+            jumpCount = 1;
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
         }
 
         if (canDoubleJump)
         {
             canDoubleJump = false;
+            jumpCount = 2;
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
         }
 
@@ -113,12 +116,6 @@ public class PlayerBehaviour : MonoBehaviour
         return grounded.collider != null;
     }
 
-    private bool IsUnder()
-    {
-        RaycastHit2D under = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.up, groundAndTopCheck, platformLayerMask);
-        return under.collider != null;
-    }
-
     private void IsDashing()
     {
         const float TIME_INTERVAL = 0.2f;
@@ -137,14 +134,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void IsSliding()
     {
-        if (slideDuration > 0)
+        if (slideDuration > 0 && !canJump)
         {
             standing.enabled = false;
             sliding.enabled = true;
             slideDuration -= Time.deltaTime;
             animator.SetBool("IsSliding", true);
         }
-
         else
         {
             standing.enabled = true;
