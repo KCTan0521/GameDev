@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     private const float MAX_HEALTH = 3;
     private const float HEALTH_REGEN = .5f;
     private const float REGEN_TIME = 5;
-    private float health;
+    public float health;
     private float timePassed;
 
     public void Update()

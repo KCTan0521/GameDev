@@ -23,12 +23,17 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isDashing;
     private bool isSliding;
 
+    private bool jumpButton;
+    private bool dashButton;
+    private bool slideButton;
+
     private Rigidbody2D _rb;
     private float playerStamina;
 
     private void Awake()
     {
         gameObject.AddComponent<Stamina>();
+        gameObject.AddComponent<TouchDetector>();
     }
     private void Start()
     {
@@ -40,24 +45,32 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        jumpButton = gameObject.GetComponent<TouchDetector>().jumpButton;
+        dashButton = gameObject.GetComponent<TouchDetector>().dashButton;
+        slideButton = gameObject.GetComponent<TouchDetector>().slideButton;
         playerStamina = gameObject.GetComponent<Stamina>().stamina;
 
         IsDashing();
         IsGrounded();
 
-        if (Input.GetKeyDown(KeyCode.Space) && !canDoubleJump && !IsGrounded() && jumpCount == 1)
+        if ((jumpButton || Input.GetKeyDown(KeyCode.Space)) && !canDoubleJump && !IsGrounded() && jumpCount == 1 && playerStamina >= 1)
         {
             canDoubleJump = true;
             gameObject.GetComponent<Stamina>().Exhaust(1f);
         }
 
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) || jumpButton)
         {
             canJump = true;
             animator.SetBool("IsJumping", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (dashButton)
+        {
+            isDashing = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
         {
             isSliding = true;
         }
