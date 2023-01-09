@@ -1,16 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public Sprite fullHeart;
+    public Sprite halfHeart;
+    public Sprite emptyHeart;
+
     private const float MAX_HEALTH = 3;
     private const float HEALTH_REGEN = .5f;
     private const float REGEN_TIME = 5;
     public float health;
+    public Animator animator;
     private float timePassed;
 
-    public void Update()
+    private void Update()
     {
         HealthRegen();
     }
@@ -23,7 +27,6 @@ public class Health : MonoBehaviour
     public void Damage(float damage)
     {
         health -= damage;
-        Debug.Log(health);
     }
 
     public void HealthRegen()
@@ -39,11 +42,59 @@ public class Health : MonoBehaviour
             if (timePassed >= REGEN_TIME)
             {
                 health += HEALTH_REGEN;
-                Debug.Log(health);
                 timePassed = 0;
             }
         }
+    }
 
-        
+    public void PalpitatingAnimation()
+    {
+        if (health == MAX_HEALTH)
+        {
+            animator.SetBool("isHealing", false);
+        }
+        else
+        {
+            animator.SetBool("isHealing", true);
+        }
+
+        switch (health)
+        {
+            case 3f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = fullHeart;
+                break;
+            case 2.5f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = halfHeart;
+                break;
+            case 2f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = emptyHeart;
+                break;
+            case 1.5f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = halfHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = emptyHeart;
+                break;
+            case 1f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = fullHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = emptyHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = emptyHeart;
+                break;
+            case 0.5f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = halfHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = emptyHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = emptyHeart;
+                break;
+            case 0f:
+                GameObject.Find("Heart1").GetComponent<Image>().sprite = emptyHeart;
+                GameObject.Find("Heart2").GetComponent<Image>().sprite = emptyHeart;
+                GameObject.Find("Heart3").GetComponent<Image>().sprite = emptyHeart;
+                break;
+        }
     }
 }

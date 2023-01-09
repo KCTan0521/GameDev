@@ -29,10 +29,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Rigidbody2D _rb;
     private float playerStamina;
+    private float playerHealth;
 
     private void Awake()
     {
         gameObject.AddComponent<Stamina>();
+        gameObject.AddComponent<Health>();
         gameObject.AddComponent<TouchDetector>();
     }
     private void Start()
@@ -49,14 +51,17 @@ public class PlayerBehaviour : MonoBehaviour
         dashButton = gameObject.GetComponent<TouchDetector>().dashButton;
         slideButton = gameObject.GetComponent<TouchDetector>().slideButton;
         playerStamina = gameObject.GetComponent<Stamina>().stamina;
+        playerHealth = gameObject.GetComponent<Health>().health;
 
         IsDashing();
         IsGrounded();
+        gameObject.GetComponent<Health>().PalpitatingAnimation();
 
         if ((jumpButton || Input.GetKeyDown(KeyCode.Space)) && !canDoubleJump && !IsGrounded() && jumpCount == 1 && playerStamina >= 1)
         {
             canDoubleJump = true;
             gameObject.GetComponent<Stamina>().Exhaust(1f);
+            gameObject.GetComponent<Health>().Damage(.5f);
         }
 
         else if (Input.GetKeyDown(KeyCode.Space) || jumpButton)
@@ -108,6 +113,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             canDoubleJump = false;
             jumpCount = 2;
+            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
         }
 
