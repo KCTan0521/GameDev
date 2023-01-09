@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 2acec1423b750064c8131236eae6a3e9
+guid: c9273268dbb861f45a40a4f039b79a73
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -128,106 +129,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MC_slide_0
+      name: MC_running_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5bc7c9bb6bc58243a2edcc8b3a8fdfc
-      internalID: -799360636
+      spriteID: 0626432e6dd181742b13d879551e3053
+      internalID: -1930678071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_slide_1
+      name: MC_running_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1119dc11625893b468807e9814cacfb6
-      internalID: -655854556
+      spriteID: bb6da32724f47234291a6d8a24c1224f
+      internalID: -1350113331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_slide_2
+      name: MC_running_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3f81e62d2af9dc459dbbbc075a41fb7
-      internalID: 1235381034
+      spriteID: 641adc40f2c5cf647959dee3149edcfe
+      internalID: 695113139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_slide_3
+      name: MC_running_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4dc1741baa044c479cb257a621019e3
-      internalID: 1983971407
+      spriteID: a0790b76541b8df40a370a3996fa9d91
+      internalID: 2095244310
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_slide_4
+      name: MC_running_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3aae4a54d4ff9f345b3c00213d91dfc6
-      internalID: -1745239528
+      spriteID: 554d94088b8c3144c8c2b7f4e42f1106
+      internalID: 441208139
       vertices: []
       indices: 
       edges: []
@@ -243,11 +244,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MC_slide_0: -799360636
-      MC_slide_3: 1983971407
-      MC_slide_2: 1235381034
-      MC_slide_1: -655854556
-      MC_slide_4: -1745239528
+      MC_running_4: 441208139
+      MC_running_2: 695113139
+      MC_running_0: -1930678071
+      MC_running_1: -1350113331
+      MC_running_3: 2095244310
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
