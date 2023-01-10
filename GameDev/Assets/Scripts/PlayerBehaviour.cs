@@ -42,6 +42,9 @@ public class PlayerBehaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         standing.enabled = true;
         sliding.enabled = false;
+
+        FindObjectOfType<AudioManager>().Play("Running");
+
     }
 
     // Update is called once per frame
