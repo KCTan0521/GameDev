@@ -51,5 +51,28 @@ public class AudioManager : MonoBehaviour
 
         s.source.Play();
     }
+    
+    public void Pause (string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found.");
+            return;
+        }
+
+        s.source.Pause();
+    }
+
+    public Sound randomPlay(Sound[] audioList)
+    {
+        //randomly play a sound and return that sound object
+        Sound sound = audioList[UnityEngine.Random.Range(0, audioList.Length)];
+
+        sound.source.Play();
+
+        return sound;
+    }
 
 }
