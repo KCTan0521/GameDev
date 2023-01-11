@@ -11,10 +11,11 @@ public class MonsterController : MonoBehaviour
     private GameObject spawnedMonster;
 
     [SerializeField]
-    private Transform leftPos, rightPos;
+    private Transform leftPos;
+    private const float distanceX = 18f;
 
     private int randomIndex;
-    private int randomSide;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,27 +27,22 @@ public class MonsterController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
+            // set the time gap for monster generation to 1 - 3 seconds
+            yield return new WaitForSeconds(Random.Range(1, 3));
 
-            randomIndex = Random.Range(0, monsterReference.Length);
-            randomSide = Random.Range(0, 2);
-
-            spawnedMonster = Instantiate(monsterReference[randomIndex]);
-
-            if (randomSide == 0)
+            // will generate at most 3 monsters
+            // because when length is 2 it will execute the code as well
+            // so 3 monsters in total
+            if (GameObject.FindGameObjectsWithTag("Monster").Length <= 2)
             {
-                // left side
-                spawnedMonster.transform.position = leftPos.position;
-                spawnedMonster.GetComponent<Monster>().speed = Random.Range(4, 10);
+                // to randonmly generate the monster
+                randomIndex = Random.Range(0, monsterReference.Length);
+                spawnedMonster = Instantiate(monsterReference[randomIndex]);
 
-                spawnedMonster.GetComponent<SpriteRenderer>().flipX = true;
+                // add a distance between the character
+                spawnedMonster.transform.position = new Vector3(leftPos.position.x + distanceX, 0f, 0f);
             }
-            else
-            {
-                // right side
-                spawnedMonster.transform.position = rightPos.position;
-                spawnedMonster.GetComponent<Monster>().speed = -Random.Range(4, 10); // this '-' will multiply the random number with -1
-            }
+            
         } // while loop
     }
 

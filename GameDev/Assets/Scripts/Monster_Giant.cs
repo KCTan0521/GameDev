@@ -7,11 +7,14 @@ public class Monster_Giant : MonoBehaviour
 {
 
     [SerializeField]
-    private float jumpForce = 30f;
+    private float jumpForce = 50f;
     private bool isGrounded = true;
+    private bool isDamaged = true;
 
     private Rigidbody2D myBody;
     private Animator anim;
+    private Transform trans;
+    private Health healthSystem;
 
     private const string SMASH_ANIMATION = "Smash";
 
@@ -20,6 +23,8 @@ public class Monster_Giant : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        trans = GetComponent<Transform>();
+        healthSystem =  GameObject.FindObjectOfType<Health>();
     }
 
     private void Start()
@@ -31,17 +36,25 @@ public class Monster_Giant : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.5f);
 
-            PlayerJump();
+            MonsterJump();
         } 
     }
 
     void Update()
     {
         AnimatePlayer();
+        DestroyMonster();
     }
 
+    void DestroyMonster()
+    {
+        if (trans.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void AnimatePlayer()
     {
@@ -55,17 +68,16 @@ public class Monster_Giant : MonoBehaviour
         }
     }
 
-    void PlayerJump()
+    void MonsterJump()
     {
-
         if (isGrounded)
         {
-            
-            myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             isGrounded = false;
+            myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
-
     }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision) // need collision.gameObject
     {
@@ -76,8 +88,22 @@ public class Monster_Giant : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("GameOver");
+            if (isDamaged)
+            {
+                StartCoroutine(MonsterDamage());
+            }
         }
 
     }
+
+    IEnumerator MonsterDamage()
+    {
+        isDamaged = false;
+        healthSystem.Damage(.5f);
+        Debug.Log("hurt");
+        yield return new WaitForSeconds(0.5f);
+        isDamaged = true;
+    }
+
+
 }
