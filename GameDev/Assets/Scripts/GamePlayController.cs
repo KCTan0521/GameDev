@@ -8,12 +8,26 @@ public class GamePlayController : MonoBehaviour
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
     private GameObject[] gameSetting;
-    
+
+    public delegate void gameOver(float distanceTraveller, float timeSurvived);
+    public static event gameOver gameOverData;
+
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-
+        /*
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }*/
+        DontDestroyOnLoad(gameObject);
+        
     }
 
     void Start()
@@ -57,7 +71,22 @@ public class GamePlayController : MonoBehaviour
 
     public void GoBackHomePage()
     {
-        SceneManager.LoadScene("MainMenu");
+        
+        SceneManager.LoadScene("GameOver"); 
     }
 
+
+    void executeGameOverData()
+    {
+        Debug.Log("hello Im");
+        if (gameOverData != null)
+        {
+            gameOverData(playerBehaviour.transform.position.x, Time.realtimeSinceStartup);
+        }
+    }
+
+    private void Update()
+    {
+        executeGameOverData();
+    }
 }
