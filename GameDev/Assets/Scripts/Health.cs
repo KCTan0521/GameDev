@@ -27,6 +27,7 @@ public class Health : MonoBehaviour
     public void Damage(float damage)
     {
         health -= damage;
+        FindObjectOfType<AudioManager>().Play("Player - Hurt"); //works
     }
 
     public void HealthRegen()
@@ -34,6 +35,7 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("Game Over");
+            FindObjectOfType<AudioManager>().Play("Player - Death"); //doesnt work
         }
 
         else if (health < MAX_HEALTH)

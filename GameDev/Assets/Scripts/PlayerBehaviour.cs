@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
         standing.enabled = true;
         sliding.enabled = false;
 
-        FindObjectOfType<AudioManager>().Play("Running");
+        FindObjectOfType<AudioManager>().Play("Song1"); //works
 
     }
 
@@ -76,11 +76,13 @@ public class PlayerBehaviour : MonoBehaviour
         if (dashButton)
         {
             isDashing = true;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
         {
             isSliding = true;
+            
         }
 
         else
@@ -99,6 +101,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (!canJump && IsGrounded())
             {
                 animator.SetBool("IsJumping", false);
+                FindObjectOfType<AudioManager>().Play("Player - Run"); // buggy (noisy at start, silent after)
             }
         }
     }
@@ -110,6 +113,7 @@ public class PlayerBehaviour : MonoBehaviour
             canJump = false;
             jumpCount = 1;
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            FindObjectOfType<AudioManager>().Play("Player - Jump");
         }
 
         if (canDoubleJump)
@@ -118,6 +122,7 @@ public class PlayerBehaviour : MonoBehaviour
             jumpCount = 2;
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            FindObjectOfType<AudioManager>().Play("Player - Jump");
         }
 
         if (isDashing)
@@ -150,6 +155,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isDashing = true;
                 gameObject.GetComponent<Stamina>().Exhaust(2f);
+                FindObjectOfType<AudioManager>().Play("Player - Dash"); // doesnt work
             }
         }
     }
@@ -162,6 +168,7 @@ public class PlayerBehaviour : MonoBehaviour
             sliding.enabled = true;
             slideDuration -= Time.deltaTime;
             animator.SetBool("IsSliding", true);
+            FindObjectOfType<AudioManager>().Play("Player - Slide"); // doesnt work
         }
         else
         {
