@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Enemy
+  - GameSetting
+  - Monster
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -14,10 +17,10 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
   - Ground
   - Platform
+  - 
+  - 
   - 
   - 
   - 
@@ -45,4 +48,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GameSetting
+    uniqueID: 2492025465
     locked: 0

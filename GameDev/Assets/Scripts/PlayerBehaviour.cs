@@ -50,6 +50,9 @@ public class PlayerBehaviour : MonoBehaviour
         targetedSpeed = moveSpeed;
         standing.enabled = true;
         sliding.enabled = false;
+
+        FindObjectOfType<AudioManager>().Play("Song1"); //works
+
     }
 
     // Update is called once per frame
@@ -137,6 +140,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (!canJump && IsGrounded())
                 {
                     animator.SetBool("IsJumping", false);
+                    FindObjectOfType<AudioManager>().Play("Player - Run"); // buggy (noisy at start, silent after)
                 }
             }
         }
@@ -169,6 +173,7 @@ public class PlayerBehaviour : MonoBehaviour
             canJump = false;
             jumpCount = 1;
             _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            FindObjectOfType<AudioManager>().Play("Player - Jump");
         }
 
         if (canDoubleJump && !isStrangled)
@@ -236,6 +241,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isDashing = true;
                 gameObject.GetComponent<Stamina>().Exhaust(2f);
+                FindObjectOfType<AudioManager>().Play("Player - Dash"); // doesnt work
             }
         }
     }
@@ -248,6 +254,7 @@ public class PlayerBehaviour : MonoBehaviour
             sliding.enabled = true;
             slideDuration -= Time.deltaTime;
             animator.SetBool("IsSliding", true);
+            FindObjectOfType<AudioManager>().Play("Player - Slide"); // doesnt work
         }
         else
         {
