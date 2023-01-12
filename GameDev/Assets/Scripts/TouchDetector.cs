@@ -46,7 +46,6 @@ public class TouchDetector : MonoBehaviour
                         else
                         {
                             dashButton = true;
-                            Debug.Log("dash");
                         }
                     }
 

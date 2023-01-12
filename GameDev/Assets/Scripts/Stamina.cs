@@ -9,6 +9,8 @@ public class Stamina : MonoBehaviour
     private const float STAMINA_REGEN = 1f;
     public float stamina;
     private Image staminaBar;
+    private bool isStrangled;
+    private float struggleCount;
 
     private void Awake()
     {
@@ -17,8 +19,14 @@ public class Stamina : MonoBehaviour
 
     private void Update()
     {
-        Rest();
         StaminaAnimation();
+        isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
+        struggleCount = GameObject.Find("Player").GetComponent<PlayerBehaviour>().struggleCount;
+    }
+
+    private void FixedUpdate()
+    {
+        Rest();
     }
 
     public Stamina()
@@ -42,6 +50,16 @@ public class Stamina : MonoBehaviour
 
     private void StaminaAnimation()
     {
-        staminaBar.fillAmount = stamina / MAX_STAMINA;
+        if (isStrangled)
+        {
+            staminaBar.color = new Color32(62, 172, 180, 255);
+            staminaBar.fillAmount = struggleCount / 10;
+        }
+
+        else
+        {
+            staminaBar.color = new Color32(140, 180, 62, 255);
+            staminaBar.fillAmount = stamina / MAX_STAMINA;
+        }
     }
 }

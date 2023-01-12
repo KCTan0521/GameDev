@@ -8,6 +8,7 @@ public class PlatformGeneration : MonoBehaviour
 {
     [SerializeField] private GameObject _platformRange;
     [SerializeField] private GameObject _platform;
+    [SerializeField] private GameObject _singleTile;
     private Collider2D _screen;
     private CinemachineVirtualCamera playerCam;
     private float leftScreen;
@@ -35,8 +36,13 @@ public class PlatformGeneration : MonoBehaviour
         while (platformPos.x < platformRanges.Last().transform.position.x + 40f)
         {
             generatePlatform();
-            GameObject newPlatform = Instantiate(_platform, platformPos, Quaternion.identity);
-            platforms.Add(newPlatform);
+            for (int i = 0; i < 8; i++)
+            {
+                GameObject newPlatform = Instantiate(_singleTile, platformPos + new Vector2(i * 1f, 0f), Quaternion.identity);
+                platforms.Add(newPlatform);
+            }
+            /*GameObject newPlatform = Instantiate(_platform, platformPos, Quaternion.identity);
+            platforms.Add(newPlatform);*/
         }
     }
 
@@ -61,10 +67,17 @@ public class PlatformGeneration : MonoBehaviour
         while (platformPos.x < platformRanges.Last().transform.position.x)
         {
             generatePlatform();
-            GameObject newPlatform = Instantiate(_platform, platformPos, Quaternion.identity);
+            for (int i = 0; i < 8; i++)
+            {
+                GameObject newPlatform = Instantiate(_singleTile, platformPos + new Vector2(i * 1f, 0f), Quaternion.identity);
+                platforms.Add(newPlatform);
+                Destroy(platforms[0]);
+                platforms.RemoveAt(0);
+            }
+            /*GameObject newPlatform = Instantiate(_platform, platformPos, Quaternion.identity);
             platforms.Add(newPlatform);
             Destroy(platforms[0]);
-            platforms.RemoveAt(0);
+            platforms.RemoveAt(0);*/
         }
     }
 
@@ -74,7 +87,7 @@ public class PlatformGeneration : MonoBehaviour
         
         int x, y;
 
-        for (int i = 2 ; i <= space; i++)
+        for (int i = 2 ; i < space; i++)
         {
             x = i;
             y = space - i;
@@ -82,12 +95,11 @@ public class PlatformGeneration : MonoBehaviour
         }
     }
 
-    private void posDown()
+    private void posDown(int maxSpace)
     {
         randomPos.Clear();
 
         int x, y;
-        int maxSpace = 6;
 
         for (int i = 2; i <= maxSpace; i++)
         {
@@ -145,13 +157,13 @@ public class PlatformGeneration : MonoBehaviour
         int indexY = 0;
         int posY = 0;
 
-        posUp(3);
+        posUp(4);
 
         System.Random rnd = new System.Random();
         indexY = rnd.Next(randomPos.Count);
         posY = randomPos.Keys.ElementAt(indexY);
 
-        while (platformPos.y + posY > 8f)
+        while (platformPos.y + posY > 8f && posY > 2f) //Set max height for platform here
         {
             indexY = rnd.Next(randomPos.Count);
             posY = randomPos.Keys.ElementAt(indexY);
@@ -162,21 +174,21 @@ public class PlatformGeneration : MonoBehaviour
 
     private void moveDown()
     {
-        int indexX = 0;
-        int posX = 0;
+        int indexY = 0;
+        int posY = 0;
 
-        posDown();
+        posDown(6);
 
         System.Random rnd = new System.Random();
-        indexX = rnd.Next(randomPos.Count);
-        posX = randomPos.Keys.ElementAt(indexX);
+        indexY = rnd.Next(randomPos.Count);
+        posY = randomPos.Keys.ElementAt(indexY);
 
-        while (platformPos.y + posX < 2f)
+        while (platformPos.y + posY < 3f) // Set min height for platform here
         {
-            indexX = rnd.Next(randomPos.Count);
-            posX = randomPos.Keys.ElementAt(indexX);
+            indexY = rnd.Next(randomPos.Count);
+            posY = randomPos.Keys.ElementAt(indexY);
         }
 
-        platformPos += new Vector2(randomPos[posX] + 8f, posX);
+        platformPos += new Vector2(randomPos[posY] + 8f, posY);
     }
 }

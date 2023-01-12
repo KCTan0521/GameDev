@@ -571,17 +571,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadbd723232c5404c804c99e3328eb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformLayerMask:
+  ground:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   _col: {fileID: 224176810}
   standing: {fileID: 224176809}
   sliding: {fileID: 224176807}
   animator: {fileID: 224176811}
   moveSpeed: 10
-  jumpForce: 10
+  jumpForce: 11
   dashTranslate: 10
   slideDuration: 1
+  isStrangled: 0
+  struggleCount: 0
+  isBeingAttacked: 0
 --- !u!61 &224176809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -618,7 +621,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.0625}
@@ -1166,6 +1169,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _platformRange: {fileID: 5184731905547293713, guid: 0105e2fc072634d40971453cd35c6551, type: 3}
   _platform: {fileID: 6783631872631666770, guid: 4f04cb33ca1e2d248b9209a6a07c5d95, type: 3}
+  _singleTile: {fileID: 7566706625443093495, guid: b6b543d34aeba664484158502576faa3, type: 3}
+--- !u!1001 &522388759
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3169980339298323173, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_Size.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462007870707081529, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
+      propertyPath: m_Name
+      value: Wahmen
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
 --- !u!1 &601407538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,7 +1366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.54999655, g: 0.7075472, b: 0.242969, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.17982507, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1560,12 +1625,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 960, y: 480}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
