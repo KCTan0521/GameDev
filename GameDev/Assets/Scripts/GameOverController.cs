@@ -7,6 +7,14 @@ public class GameOverController : MonoBehaviour
 {
     // the Home Button and Restart Button do not override all back to the prefab
 
+
+
+    private void Start()
+    {
+
+    }
+
+
     public void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
