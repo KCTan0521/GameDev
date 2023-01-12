@@ -824,7 +824,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &225256811
 BoxCollider2D:
@@ -1149,7 +1149,7 @@ RectTransform:
   - {fileID: 234324292}
   - {fileID: 1370870246}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1415,7 +1415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 61821174, guid: c21df18ee693f2844a91e149e689203b, type: 3}
+  m_Sprite: {fileID: -1629685436, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1591,10 +1591,10 @@ RectTransform:
   m_Father: {fileID: 355053754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -40}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -56, y: -58}
+  m_SizeDelta: {x: 49.48999, y: 46.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &601407538
 GameObject:
@@ -1786,7 +1786,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &868221370
 MonoBehaviour:
@@ -2868,7 +2868,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6379101704262701841, guid: a6de9034d53872b4c8fd090ed9b7f7fe, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6379101704262701841, guid: a6de9034d53872b4c8fd090ed9b7f7fe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3366,7 +3366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2979369081601655526, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 60
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 2979369081601655526, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3388,6 +3388,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 355053755}
+    - target: {fileID: 2979369081601655528, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1569171047, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
 --- !u!1001 &3534180798322687788
@@ -3485,6 +3489,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 355053755}
+    - target: {fileID: 3534180798556028522, guid: b09c505809938354ca402b3c7c149695, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1202763134, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
     - target: {fileID: 3534180798556028527, guid: b09c505809938354ca402b3c7c149695, type: 3}
       propertyPath: m_Name
       value: Restart Button

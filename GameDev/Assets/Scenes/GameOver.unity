@@ -172,12 +172,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 960, y: 480}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -279,8 +279,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.13, y: -0.03}
-  m_SizeDelta: {x: 674.52, y: 328.77}
+  m_AnchoredPosition: {x: 0, y: -0.00050354004}
+  m_SizeDelta: {x: 1040, y: 480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &820250314
 MonoBehaviour:
@@ -439,6 +439,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameOverController, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 2979369081601655528, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1569171047, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37165b60e39500c4e8f9627eab654be9, type: 3}
 --- !u!224 &1021691215 stripped
@@ -1118,6 +1122,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameOverController, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 3534180798556028522, guid: b09c505809938354ca402b3c7c149695, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1202763134, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
     - target: {fileID: 3534180798556028527, guid: b09c505809938354ca402b3c7c149695, type: 3}
       propertyPath: m_Name
       value: Restart Button
