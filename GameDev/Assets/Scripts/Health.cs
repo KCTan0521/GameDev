@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class Health : MonoBehaviour
         {
             Debug.Log("Game Over");
             FindObjectOfType<AudioManager>().Play("Player - Death"); //doesnt work
+            SceneManager.LoadScene("GameOver");
         }
 
         else if (health < MAX_HEALTH)
