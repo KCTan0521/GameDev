@@ -64,6 +64,8 @@ public class Bullet : MonoBehaviour
                 if (_rb.transform.position.x > initialPos.x)
                 {
                     GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = false;
+                    woman.GetComponent<Animator>().SetBool("attack", false);
+                    woman.GetComponent<Animator>().SetBool("endattack", true);
                     Destroy(_rb.gameObject);
                 }
             }

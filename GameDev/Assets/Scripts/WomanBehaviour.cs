@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WomanBehaviour : MonoBehaviour
 {
-    public Animator animator;
 
     [SerializeField] private GameObject _bullet;
     private Rigidbody2D _player;
@@ -52,8 +51,10 @@ public class WomanBehaviour : MonoBehaviour
             attackTimer += Time.fixedDeltaTime;
             if (attackTimer >= 1f)
             {
-                Instantiate(_bullet, transform.position, Quaternion.identity);
-                animator.SetBool("attack", true);
+                GetComponent<Animator>().SetBool("attack", true);
+                GameObject bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
+                bullet.GetComponent<Bullet>().woman = gameObject;
+
                 GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
                 attackTimer = 0;
             }
