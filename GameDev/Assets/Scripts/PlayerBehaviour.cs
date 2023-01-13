@@ -222,7 +222,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
             if (isDashing)
-            { 
+            {
                 _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
                 isDashing = false;
             }
@@ -257,6 +257,7 @@ public class PlayerBehaviour : MonoBehaviour
             firstTap = Time.time;
             if (timeSinceLastTap <= TIME_INTERVAL)
             {
+                gameObject.GetComponent<Stamina>().Exhaust(2f);
                 isDashing = true;
             }
         }
