@@ -75,4 +75,14 @@ public class AudioManager : MonoBehaviour
         return sound;
     }
 
+    public static void MuteAllSound()
+    {
+        AudioListener.volume = 0;
+    }
+
+    public static void UnMuteAllSound()
+    {
+        AudioListener.volume = 1;
+    }
+
 }
