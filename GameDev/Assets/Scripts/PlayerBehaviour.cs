@@ -28,7 +28,10 @@ public class PlayerBehaviour : MonoBehaviour
     private float struggleDuration = 0;
     public float struggleCount = 0;
     public bool isBeingAttacked;
-    private bool isStunned;
+    public bool isBreakFree;
+    public bool pull;
+    public bool isPulled;
+    private bool isPulling;
 
     private bool jumpButton;
     private bool dashButton;
@@ -50,9 +53,6 @@ public class PlayerBehaviour : MonoBehaviour
         targetedSpeed = moveSpeed;
         standing.enabled = true;
         sliding.enabled = false;
-
-        FindObjectOfType<AudioManager>().Play("Song1"); //works
-
     }
 
     // Update is called once per frame
@@ -70,15 +70,18 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (isStrangled)
         {
-            _rb.velocity = new Vector2(0f, 0f);
             struggleDuration += Time.deltaTime;
-
             if (struggleCount <= 0f)
             {
-                isStrangled = false;
-                // pull towards
+                pull = true;
+                if (isPulled)
+                {
+                    isPulled = false;
+                    isPulling = true;
+                    isStrangled = false;
+                }
             }
-            
+
             else if (struggleDuration < 5f)
             {
                 if (struggleCount < 10f)
@@ -92,16 +95,18 @@ public class PlayerBehaviour : MonoBehaviour
                 else
                 {
                     isStrangled = false;
+                    isBreakFree = true;
                 }
             }
 
             else
             {
                 isStrangled = false;
+                isBreakFree = true;
             }
         }
 
-        else if (!isStrangled)
+        else if (!isStrangled && !isPulling)
         {
             if ((jumpButton || Input.GetKeyDown(KeyCode.Space)) && !canDoubleJump && !IsGrounded() && jumpCount == 1 && playerStamina >= 1)
             {
@@ -115,9 +120,10 @@ public class PlayerBehaviour : MonoBehaviour
                 animator.SetBool("IsJumping", true);
             }
 
-            if (dashButton)
+            if (dashButton && playerStamina >= 2)
             {
                 isDashing = true;
+                gameObject.GetComponent<Stamina>().Exhaust(2f);
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
@@ -132,94 +138,106 @@ public class PlayerBehaviour : MonoBehaviour
                     animator.SetFloat("Speed", _rb.velocity.x);
                 }
 
-                if (isSliding)
-                {
-                    IsSliding();
-                }
-
                 if (!canJump && IsGrounded())
                 {
                     animator.SetBool("IsJumping", false);
-                    FindObjectOfType<AudioManager>().Play("Player - Run"); // buggy (noisy at start, silent after)
                 }
             }
         }
     }
-    
+
     void FixedUpdate()
     {
         if (isStrangled)
         {
-            struggleCount -= Time.fixedDeltaTime * 5;
-        }
-
-        if (_rb.velocity.x <= moveSpeed && _rb.velocity.x > 0 && !isStrangled)
-        {
-            _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
-        }
-        
-        if (moveSpeed < 15f) //Set max speed here
-        {
-            targetedSpeed += .1f * Time.fixedDeltaTime;
-            if (targetedSpeed >= Math.Truncate(targetedSpeed))
+            if (isSliding)
             {
-                moveSpeed = (float)Math.Truncate(targetedSpeed);
+                standing.enabled = true;
+                sliding.enabled = false;
+                slideDuration = 1f;
+                isSliding = false;
+                animator.SetBool("IsSliding", false);
             }
-
-        }
-
-        if (canJump && IsGrounded() && !isStrangled)
-        {
-            canJump = false;
-            jumpCount = 1;
-            _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
-            FindObjectOfType<AudioManager>().Play("Player - Jump");
-        }
-
-        if (canDoubleJump && !isStrangled)
-        {
-            if (_rb.velocity.x <= 0f && !isStrangled)
-            {
-                canDoubleJump = false;
-                jumpCount = 2;
-                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
-                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
-                _rb.AddForce(Vector2.right * 7f, ForceMode2D.Impulse);
-                Debug.Log("push");
-            }
-
-            else
-            {
-                canDoubleJump = false;
-                jumpCount = 2;
-                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
-                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
-            }
-        }
-
-        if (isDashing && !isStrangled)
-        {
-            _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
-            isDashing = false;
-        }
-
-        if (isStunned)
-        {
             _rb.velocity = new Vector2(0f, 0f);
-            _rb.AddForce(new Vector2(-0.5f * moveSpeed, 9.81f), ForceMode2D.Impulse);
-            isStunned = false;
-        }
-        
-        else if (_rb.velocity.x > moveSpeed && !isStrangled)
-        {
-            _rb.AddForce(Vector2.left * 0.5f, ForceMode2D.Impulse);
+            Physics2D.gravity = new Vector2(0f, 0f);
+            struggleCount -= Time.fixedDeltaTime * 5; // control struggle speed
         }
 
-        if (_rb.velocity.x <= 0f && !isStrangled)
+        else if (isPulling)
         {
-            if (IsGrounded())
+            Physics2D.gravity = new Vector2(0f, 0f);
+            Physics2D.IgnoreLayerCollision(6, 8, true);
+        }
+
+        else
+        {
+            Physics2D.gravity = new Vector2(0f, -9.81f);
+
+            if (_rb.velocity.x <= moveSpeed && _rb.velocity.x > 0)
             {
-                _rb.AddForce(Vector2.right * 0.5f, ForceMode2D.Impulse);
+                _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+            }
+
+            if (moveSpeed < 15f) //Set max speed here
+            {
+                targetedSpeed += .1f * Time.fixedDeltaTime;
+                if (targetedSpeed >= Math.Truncate(targetedSpeed))
+                {
+                    moveSpeed = (float)Math.Truncate(targetedSpeed);
+                }
+
+            }
+
+            if (canJump && IsGrounded())
+            {
+                canJump = false;
+                jumpCount = 1;
+                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+            }
+
+            if (canDoubleJump)
+            {
+                if (_rb.velocity.x <= 0f && !isStrangled)
+                {
+                    canDoubleJump = false;
+                    jumpCount = 2;
+                    _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+                    _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+                    _rb.AddForce(Vector2.right * 7f, ForceMode2D.Impulse);
+                    Debug.Log("push");
+                }
+
+                else
+                {
+                    canDoubleJump = false;
+                    jumpCount = 2;
+                    _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+                    _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+                }
+            }
+
+            if (isSliding)
+            {
+                IsSliding();
+            }
+
+            if (isDashing)
+            { 
+                _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
+                isDashing = false;
+            }
+
+            else if (_rb.velocity.x > moveSpeed)
+            {
+                _rb.AddForce(Vector2.left * 0.5f, ForceMode2D.Impulse);
+            }
+
+            if (_rb.velocity.x <= 0f)
+            {
+                if (IsGrounded())
+                {
+                    _rb.AddForce(Vector2.right * 0.5f, ForceMode2D.Impulse);
+                }
             }
         }
     }
@@ -240,21 +258,18 @@ public class PlayerBehaviour : MonoBehaviour
             if (timeSinceLastTap <= TIME_INTERVAL)
             {
                 isDashing = true;
-                gameObject.GetComponent<Stamina>().Exhaust(2f);
-                FindObjectOfType<AudioManager>().Play("Player - Dash"); // doesnt work
             }
         }
     }
 
     private void IsSliding()
     {
-        if (slideDuration > 0 && !canJump)
+        if (slideDuration > 0 && !canJump && !isStrangled)
         {
             standing.enabled = false;
             sliding.enabled = true;
-            slideDuration -= Time.deltaTime;
+            slideDuration -= Time.fixedDeltaTime;
             animator.SetBool("IsSliding", true);
-            FindObjectOfType<AudioManager>().Play("Player - Slide"); // doesnt work
         }
         else
         {
@@ -271,13 +286,15 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.name == "Wahmen")
         {
             gameObject.GetComponent<Health>().Damage(.5f);
-            isStunned = true;
+            isPulling = false;
+            Physics2D.IgnoreLayerCollision(6, 8, false);
         }
 
         if (collision.gameObject.tag == "Bullet")
         {
-            struggleCount = 5;
             isStrangled = true;
+            struggleCount = 5;
+            struggleDuration = 0f;
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] Collider2D _col;
     private Rigidbody2D _player;
     private Rigidbody2D _rb;
     private Vector3 initialTarget;
@@ -13,16 +14,18 @@ public class Bullet : MonoBehaviour
     private bool isReflected;
     private float timer;
     private bool hitTarget;
+    private bool pull;
 
     public float attackSpeed = 1f;
-    public float speed = 10f;
+    public float speed = 20f;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-        initialTarget = _player.transform.position + new Vector3(1f, 0f, 0f);
+        initialTarget = _player.transform.position;
         initialPos = _rb.transform.position;
+        targetSetter();
         direction = initialTarget - initialPos;
         isReflected = false;
         hitTarget = false;
@@ -31,8 +34,23 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
+        pull = GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull;
+        if (hitTarget)
+        {
+            _col.isTrigger = enabled;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         Attack();
+        if (pull)
+        {
+            _player.velocity = new Vector2(-direction.x, -direction.y).normalized * speed;
+            GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull = false;
+            GameObject.Find("Player").GetComponent<PlayerBehaviour>().isPulled = true;
+        }
     }
 
     private void Attack()
@@ -72,7 +90,7 @@ public class Bullet : MonoBehaviour
                 isReflected = true;
             }
 
-            else if (_rb.transform.position.x < initialTarget.x)
+            if (_rb.transform.position.x < initialTarget.x && !hitTarget)
             {
                 _rb.velocity = new Vector2(0f, 0f);
                 timer += Time.deltaTime;
@@ -89,12 +107,11 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        else
+        else if (initialTarget.x > initialPos.x)
         {
             if (isStrangled)
             {
                 _rb.velocity = new Vector2(0f, 0f);
-                Debug.Log("strangled");
             }
 
             if (!isStrangled && hitTarget)
@@ -102,12 +119,13 @@ public class Bullet : MonoBehaviour
                 isReflected = true;
             }
 
-            else if (_rb.transform.position.x > initialTarget.x)
+            else if (_rb.transform.position.x > initialTarget.x && !hitTarget)
             {
                 _rb.velocity = new Vector2(0f, 0f);
                 timer += Time.deltaTime;
                 if (timer >= attackSpeed)
                 {
+                    Debug.Log("reflected");
                     isReflected = true;
                     timer = 0;
                 }
@@ -124,6 +142,7 @@ public class Bullet : MonoBehaviour
     {
         if (isLeft)
         {
+            /*_rb.AddForce(new Vector2(direction.x, direction.y).normalized * 5f, ForceMode2D.Impulse);*/
             _rb.velocity = new Vector2(direction.x, direction.y).normalized * speed;
             float rot = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rot);
@@ -131,10 +150,11 @@ public class Bullet : MonoBehaviour
 
         else
         {
+            /*_rb.AddForce(new Vector2(-direction.x, -direction.y).normalized * 5f, ForceMode2D.Impulse);*/
             _rb.velocity = new Vector2(-direction.x, -direction.y).normalized * speed;
             float rot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rot);
-        } 
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -142,6 +162,37 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             hitTarget = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Platform")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void targetSetter()
+    {
+        if (_player.transform.position.x < _rb.transform.position.x)
+        {
+            if (_player.transform.position.y < _rb.transform.position.y - 1 || _player.transform.position.y > _rb.transform.position.y + 1)
+            {
+                initialTarget.x -= (initialTarget.x - initialPos.x) * 0.2f;
+            }
+        }
+        else
+        {
+            if (_player.transform.position.y < _rb.transform.position.y - 1 || _player.transform.position.y > _rb.transform.position.y + 1)
+            {
+                initialTarget.x += (initialTarget.x - initialPos.x) * 0.4f;
+            }
+
+            else
+            {
+                initialTarget.x += (initialTarget.x - initialPos.x) * 0.2f;
+            }
         }
     }
 }
