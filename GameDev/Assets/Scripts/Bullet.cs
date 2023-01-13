@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
 
     public float attackSpeed = 1f;
     public float speed = 20f;
+    public GameObject woman;
 
     private void Start()
     {

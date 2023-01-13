@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3169980339298323173}
   - component: {fileID: 140673394096939241}
   - component: {fileID: 1822737760731532278}
+  - component: {fileID: 6013381796631444925}
   m_Layer: 0
   m_Name: Wahmen
   m_TagString: Enemy
@@ -29,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8462007870707081529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.977419, y: 6.064457, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 20.0969, y: 6.3211, z: 0}
+  m_LocalScale: {x: 1.3733, y: 1.5133, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa33ed2bc31d5a47af8342bee0ce8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 6013381796631444925}
   _bullet: {fileID: 2096791716952982430, guid: 7ed41271e7773ed4592045eda2b74630, type: 3}
 --- !u!50 &1822737760731532278
 Rigidbody2D:
@@ -174,3 +176,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &6013381796631444925
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8462007870707081529}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 32311b03756cfea47b4668b5596c81a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

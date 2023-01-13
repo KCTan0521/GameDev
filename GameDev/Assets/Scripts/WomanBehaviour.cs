@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WomanBehaviour : MonoBehaviour
 {
+    public Animator animator;
+
     [SerializeField] private GameObject _bullet;
     private Rigidbody2D _player;
     private float attackTimer;
@@ -24,7 +26,7 @@ public class WomanBehaviour : MonoBehaviour
         isStrangling = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         isAttacking = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked;
         isBreakFree = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBreakFree;
-
+        
         if (isIncapacitate)
         {
             GetComponent<BoxCollider2D>().enabled = false;
@@ -51,6 +53,7 @@ public class WomanBehaviour : MonoBehaviour
             if (attackTimer >= 1f)
             {
                 Instantiate(_bullet, transform.position, Quaternion.identity);
+                animator.SetBool("attack", true);
                 GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
                 attackTimer = 0;
             }
