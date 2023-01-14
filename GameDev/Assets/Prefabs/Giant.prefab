@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f034e8dda2a47d94b92160c5cdfae835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 950
+  jumpForce: 1150
   horizontalForce: -300
   healthSystem: {fileID: 0}
   groundCheck: {fileID: 6731919470081640686}
@@ -218,6 +218,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  impulseForceX: 5
 --- !u!61 &659633021822207944
 BoxCollider2D:
   m_ObjectHideFlags: 0

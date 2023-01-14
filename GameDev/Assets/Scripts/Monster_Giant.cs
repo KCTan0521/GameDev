@@ -8,25 +8,28 @@ public class Monster_Giant : MonoBehaviour
 
     public float jumpForce;
     public float horizontalForce;
+    public float impulseForceX;
     public Health healthSystem;
 
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask groundLayer;
 
-    private bool isDamaged = true;
     private bool isGrounded;
     private bool isAttack;
     private bool isJumping;
+    private bool isStop = false;
     private int ignoreFrame = 0;     //number of frame to ignore to avoid multiple detect collision in one real collision
+    private float isStopTimer = 0;
 
+    private Rigidbody2D _player;
     private Rigidbody2D myBody;
     private Animator anim;
     private Transform trans;
     
-
     private const string SMASH_ANIMATION = "Launch";
-
+    private const float GRAVITY = 9.81f + 8f;
+    
 
     public void Awake()
     {
@@ -38,7 +41,7 @@ public class Monster_Giant : MonoBehaviour
 
     public void Start()
     {
-        
+        _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
     }
     
     public void FixedUpdate()
@@ -62,15 +65,30 @@ public class Monster_Giant : MonoBehaviour
             anim.SetFloat("speed_y", myBody.velocity.y);
         }
         
-        if (isJumping && isGrounded && ignoreFrame <= 0)
+        if (isJumping && isGrounded && myBody.velocity.y == 0)
         {
             //Landing
             anim.SetBool("isSmash", false);
             anim.SetBool("isGround", true);
+
+            myBody.velocity = new Vector2(0f, 0f);
         }
+            
 
         DestroyMonster();
         ignoreFrame--;
+
+        if (isStop)
+        {
+
+            isStopTimer += Time.deltaTime;
+            if (isStopTimer >= 2f) // change recover time here
+            {
+                isStop = false;
+                GetComponent<BoxCollider2D>().enabled = true;
+                isStopTimer = 0;
+            }
+        }
     }
 
     private void DestroyMonster()
@@ -96,13 +114,27 @@ public class Monster_Giant : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) // need collision.gameObject
     {
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !isStop)
         {
-            if (isDamaged)
+
+            if (transform.position.x > _player.transform.position.x)
             {
-                
+                _player.velocity = new Vector2(0f, 0f);
+                _player.AddForce(new Vector2(-1f * impulseForceX, GRAVITY), ForceMode2D.Impulse);
             }
+            else if (transform.position.x < _player.transform.position.x)
+            {
+                _player.velocity = new Vector2(0f, 0f);
+                _player.AddForce(new Vector2(-1f * impulseForceX, GRAVITY), ForceMode2D.Impulse);
+            }
+
+            _player.GetComponent<Health>().Damage(.5f);
+            
+            isStop = true;  
+
         }
+
+           
 
     }
 

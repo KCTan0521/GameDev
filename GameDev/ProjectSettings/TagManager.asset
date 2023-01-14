@@ -9,6 +9,7 @@ TagManager:
   - GameSetting
   - Monster
   - Ground
+  - Platform
   layers:
   - Default
   - TransparentFX
