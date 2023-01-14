@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    private void Start()
+    {
+        FindObjectOfType<AudioManager>().Play("Song1");
+    }
     public void PlayGame()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         SceneManager.LoadScene("GamePlay");
     }
 

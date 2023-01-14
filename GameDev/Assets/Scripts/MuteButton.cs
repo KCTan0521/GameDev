@@ -28,6 +28,7 @@ public class MuteButton : MonoBehaviour
     {
         if(isMute)
         {
+            FindObjectOfType<AudioManager>().Play("Menu - Button2");
             AudioManager.UnMuteAllSound();
             soundButton.GetComponent<Image>().sprite = unmuteUI;
         }

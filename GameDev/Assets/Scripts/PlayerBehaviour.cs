@@ -118,6 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 canJump = true;
                 animator.SetBool("IsJumping", true);
+                FindObjectOfType<AudioManager>().Play("Player - Jump");
             }
 
             if (dashButton && playerStamina >= 2)
@@ -141,6 +142,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (!canJump && IsGrounded())
                 {
                     animator.SetBool("IsJumping", false);
+                    FindObjectOfType<AudioManager>().Play("Player - Land");
                 }
             }
         }
@@ -224,6 +226,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (isDashing)
             {
                 _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
+                FindObjectOfType<AudioManager>().Play("Player - Run");
                 isDashing = false;
             }
 
@@ -267,10 +270,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (slideDuration > 0 && !canJump && !isStrangled)
         {
+            FindObjectOfType<AudioManager>().Play("Player - Slide");
             standing.enabled = false;
             sliding.enabled = true;
             slideDuration -= Time.fixedDeltaTime;
             animator.SetBool("IsSliding", true);
+            
         }
         else
         {
