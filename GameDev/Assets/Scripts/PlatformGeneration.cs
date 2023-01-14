@@ -18,7 +18,7 @@ public class PlatformGeneration : MonoBehaviour
     private float leftMostPlatform;
     private Vector2 platformPos;
     private List<GameObject> platformRanges = new List<GameObject>();
-    private List<GameObject> platforms = new List<GameObject>();
+    public List<GameObject> platforms = new List<GameObject>();
     Dictionary<int, int> randomPos = new Dictionary<int, int>();
 
     private void Awake()

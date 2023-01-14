@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour
 
     public float attackSpeed = 1f;
     public float speed = 20f;
-    public GameObject woman;
 
     private void Start()
     {
@@ -64,8 +63,6 @@ public class Bullet : MonoBehaviour
                 if (_rb.transform.position.x > initialPos.x)
                 {
                     GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = false;
-                    woman.GetComponent<Animator>().SetBool("attack", false);
-                    woman.GetComponent<Animator>().SetBool("endattack", true);
                     Destroy(_rb.gameObject);
                 }
             }
@@ -128,7 +125,6 @@ public class Bullet : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer >= attackSpeed)
                 {
-                    Debug.Log("reflected");
                     isReflected = true;
                     timer = 0;
                 }

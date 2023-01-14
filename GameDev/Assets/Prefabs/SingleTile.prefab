@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3209507602112754479}
   - component: {fileID: 7651102263055010373}
   - component: {fileID: 3828325825388870505}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6104923934702021821}
   - component: {fileID: 6301917147361836987}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: SingleTile
   m_TagString: Platform
   m_Icon: {fileID: 0}

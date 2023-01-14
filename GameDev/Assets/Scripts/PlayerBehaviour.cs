@@ -284,7 +284,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Wahmen")
+        if (collision.gameObject.tag == "Wahmen")
         {
             gameObject.GetComponent<Health>().Damage(.5f);
             isPulling = false;
@@ -296,11 +296,6 @@ public class PlayerBehaviour : MonoBehaviour
             isStrangled = true;
             struggleCount = 5;
             struggleDuration = 0f;
-        }
-        
-        if (collision.gameObject.tag == "Monster")
-        {
-            gameObject.GetComponent<Health>().Damage(.5f);
         }
             
     }

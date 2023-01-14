@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class WomanBehaviour : MonoBehaviour
 {
-
+    public Animator animator;
     [SerializeField] private GameObject _bullet;
+    private Rigidbody2D _rb;
     private Rigidbody2D _player;
     private float attackTimer;
     private bool attack;
     private bool isStrangling;
     private bool isAttacking;
+    private bool isPulled;
     private bool isIncapacitate;
     private float incapacitateTimer;
     private bool isBreakFree;
+    private float distance;
 
     private void Start()
     {
+        _rb = this.GetComponent<Rigidbody2D>();
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
     }
 
@@ -25,7 +29,12 @@ public class WomanBehaviour : MonoBehaviour
         isStrangling = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         isAttacking = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked;
         isBreakFree = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBreakFree;
-        
+        isPulled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isPulled;
+        distance = transform.position.x - _player.transform.position.x;
+
+        AttackRange();
+        Animation();
+
         if (isIncapacitate)
         {
             GetComponent<BoxCollider2D>().enabled = false;
@@ -44,41 +53,28 @@ public class WomanBehaviour : MonoBehaviour
             isIncapacitate = true;
         }
     }
+
     private void FixedUpdate()
     {
         if (attack && !isStrangling && !isAttacking && !isIncapacitate)
         {
             attackTimer += Time.fixedDeltaTime;
-            if (attackTimer >= 1f)
+            if (attackTimer >= 0.5f)
             {
-                GetComponent<Animator>().SetBool("attack", true);
-                GameObject bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
-                bullet.GetComponent<Bullet>().woman = gameObject;
-
+                Instantiate(_bullet, transform.position, Quaternion.identity);
                 GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
                 attackTimer = 0;
             }
         }
 
-        if (isStrangling || isAttacking || isIncapacitate)
+        if (isStrangling || isAttacking || isIncapacitate || !attack)
         {
             attackTimer = 0;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.name == "Player")
+        if (distance < 0)
         {
-            attack = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.name == "Player")
-        {
-            /*Destroy(this.gameObject);*/
+            _rb.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 
@@ -103,6 +99,42 @@ public class WomanBehaviour : MonoBehaviour
                 _player.AddForce(new Vector2(0.5f * 15, 9.81f), ForceMode2D.Impulse);
             }
             isIncapacitate = true;
+        }
+    }
+
+    private void AttackRange()
+    {
+        if ((distance > 1f && distance <= 15f) || (distance < -1f && distance >= -15f))
+        {
+            attack = true;
+        }
+
+        else
+        {
+            attack = false;
+        }
+    }
+
+    private void Animation()
+    {
+        if (attack)
+        {
+            animator.SetBool("Attack", true);
+        }
+
+        if (!attack)
+        {
+            animator.SetBool("Attack", false);
+        }
+
+        if (isAttacking)
+        {
+            animator.SetBool("IsAttacking", true);
+        }
+
+        if (!isAttacking)
+        {
+            animator.SetBool("IsAttacking", false);
         }
     }
 }

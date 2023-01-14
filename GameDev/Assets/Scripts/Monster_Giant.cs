@@ -9,6 +9,9 @@ public class Monster_Giant : MonoBehaviour
     public float jumpForce;
     public float horizontalForce;
     public float impulseForceX;
+    public float recoverTime;
+    public float dropMultiplier;
+    public float attackDistance;
     public Health healthSystem;
 
     public Transform groundCheck;
@@ -18,6 +21,7 @@ public class Monster_Giant : MonoBehaviour
     private bool isGrounded;
     private bool isAttack;
     private bool isJumping;
+    private bool isDrop = false;
     private bool isStop = false;
     private int ignoreFrame = 0;     //number of frame to ignore to avoid multiple detect collision in one real collision
     private float isStopTimer = 0;
@@ -42,6 +46,7 @@ public class Monster_Giant : MonoBehaviour
     public void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(6, 9, false);
     }
     
     public void FixedUpdate()
@@ -51,7 +56,9 @@ public class Monster_Giant : MonoBehaviour
 
     public void Update()
     {
-        if (isGrounded && !isAttack)
+        
+
+        if (isGrounded && !isAttack /*&& (myBody.transform.x - _player.transform.x) <= attackDistance*/)
         {
             anim.SetBool("isSmash", true);
 
@@ -64,7 +71,13 @@ public class Monster_Giant : MonoBehaviour
             //check velocity y to know if dropping down
             anim.SetFloat("speed_y", myBody.velocity.y);
         }
-        
+
+        if (isJumping && !isGrounded && myBody.velocity.y < 0 && !isDrop)
+        {
+            myBody.AddForce(new Vector2(0, -1 * dropMultiplier), ForceMode2D.Impulse);
+            isDrop = true;
+        }
+
         if (isJumping && isGrounded && myBody.velocity.y == 0)
         {
             //Landing
@@ -80,12 +93,15 @@ public class Monster_Giant : MonoBehaviour
 
         if (isStop)
         {
+            Physics2D.IgnoreLayerCollision(6, 9, true);
 
             isStopTimer += Time.deltaTime;
-            if (isStopTimer >= 2f) // change recover time here
+            if (isStopTimer >= recoverTime)
             {
                 isStop = false;
                 GetComponent<BoxCollider2D>().enabled = true;
+                Physics2D.IgnoreLayerCollision(6, 9, false);
+                Debug.Log("Cancel ignore");
                 isStopTimer = 0;
             }
         }
