@@ -6,17 +6,21 @@ using UnityEngine.SceneManagement;
 public class Monster_Giant : MonoBehaviour
 {
 
-    [SerializeField]
-    private float jumpForce = 50f;
-    private bool isGrounded = true;
+    public float jumpForce = 50f;
+    public float horizontalForce;
+    public Health healthSystem;
+
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private BoxCollider2D _col;
     private bool isDamaged = true;
+    private float groundAndTopCheck = 0.2f;
 
     private Rigidbody2D myBody;
     private Animator anim;
     private Transform trans;
-    private Health healthSystem;
+    
 
-    private const string SMASH_ANIMATION = "Smash";
+    private const string SMASH_ANIMATION = "Launch";
 
 
     void Awake()
@@ -24,31 +28,26 @@ public class Monster_Giant : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         trans = GetComponent<Transform>();
-        healthSystem =  GameObject.FindObjectOfType<Health>();
     }
 
     private void Start()
     {
-        StartCoroutine(MonsterGiantJump());
+        
     }
 
-    IEnumerator MonsterGiantJump()
+    public void Update()
     {
-        while (true)
+        if (IsGrounded())
         {
-            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Ground");
+        }
 
-            MonsterJump();
-        } 
-    }
-
-    void Update()
-    {
+        MonsterJump();
         AnimatePlayer();
         DestroyMonster();
     }
 
-    void DestroyMonster()
+    private void DestroyMonster()
     {
         if (trans.position.y < -10)
         {
@@ -56,24 +55,29 @@ public class Monster_Giant : MonoBehaviour
         }
     }
 
-    void AnimatePlayer()
+    private bool IsGrounded()
     {
-        if (isGrounded)
+        RaycastHit2D grounded = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.down, groundAndTopCheck, ground);
+        return grounded.collider != null;
+    }
+
+    private void AnimatePlayer()
+    {
+        /*if (isGrounded)
         {
             anim.SetBool(SMASH_ANIMATION, false);
         }
         else
         {
             anim.SetBool(SMASH_ANIMATION, true);
-        }
+        }*/
     }
 
-    void MonsterJump()
+    private void MonsterJump()
     {
-        if (isGrounded)
+        if (IsGrounded())
         {
-            isGrounded = false;
-            myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            myBody.AddForce(new Vector2(horizontalForce, jumpForce), ForceMode2D.Impulse);
         }
     }
 
@@ -81,16 +85,12 @@ public class Monster_Giant : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) // need collision.gameObject
     {
-        if (collision.gameObject.CompareTag("Ground")) // at here
-        {
-            isGrounded = true;
-        }
 
         if (collision.gameObject.CompareTag("Player"))
         {
             if (isDamaged)
             {
-                StartCoroutine(MonsterDamage());
+                
             }
         }
 
