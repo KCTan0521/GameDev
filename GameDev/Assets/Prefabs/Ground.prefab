@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8817421726040863502}
   - component: {fileID: 7626830205628869258}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 7611200553506074178}
   - component: {fileID: 4182846671700813024}
   - component: {fileID: 736618457940631534}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Tilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}

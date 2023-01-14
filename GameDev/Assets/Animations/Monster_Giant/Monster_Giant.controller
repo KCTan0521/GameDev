@@ -71,7 +71,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Smash
+    m_ConditionEvent: isSmash
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -578316661115867069}
@@ -177,7 +177,7 @@ AnimatorController:
   m_Name: Monster_Giant
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Smash
+  - m_Name: isSmash
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -185,6 +185,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: speed_y
     m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isGround
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -255,7 +261,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Smash
+    m_ConditionEvent: isSmash
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6442245166536432820}
@@ -263,7 +269,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.2
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 1
@@ -279,8 +285,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Smash
+  - m_ConditionMode: 1
+    m_ConditionEvent: isGround
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4554659020862217719}
