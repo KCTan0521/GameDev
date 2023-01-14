@@ -20,7 +20,7 @@ public class GameOverController : MonoBehaviour
     [SerializeField]
     private GameObject bestTimeSurvived;
 
-    private bool isDisplayed = false;
+
     private void Awake()
     {
 

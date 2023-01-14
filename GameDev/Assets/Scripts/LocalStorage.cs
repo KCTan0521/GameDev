@@ -103,8 +103,8 @@ public class LocalStorage : MonoBehaviour
         reader.Close();
 
 
-        string bestDistance = "";
-        string bestTime = "";
+        string bestDistance = null;
+        string bestTime = null;
         if (File.Exists(bestGamePath))
         {
             StreamReader bestGameReader = new StreamReader(bestGamePath, false);
@@ -113,7 +113,7 @@ public class LocalStorage : MonoBehaviour
             bestGameReader.Close();
         }
 
-        string[] data = { distance, time, bestDistance, bestTime};
+        string[] data = { distance, time, bestDistance, bestTime };
         return data;
     }
 

@@ -90,7 +90,7 @@ public class Monster_Giant : MonoBehaviour
         {
             if (isDamaged)
             {
-                
+
             }
         }
 
