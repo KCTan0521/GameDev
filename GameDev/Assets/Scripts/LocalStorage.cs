@@ -116,5 +116,4 @@ public class LocalStorage : MonoBehaviour
         string[] data = { distance, time, bestDistance, bestTime };
         return data;
     }
-
 }

@@ -12,7 +12,6 @@ public class Monster_Giant : MonoBehaviour
 
     [SerializeField] private LayerMask ground;
     [SerializeField] private BoxCollider2D _col;
-    private bool isDamaged = true;
     private float groundAndTopCheck = 0.2f;
 
     private Rigidbody2D myBody;
@@ -80,30 +79,5 @@ public class Monster_Giant : MonoBehaviour
             myBody.AddForce(new Vector2(horizontalForce, jumpForce), ForceMode2D.Impulse);
         }
     }
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision) // need collision.gameObject
-    {
-
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (isDamaged)
-            {
-
-            }
-        }
-
-    }
-
-    IEnumerator MonsterDamage()
-    {
-        isDamaged = false;
-        healthSystem.Damage(.5f);
-        // Debug.Log("hurt");
-        yield return new WaitForSeconds(0.5f);
-        isDamaged = true;
-    }
-
 
 }

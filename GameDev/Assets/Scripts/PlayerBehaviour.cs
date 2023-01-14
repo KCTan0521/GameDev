@@ -297,5 +297,11 @@ public class PlayerBehaviour : MonoBehaviour
             struggleCount = 5;
             struggleDuration = 0f;
         }
+        
+        if (collision.gameObject.tag == "Monster")
+        {
+            gameObject.GetComponent<Health>().Damage(.5f);
+        }
+            
     }
 }

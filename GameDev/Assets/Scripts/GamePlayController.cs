@@ -69,7 +69,9 @@ public class GamePlayController : MonoBehaviour
     }
 
     public void GoBackHomePage()
-    { 
+    {
+        
+        
         SceneManager.LoadScene("MainMenu"); 
     }
 
