@@ -58,11 +58,13 @@ public class GameOverController : MonoBehaviour
 
     public void RestartGame()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         SceneManager.LoadScene("GamePlay");
     }
 
     public void GoBackHomePage()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         SceneManager.LoadScene("MainMenu");
     }
 }

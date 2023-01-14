@@ -41,6 +41,7 @@ public class GamePlayController : MonoBehaviour
         Time.timeScale = 1;
         startTime = Time.time;
         pauseButton.GetComponent<Image>().sprite = pauseUI;
+        FindObjectOfType<AudioManager>().Play("Song2");
     }
 
     void gameSettingStatus(bool status)
@@ -55,6 +56,7 @@ public class GamePlayController : MonoBehaviour
     {
         if (isGamePaused)
         {
+            FindObjectOfType<AudioManager>().Play("Menu - Button1");
             Time.timeScale = 1;
             isGamePaused = false;
             playerBehaviour.enabled = true;
@@ -63,6 +65,7 @@ public class GamePlayController : MonoBehaviour
         }
         else
         {
+            FindObjectOfType<AudioManager>().Play("Menu - Button2");
             Time.timeScale = 0;
             isGamePaused = true;
             playerBehaviour.enabled = false;
@@ -73,13 +76,13 @@ public class GamePlayController : MonoBehaviour
 
     public void RestartGame()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button2");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GoBackHomePage()
     {
-        
-        
+        FindObjectOfType<AudioManager>().Play("Menu - Button2");
         SceneManager.LoadScene("MainMenu"); 
     }
 

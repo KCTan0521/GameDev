@@ -1388,6 +1388,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1524,6 +1525,21 @@ MonoBehaviour:
   _platformRange: {fileID: 5184731905547293713, guid: 0105e2fc072634d40971453cd35c6551, type: 3}
   _platform: {fileID: 6783631872631666770, guid: 4f04cb33ca1e2d248b9209a6a07c5d95, type: 3}
   _singleTile: {fileID: 7566706625443093495, guid: b6b543d34aeba664484158502576faa3, type: 3}
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2a9ca96beb406468e85b7c153eebd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterReference:
+  - {fileID: 6379101704262701869, guid: a6de9034d53872b4c8fd090ed9b7f7fe, type: 3}
+  leftPos: {fileID: 224176805}
 --- !u!1 &569438159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,7 +3267,7 @@ Transform:
   m_Children:
   - {fileID: 147477510}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1976825045
 MonoBehaviour:
@@ -3277,7 +3293,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5198642969672735930, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_LocalScale.x
@@ -3696,7 +3712,7 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
-  - name: Player - Silde
+  - name: Player - Slide
     clip: {fileID: 8300000, guid: c1ecc4ca01f312949b03803b4b88381e, type: 3}
     volume: 0.5
     pitch: 1
