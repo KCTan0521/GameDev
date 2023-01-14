@@ -8,12 +8,24 @@ public class GamePlayController : MonoBehaviour
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
     private GameObject[] gameSetting;
-    
+    private float startTime;
+
+    private void OnEnable()
+    {
+        Health.echoGameOver += gameOver;
+    }
+
+    private void OnDisable()
+    {
+        Health.echoGameOver -= gameOver;
+    }
+
+
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-
+        
     }
 
     void Start()
@@ -22,6 +34,7 @@ public class GamePlayController : MonoBehaviour
         playerBehaviour.enabled = true;
         isGamePaused = false;
         Time.timeScale = 1;
+        startTime = Time.time;
     }
 
     void gameSettingStatus(bool status)
@@ -57,7 +70,14 @@ public class GamePlayController : MonoBehaviour
 
     public void GoBackHomePage()
     {
-        SceneManager.LoadScene("MainMenu");
+        
+        
+        SceneManager.LoadScene("MainMenu"); 
     }
 
+    public void gameOver()
+    {
+        LocalStorage.WriteRecord(playerBehaviour.transform.position.x, Time.time - startTime);
+        SceneManager.LoadScene("GameOver");
+    }
 }

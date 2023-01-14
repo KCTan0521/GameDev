@@ -15,6 +15,17 @@ public class Health : MonoBehaviour
     public Animator animator;
     private float timePassed;
 
+    public delegate void gameOver();
+    public static event gameOver echoGameOver;
+
+    void executeEchoGameOver()
+    {
+        if (echoGameOver != null)
+        {
+            echoGameOver();
+        }
+    }
+
     private void Update()
     {
         HealthRegen();
@@ -37,7 +48,7 @@ public class Health : MonoBehaviour
         {
             Debug.Log("Game Over");
             FindObjectOfType<AudioManager>().Play("Player - Death"); //doesnt work
-            SceneManager.LoadScene("GameOver");
+            executeEchoGameOver();
         }
 
         else if (health < MAX_HEALTH)
