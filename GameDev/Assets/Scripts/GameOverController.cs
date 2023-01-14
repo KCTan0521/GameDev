@@ -21,25 +21,19 @@ public class GameOverController : MonoBehaviour
     }
     private void Start()
     {
+        string[] data;
+        data = LocalStorage.ReadRecord();
+        textDisplay(data[0], data[1]);
         /*
         distanceTravelled.GetComponent<TextMeshProUGUI>().text += playerBehaviour.GetComponent<Transform>().position.x;
         timeSurvived.GetComponent<TextMeshProUGUI>().text += "88s";*/
     }
 
-    private void OnEnable()
-    {
-        GamePlayController.gameOverData += textDisplay;
-    }
 
-    private void OnDisable()
-    {
-        GamePlayController.gameOverData -= textDisplay;
-    }
-
-    void textDisplay(float distance, float time) {
+    void textDisplay(string distance, string time) {
         Debug.Log("Game Over Scene func call");
-        distanceTravelled.GetComponent<TextMeshProUGUI>().text += string.Format("{0:N2}", distance) + "m";
-        timeSurvived.GetComponent<TextMeshProUGUI>().text += string.Format("{0:N2}", time) + "s";
+        distanceTravelled.GetComponent<TextMeshProUGUI>().text += distance + "m";
+        timeSurvived.GetComponent<TextMeshProUGUI>().text += time + "s";
     }
 
 

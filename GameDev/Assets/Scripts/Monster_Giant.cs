@@ -100,7 +100,7 @@ public class Monster_Giant : MonoBehaviour
     {
         isDamaged = false;
         healthSystem.Damage(.5f);
-        Debug.Log("hurt");
+        // Debug.Log("hurt");
         yield return new WaitForSeconds(0.5f);
         isDamaged = true;
     }

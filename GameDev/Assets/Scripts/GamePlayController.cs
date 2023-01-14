@@ -8,25 +8,23 @@ public class GamePlayController : MonoBehaviour
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
     private GameObject[] gameSetting;
+    private float startTime;
 
-    public delegate void gameOver(float distanceTraveller, float timeSurvived);
-    public static event gameOver gameOverData;
+    private void OnEnable()
+    {
+        Health.echoGameOver += gameOver;
+    }
+
+    private void OnDisable()
+    {
+        Health.echoGameOver -= gameOver;
+    }
+
 
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-        /*
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }*/
-        DontDestroyOnLoad(gameObject);
         
     }
 
@@ -36,6 +34,7 @@ public class GamePlayController : MonoBehaviour
         playerBehaviour.enabled = true;
         isGamePaused = false;
         Time.timeScale = 1;
+        startTime = Time.time;
     }
 
     void gameSettingStatus(bool status)
@@ -70,23 +69,13 @@ public class GamePlayController : MonoBehaviour
     }
 
     public void GoBackHomePage()
-    {
-        
-        SceneManager.LoadScene("GameOver"); 
+    { 
+        SceneManager.LoadScene("MainMenu"); 
     }
 
-
-    void executeGameOverData()
+    public void gameOver()
     {
-        Debug.Log("hello Im");
-        if (gameOverData != null)
-        {
-            gameOverData(playerBehaviour.transform.position.x, Time.realtimeSinceStartup);
-        }
-    }
-
-    private void Update()
-    {
-        executeGameOverData();
+        LocalStorage.WriteRecord(playerBehaviour.transform.position.x, Time.time - startTime);
+        SceneManager.LoadScene("GameOver");
     }
 }
