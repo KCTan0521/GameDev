@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MuteButton : MonoBehaviour
 {
+
     private static bool isMute = false;
 
     public GameObject soundButton;

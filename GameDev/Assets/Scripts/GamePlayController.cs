@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GamePlayController : MonoBehaviour
 {
+    public GameObject pauseButton;
+    public Sprite unPauseUI;
+    public Sprite pauseUI;
+
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
     private GameObject[] gameSetting;
@@ -35,6 +40,7 @@ public class GamePlayController : MonoBehaviour
         isGamePaused = false;
         Time.timeScale = 1;
         startTime = Time.time;
+        pauseButton.GetComponent<Image>().sprite = pauseUI;
     }
 
     void gameSettingStatus(bool status)
@@ -53,6 +59,7 @@ public class GamePlayController : MonoBehaviour
             isGamePaused = false;
             playerBehaviour.enabled = true;
             gameSettingStatus(false);
+            pauseButton.GetComponent<Image>().sprite = pauseUI;
         }
         else
         {
@@ -60,6 +67,7 @@ public class GamePlayController : MonoBehaviour
             isGamePaused = true;
             playerBehaviour.enabled = false;
             gameSettingStatus(true);
+            pauseButton.GetComponent<Image>().sprite = unPauseUI;
         }
     }
 
