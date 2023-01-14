@@ -14,6 +14,12 @@ public class GameOverController : MonoBehaviour
     [SerializeField]
     private GameObject timeSurvived;
 
+    [SerializeField]
+    private GameObject bestDistanceTravelled;
+
+    [SerializeField]
+    private GameObject bestTimeSurvived;
+
     private bool isDisplayed = false;
     private void Awake()
     {
@@ -23,17 +29,23 @@ public class GameOverController : MonoBehaviour
     {
         string[] data;
         data = LocalStorage.ReadRecord();
-        textDisplay(data[0], data[1]);
-        /*
-        distanceTravelled.GetComponent<TextMeshProUGUI>().text += playerBehaviour.GetComponent<Transform>().position.x;
-        timeSurvived.GetComponent<TextMeshProUGUI>().text += "88s";*/
+        textDisplay(data[0], data[1], data[2], data[3]);
+        
     }
 
 
-    void textDisplay(string distance, string time) {
-        Debug.Log("Game Over Scene func call");
-        distanceTravelled.GetComponent<TextMeshProUGUI>().text += distance + "m";
-        timeSurvived.GetComponent<TextMeshProUGUI>().text += time + "s";
+    void textDisplay(string distance, string time, string bestDistance, string bestTime) {
+        distanceTravelled.GetComponent<TextMeshProUGUI>().text = "Distance : " +  distance + "m";
+        timeSurvived.GetComponent<TextMeshProUGUI>().text = "Time Survived : " + time + "s";
+
+        if (bestDistance != "")
+        {
+            bestDistanceTravelled.GetComponent<TextMeshProUGUI>().text = "Best Distance : " + bestDistance + "m";
+        }
+        if (bestTime != "")
+        {
+            bestTimeSurvived.GetComponent<TextMeshProUGUI>().text = "Best Time Survived : " + bestTime + "s";
+        }
     }
 
 
