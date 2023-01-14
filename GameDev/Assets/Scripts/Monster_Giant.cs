@@ -51,13 +51,15 @@ public class Monster_Giant : MonoBehaviour
         if (isGrounded && !isAttack)
         {
             anim.SetBool("isSmash", true);
+
+            if(ignoreFrame <= 0)
+                MonsterJump();
         }
 
         if(isJumping)
         {
             //check velocity y to know if dropping down
             anim.SetFloat("speed_y", myBody.velocity.y);
-            Debug.Log(myBody.velocity.y);
         }
         
         if (isJumping && isGrounded && ignoreFrame <= 0)
@@ -65,7 +67,6 @@ public class Monster_Giant : MonoBehaviour
             //Landing
             anim.SetBool("isSmash", false);
             anim.SetBool("isGround", true);
-            Debug.Log("Smashh");
         }
 
         DestroyMonster();
@@ -85,7 +86,6 @@ public class Monster_Giant : MonoBehaviour
     {
         //Launching
         myBody.AddForce(new Vector2(horizontalForce, jumpForce), ForceMode2D.Impulse);
-        Debug.Log("Launch");
 
         isJumping = true;
         isAttack = true;
@@ -102,6 +102,17 @@ public class Monster_Giant : MonoBehaviour
             {
                 
             }
+        }
+
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            Destroy(collision.gameObject);
         }
 
     }
