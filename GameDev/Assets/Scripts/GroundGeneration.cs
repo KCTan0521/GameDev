@@ -20,7 +20,7 @@ public class GroundGeneration : MonoBehaviour
         orthoSize = playerCam.m_Lens.OrthographicSize;
         aspectRatio = GetComponent<Camera>().aspect;
         leftScreen = orthoSize * aspectRatio;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             GameObject newGround = Instantiate(_ground, new Vector2(i * 20f, 0f), Quaternion.identity);
             grounds.Add(newGround);
@@ -31,7 +31,7 @@ public class GroundGeneration : MonoBehaviour
     void Update()
     {
         camEnd = GetComponent<Transform>().position.x - leftScreen;
-        leftMostGround = grounds[0].transform.position.x + 20f;
+        leftMostGround = grounds[0].transform.position.x + 40f;
         if (camEnd > leftMostGround)
         {
             Destroy(grounds[0]);

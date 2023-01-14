@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &21056808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21056810}
+  - component: {fileID: 21056811}
+  m_Layer: 0
+  m_Name: MuteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &21056810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21056808}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1805388, y: 0.016578048, z: 0.018984012}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &21056811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21056808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a8b49e095565b469af048f3d90abaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundButton: {fileID: 1945955182}
+  muteUI: {fileID: 616542974, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
+  unmuteUI: {fileID: -1940609140, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
 --- !u!1 &457128021
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2080474314, guid: c21df18ee693f2844a91e149e689203b, type: 3}
+  m_Sprite: {fileID: -2018544702, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -642,8 +689,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1945955183}
   - component: {fileID: 1945955186}
-  - component: {fileID: 1945955185}
   - component: {fileID: 1945955184}
+  - component: {fileID: 1945955187}
   m_Layer: 5
   m_Name: Sound Button
   m_TagString: Untagged
@@ -666,10 +713,10 @@ RectTransform:
   m_Father: {fileID: 1790709568}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -377, y: 183}
-  m_SizeDelta: {x: 43.09, y: 42.99}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 107, y: -76.36099}
+  m_SizeDelta: {x: 43.089966, y: 42.98999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945955184
 MonoBehaviour:
@@ -711,11 +758,31 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1945955185}
+  m_TargetGraphic: {fileID: 1945955187}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1945955185
+      m_Calls:
+      - m_Target: {fileID: 21056811}
+        m_TargetAssemblyTypeName: MuteButton, Assembly-CSharp
+        m_MethodName: OnButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!222 &1945955186
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945955182}
+  m_CullTransparentMesh: 1
+--- !u!114 &1945955187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -735,9 +802,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1272770465, guid: c21df18ee693f2844a91e149e689203b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -745,14 +812,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &1945955186
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945955182}
-  m_CullTransparentMesh: 1
 --- !u!1 &2069436657
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,10 +884,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 0.3207547, g: 0.2827269, b: 0.08977095, a: 1}
-    topRight: {r: 0.16186062, g: 0.22008826, b: 0.8301887, a: 1}
-    bottomLeft: {r: 0.6886792, g: 0.08229493, b: 0.6840688, a: 1}
-    bottomRight: {r: 0.5019608, g: 0.1240951, b: 0.1240951, a: 1}
+    topLeft: {r: 0.5943396, g: 0.30580673, b: 0.2938056, a: 1}
+    topRight: {r: 0.6792453, g: 0.073050864, b: 0.08582714, a: 1}
+    bottomLeft: {r: 0.0754717, g: 0.053684585, b: 0.055864044, a: 1}
+    bottomRight: {r: 0.5377358, g: 0.28104305, b: 0.28104305, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
