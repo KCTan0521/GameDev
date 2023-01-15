@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3161959046810739410
+--- !u!1 &2768009768655147910
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7126859401152123746}
+  - component: {fileID: 8029860847602868790}
+  - component: {fileID: 975164799790674262}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -16,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7126859401152123746
+--- !u!4 &8029860847602868790
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3161959046810739410}
+  m_GameObject: {fileID: 2768009768655147910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.30178237, y: 4.378998, z: 1.4727336}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,3 +32,178 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &975164799790674262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2768009768655147910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4a218ed9c8a1a479e43b8a109042a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Song1
+    clip: {fileID: 8300000, guid: 4300ef09b2499ee498f5d7ba0f849a6b, type: 3}
+    volume: 0.35
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Song2
+    clip: {fileID: 8300000, guid: a4f87dd845c61334ba337877bba24971, type: 3}
+    volume: 0.35
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Ambience - Forest
+    clip: {fileID: 8300000, guid: 9cb9a28c610ee144a812ef548b47a500, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Land
+    clip: {fileID: 8300000, guid: 46de05bb91ccbb84fbcf836ec0fb5381, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Jump
+    clip: {fileID: 8300000, guid: 390d41bf4c144fb4fad52642617886fa, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Growl
+    clip: {fileID: 8300000, guid: 8f40666e3092d7145b7e43f3d77edc3b, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Stomp1
+    clip: {fileID: 8300000, guid: ec0977b735d52774a85883ea44431a7e, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Stomp2
+    clip: {fileID: 8300000, guid: b0e7a31645ab31c40be5a22f3a1e9692, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Stomp3
+    clip: {fileID: 8300000, guid: 45a10abe96dac0845b69113233a67252, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Stomp4
+    clip: {fileID: 8300000, guid: 9523f808bca57ad46861beadd4de6dee, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Stomp5
+    clip: {fileID: 8300000, guid: cf7eda675763eeb4eb4d8acd070e7ec3, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Crush1
+    clip: {fileID: 8300000, guid: 8125f5d894a39c144b7ba99d013a61bd, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Crush2
+    clip: {fileID: 8300000, guid: 19d52a2f89ef9354a9b50aa25b8c4d0d, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Crush3
+    clip: {fileID: 8300000, guid: c6abf9032758fc54e9b792e7788dd29e, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Giant - Crush4
+    clip: {fileID: 8300000, guid: c063400d45def224090f410007bdcb53, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Hair - Release
+    clip: {fileID: 8300000, guid: 711c67d2fe058b14aa98624d9ebb9616, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Hair - Tighten
+    clip: {fileID: 8300000, guid: dc92bb7336db65e4081cdbcb4f3d31cd, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Hair - Snap
+    clip: {fileID: 8300000, guid: cf60709d4cafb894fb7430844089b033, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Jump
+    clip: {fileID: 8300000, guid: bb5c89ef37d9897449137b3172e56378, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Land
+    clip: {fileID: 8300000, guid: 4b8af2f3eba1fa849abd801ed5eeb371, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Menu - Button1
+    clip: {fileID: 8300000, guid: d9179604829ad8e4cac4b66f8806021a, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Menu - Button2
+    clip: {fileID: 8300000, guid: 123d169880da21348a6bee7176174937, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Hurt
+    clip: {fileID: 8300000, guid: 4169c69e0358edc4d83bd7ce63bd2bb2, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Death
+    clip: {fileID: 8300000, guid: 3deb8e2fdd8023c40a4c47eb2cd78c75, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Slide
+    clip: {fileID: 8300000, guid: c1ecc4ca01f312949b03803b4b88381e, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Dash
+    clip: {fileID: 8300000, guid: 1b0f4b9db28a4f34fa51af1465771092, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - Run
+    clip: {fileID: 8300000, guid: 3e1735b5a87683542b2fc4a799445fb7, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
