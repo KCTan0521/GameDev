@@ -45,8 +45,8 @@ public class Monster_Giant : MonoBehaviour
 
     public void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(6, 9, false);
+        //_player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        //Physics2D.IgnoreLayerCollision(6, 9, false);
     }
     
     public void FixedUpdate()

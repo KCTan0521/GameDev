@@ -129,6 +129,8 @@ public class PlayerBehaviour : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
             {
+                if (!isSliding)
+                    FindObjectOfType<AudioManager>().Play("Player - Slide");
                 isSliding = true;
             }
 
@@ -270,7 +272,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (slideDuration > 0 && !canJump && !isStrangled)
         {
-            FindObjectOfType<AudioManager>().Play("Player - Slide");
             standing.enabled = false;
             sliding.enabled = true;
             slideDuration -= Time.fixedDeltaTime;
