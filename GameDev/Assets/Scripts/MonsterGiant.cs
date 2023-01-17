@@ -62,28 +62,26 @@ public class MonsterGiant : MonoBehaviour
     public void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        float distancePlayerX = (myBody.transform.position.x - _player.transform.position.x);
 
         if (isGrounded && !isAttack)
         {
-            
 
             if (!isLaunch)
             {
                 //launch once and avoid jumping again
 
-                if ((myBody.transform.position.x - _player.transform.position.x) <= longJumpTriggerDistance && !jumpType)
+                if ((distancePlayerX <= longJumpTriggerDistance) && !jumpType)
                 {
-                    Debug.Log("long");
+                    Debug.Log("long " + distancePlayerX + " " + longJumpTriggerDistance + " " + (distancePlayerX <= longJumpTriggerDistance));
                     MonsterJump(false);
                 }
-                else if ((myBody.transform.position.x - _player.transform.position.x) <= highJumpTriggerDistance && jumpType)
+                else if (distancePlayerX <= highJumpTriggerDistance && jumpType)
                 {
                     Debug.Log("highjump");
                     MonsterJump();
                 }
-                    
 
-                isLaunch = true;
             }
 
         }
@@ -114,8 +112,9 @@ public class MonsterGiant : MonoBehaviour
 
     public void Update()
     {
+       
 
-        if(isJumping)
+        if (isJumping)
         {
             //check velocity y to know if dropping down
             anim.SetFloat("speed_y", myBody.velocity.y);
@@ -174,6 +173,7 @@ public class MonsterGiant : MonoBehaviour
 
         isJumping = true;
         isAttack = true;
+        isLaunch = true;
     }
 
 
