@@ -13,12 +13,12 @@ public class MonsterGiant : MonoBehaviour
     public float longJumpX;
     public float longJumpY;
     public float longJumpTriggerDistance;
+    public float longJumpFlipDistance;
 
     public float impulseForceX;
     public float recoverTime;
     public float dropMultiplier;
     public float fictionMultiplier;
-    public float attackDistance;
     public Health healthSystem;
 
     public float groundCheckRadius;
@@ -52,6 +52,9 @@ public class MonsterGiant : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         isAttack = false;
         jumpType = getJumpType();
+
+        if(!jumpType)
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
     }
 
     public void Start()
@@ -70,10 +73,11 @@ public class MonsterGiant : MonoBehaviour
             if (!isLaunch)
             {
                 //launch once and avoid jumping again
+                if (((distancePlayerX - longJumpFlipDistance) <= longJumpTriggerDistance) && !jumpType)
+                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
 
                 if ((distancePlayerX <= longJumpTriggerDistance) && !jumpType)
-                {
-                    Debug.Log("long " + distancePlayerX + " " + longJumpTriggerDistance + " " + (distancePlayerX <= longJumpTriggerDistance));
+                { 
                     MonsterJump(false);
                 }
                 else if (distancePlayerX <= highJumpTriggerDistance && jumpType)

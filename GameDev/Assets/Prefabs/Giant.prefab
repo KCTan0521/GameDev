@@ -216,6 +216,7 @@ MonoBehaviour:
   longJumpX: -1320
   longJumpY: 530
   longJumpTriggerDistance: 11.26
+  longJumpFlipDistance: 10
   impulseForceX: 8
   recoverTime: 3.5
   dropMultiplier: 1000
