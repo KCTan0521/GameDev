@@ -33,6 +33,9 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isPulled;
     private bool isPulling;
 
+    private bool isJumpBoost = false;
+    private float jumpBoostDuration = 0;
+
     private bool jumpButton;
     private bool dashButton;
     private bool slideButton;
@@ -148,6 +151,8 @@ public class PlayerBehaviour : MonoBehaviour
                 }
             }
         }
+
+        StopJumpBoost();
     }
 
     void FixedUpdate()
@@ -304,5 +309,27 @@ public class PlayerBehaviour : MonoBehaviour
             struggleDuration = 0f;
         }
             
+    }
+
+    public void JumpBoost(float duration)
+    {
+        isJumpBoost = true;
+        jumpBoostDuration = duration;
+        jumpForce *= (float)1.5;
+    }
+
+    private void StopJumpBoost()
+    {
+        if (isJumpBoost)
+        {
+            jumpBoostDuration -= Time.deltaTime;
+            Debug.Log(jumpBoostDuration);
+
+            if (jumpBoostDuration <= 0)
+            {
+                isJumpBoost = false;
+                jumpForce /= (float)1.5;
+            }
+        }
     }
 }
