@@ -82,7 +82,6 @@ public class MonsterGiant : MonoBehaviour
                 }
                 else if (distancePlayerX <= highJumpTriggerDistance && jumpType)
                 {
-                    Debug.Log("highjump");
                     MonsterJump();
                 }
 
@@ -106,7 +105,6 @@ public class MonsterGiant : MonoBehaviour
         if (isJumping && isGrounded && myBody.velocity.y == 0)
         {
             //Landing
-            Debug.Log("land");
             anim.SetBool("isSmash", false);
             anim.SetBool("isGround", true);
 
@@ -173,7 +171,6 @@ public class MonsterGiant : MonoBehaviour
         }
 
         anim.SetBool("isSmash", true);
-        Debug.Log("Jump");
 
         isJumping = true;
         isAttack = true;
