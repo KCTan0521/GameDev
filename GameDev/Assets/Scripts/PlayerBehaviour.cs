@@ -35,6 +35,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private bool isJumpBoost = false;
     private float jumpBoostDuration = 0;
+    private bool isHealthRegen = false;
+    private float healthRegenDuration = 0;
+    private float addHealthDuration = 0;
 
     private bool jumpButton;
     private bool dashButton;
@@ -153,6 +156,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         StopJumpBoost();
+        StopHealthRegen();
     }
 
     void FixedUpdate()
@@ -323,7 +327,6 @@ public class PlayerBehaviour : MonoBehaviour
         if (isJumpBoost)
         {
             jumpBoostDuration -= Time.deltaTime;
-            Debug.Log(jumpBoostDuration);
 
             if (jumpBoostDuration <= 0)
             {
@@ -332,4 +335,35 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
     }
+
+    public void HealthRegen(float duration)
+    {
+        isHealthRegen = true;
+        healthRegenDuration = duration;
+    }
+
+
+    private void StopHealthRegen()
+    {
+        if (isHealthRegen)
+        {
+
+            healthRegenDuration -= Time.deltaTime;
+            addHealthDuration += Time.deltaTime;
+
+
+            if (addHealthDuration >= 4)
+            {
+                gameObject.GetComponent<Health>().Regen();
+                addHealthDuration = 0;
+                Debug.Log("add health");
+            }
+
+            if (healthRegenDuration <= 0)
+            {
+                isHealthRegen = false;
+            }
+        }
+    }
+
 }

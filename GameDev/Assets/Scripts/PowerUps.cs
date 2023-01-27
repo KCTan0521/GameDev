@@ -8,7 +8,13 @@ public class PowerUps : MonoBehaviour
 
     private GameObject _player;
     public PowerUpType powerUpType;
+    private Transform visual;
 
+    private void Start()
+    {
+        visual = gameObject.transform;
+        StartCoroutine(FloatingAnimation());
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -25,9 +31,21 @@ public class PowerUps : MonoBehaviour
             if (powerUpType == PowerUpType.JumpBoost)
                 _player.GetComponent<PlayerBehaviour>().JumpBoost(15);
 
+            if (powerUpType == PowerUpType.HealthRegen)
+                _player.GetComponent<PlayerBehaviour>().HealthRegen(15);
+
             Destroy(gameObject);
         }
 
+    }
+
+    private IEnumerator FloatingAnimation()
+    {
+        while (true)
+        {
+            visual.position = new Vector2(visual.position.x, (visual.position.y + Mathf.Sin(Time.time * 5) * 0.005f));
+            yield return null;
+        }
     }
 }
 

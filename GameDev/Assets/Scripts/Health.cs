@@ -42,6 +42,12 @@ public class Health : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("Player - Hurt");
     }
 
+    public void Regen()
+    {
+        if (health < MAX_HEALTH)
+            health += HEALTH_REGEN;
+    }
+
     public void HealthRegen()
     {
         if (health <= 0)
@@ -51,7 +57,7 @@ public class Health : MonoBehaviour
             executeEchoGameOver();
         }
 
-        else if (health < MAX_HEALTH)
+        /*else if (health < MAX_HEALTH)
         {
             timePassed += Time.deltaTime;
             if (timePassed >= REGEN_TIME)
@@ -59,7 +65,7 @@ public class Health : MonoBehaviour
                 health += HEALTH_REGEN;
                 timePassed = 0;
             }
-        }
+        }*/
     }
 
     public void PalpitatingAnimation()
