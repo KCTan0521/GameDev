@@ -1443,7 +1443,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterReference:
   - {fileID: 6379101704262701869, guid: a6de9034d53872b4c8fd090ed9b7f7fe, type: 3}
+  - {fileID: 685831052822321996, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
   leftPos: {fileID: 224176805}
+  distanceX: 20
+  monsterSpawnLimit: 3
 --- !u!1 &569438159
 GameObject:
   m_ObjectHideFlags: 0
