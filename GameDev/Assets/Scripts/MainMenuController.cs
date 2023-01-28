@@ -15,4 +15,14 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("GamePlay");
     }
 
+    public void OpenCreditPage()
+    {
+        SceneManager.LoadScene("CreditPage");
+    }
+
+    public void OpenTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
 }
