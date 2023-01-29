@@ -22,6 +22,13 @@ public class PowerUps : MonoBehaviour
         _player = GameObject.Find("Player");
     }
 
+    private void Update()
+    {
+        if((_player.transform.position.x - gameObject.transform.position.x) > 30)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
