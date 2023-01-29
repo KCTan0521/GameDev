@@ -34,7 +34,7 @@ public class MonsterController : MonoBehaviour
         camEnd = transform.position.x + leftScreen;
         if (spawnX < camEnd)
         {
-            MobSpawn();
+            MobSpawn(_wahmen);
         }
     }
 
@@ -57,7 +57,7 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    private void MobSpawn()
+    private void MobSpawn(GameObject monster)
     {
         PlatformFinder();
         int[] upOrDown = { 1, 2 };
@@ -65,15 +65,18 @@ public class MonsterController : MonoBehaviour
         int randIndex = rnd.Next(upOrDown.Length);
         int rand = upOrDown[randIndex];
         spawnX += 40f;
-        
-        if (rand == 1 || spawnY == 0)
-        {
-            Instantiate(_wahmen, new Vector2(spawnX, 1f), Quaternion.identity);
-        }
 
-        else
+        if (monster == _wahmen)
         {
-            Instantiate(_wahmen, new Vector2(spawnX, spawnY), Quaternion.identity);
+            if (rand == 1 || spawnY < 5)
+            {
+                Instantiate(_wahmen, new Vector2(spawnX, 1f), Quaternion.identity);
+            }
+
+            else
+            {
+                Instantiate(_wahmen, new Vector2(spawnX, spawnY), Quaternion.identity);
+            }
         }
     }
 }
