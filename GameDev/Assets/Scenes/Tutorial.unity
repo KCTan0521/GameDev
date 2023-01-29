@@ -236,6 +236,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 6651491f369fbc24bb752280cff5475c, type: 3}
   - {fileID: 2800000, guid: 491ca161f063da14596428475d62dd23, type: 3}
   - {fileID: 2800000, guid: 0912c3a4bfbb7744d800e87b8242c34a, type: 3}
+  - {fileID: 2800000, guid: 5917a89a4a374fd408a1089e05d0e2d1, type: 3}
+  - {fileID: 2800000, guid: 8dd032d05ca550c4192a5dd0b92f0a7d, type: 3}
   - {fileID: 2800000, guid: 3ea715e538bcbf24eb63dc544c508ec2, type: 3}
   - {fileID: 2800000, guid: 2a6b54ff7edd86b49833a04e61fd2fa5, type: 3}
   - {fileID: 2800000, guid: 44d86af141622fb429da73b26dcb0f01, type: 3}
@@ -246,6 +248,9 @@ MonoBehaviour:
   - Jump to Escape from Top of Monster
   - Slide to Escape from Bottom of Monster
   - Dash to Move Away from Monster
+  - Jump Over the Attack from Monster
+  - If Monster tangled Player Before<br>It Tangles Player Again<br>Keep Dashing to
+    Escape
   - The Hearts are Health<br>The Green Bar is Stamina
   - Collect the Power ups<br>They Take Effects on the Player
   - Survived as Long as You can<br>Travel as Far as You can
