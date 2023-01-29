@@ -20,7 +20,7 @@ public class MonsterController : MonoBehaviour
     private float spawnY;
     private float lastWahmenX;
     private float mobCount;
-    public List<GameObject> platforms = new List<GameObject>();
+    private List<GameObject> platforms = new List<GameObject>();
 
     private void Start()
     {
