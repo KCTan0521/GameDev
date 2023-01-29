@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         isReflected = false;
         hitTarget = false;
         timer = 0f;
+        Physics2D.IgnoreLayerCollision(6, 10, false);
     }
 
     private void Update()
@@ -57,6 +58,8 @@ public class Bullet : MonoBehaviour
     {
         if (isReflected)
         {
+            Physics2D.IgnoreLayerCollision(6, 10, true);
+
             if (initialTarget.x < initialPos.x)
             {
                 Fire(false);
