@@ -1,82 +1,100 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
-using System.Linq;
 
 public class MonsterController : MonoBehaviour
 {
-    [SerializeField] private GameObject _wahmen;
-    private Rigidbody2D _player;
-    private CinemachineVirtualCamera playerCam;
-    private float leftScreen;
-    private float orthoSize;
-    private float aspectRatio;
-    private float camEnd;
-    private float spawnX;
-    private float targettedX;
-    private float spawnY;
-    private float lastGiantX;
-    private float lastWahmenX;
-    public List<GameObject> platforms = new List<GameObject>();
 
-    private void Start()
+    [SerializeField]
+    private GameObject[] monsterReference;
+
+    private GameObject spawnedMonster;
+    private List<GameObject> spawnedMonsterList;
+
+    [SerializeField]
+    private Transform leftPos;
+    public float distanceX;
+    public int monsterSpawnLimit;
+    public float distanceBetweenWahmen;
+    public float distanceBetweenGiant;
+
+    private int randomIndex;
+
+
+    // Start is called before the first frame update
+    void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-        playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
-        orthoSize = playerCam.m_Lens.OrthographicSize;
-        aspectRatio = GetComponent<Camera>().aspect;
-        leftScreen = orthoSize * aspectRatio;
-    }  
+        spawnedMonsterList = new List<GameObject>();
+        StartCoroutine(SpawnMonster());
+    }
 
     private void Update()
     {
-        camEnd = transform.position.x + leftScreen;
-        if (spawnX < camEnd)
-        {
-            MobSpawn(_wahmen);
-        }
+        spawnedMonsterList.RemoveAll(monster => monster == null);
     }
 
-    private void PlatformFinder()
+    IEnumerator SpawnMonster()
     {
-        platforms = GetComponent<PlatformGeneration>().platforms;
-
-        foreach (GameObject platform in platforms)
+        while (true)
         {
-            if (platform.transform.position.x == spawnX + 40f)
+            // set the time gap for monster generation to 1 - 3 seconds
+            yield return new WaitForSeconds(Random.Range(1, 3));
+
+            if (spawnedMonsterList.Count <= monsterSpawnLimit)
             {
-                spawnY = platform.transform.position.y + 2f;
-                break;
+                // to randonmly generate the monster
+                randomIndex = Random.Range(0, monsterReference.Length);
+
+                //check woman if it is certain tiles apart from last one
+                if (monsterReference[randomIndex].tag == "Wahmen")
+                {
+                    bool canSpawnWoman = true;
+
+                    foreach(GameObject monster in spawnedMonsterList)
+                    {
+                        float newSpawnPos = leftPos.position.x + distanceX;
+
+                        if (monster.tag == "Wahmen" && newSpawnPos < (monster.transform.position.x + distanceBetweenWahmen))
+                        {
+                            canSpawnWoman = false;
+                            break;
+                        }
+                            
+                    }
+
+                    if(!canSpawnWoman)
+                        continue;
+                }
+
+                //check woman if it is certain tiles apart from last one
+                if (monsterReference[randomIndex].tag == "Giant")
+                {
+                    bool canSpawnGiant = true;
+
+                    foreach (GameObject monster in spawnedMonsterList)
+                    {
+                        float newSpawnPos = leftPos.position.x + distanceX;
+
+                        if (monster.tag == "Monster" && newSpawnPos < (monster.transform.position.x + distanceBetweenGiant))
+                        {
+                            canSpawnGiant = false;
+                            break;
+                        }
+
+                    }
+
+                    if (!canSpawnGiant)
+                        continue;
+                }
+
+                spawnedMonster = Instantiate(monsterReference[randomIndex]);
+                spawnedMonsterList.Add(spawnedMonster);
+
+                // spawn the monster with on the ground with a certain distance away
+                spawnedMonster.transform.position = new Vector2(leftPos.position.x + distanceX, spawnedMonster.GetComponent<SpriteRenderer>().bounds.size.y / 2);
             }
 
-            else
-            {
-                spawnY = 0f;
-            }
-        }
+        } // while loop
     }
 
-    private void MobSpawn(GameObject monster)
-    {
-        PlatformFinder();
-        int[] upOrDown = { 1, 2 };
-        System.Random rnd = new System.Random();
-        int randIndex = rnd.Next(upOrDown.Length);
-        int rand = upOrDown[randIndex];
-        spawnX += 40f;
-
-        if (monster == _wahmen)
-        {
-            if (rand == 1 || spawnY < 5)
-            {
-                Instantiate(_wahmen, new Vector2(spawnX, 1f), Quaternion.identity);
-            }
-
-            else
-            {
-                Instantiate(_wahmen, new Vector2(spawnX, spawnY), Quaternion.identity);
-            }
-        }
-    }
 }

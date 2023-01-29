@@ -52,6 +52,8 @@ public class WomanBehaviour : MonoBehaviour
         {
             isIncapacitate = true;
         }
+
+        DestroyMonster();
     }
 
     private void FixedUpdate()
@@ -135,6 +137,14 @@ public class WomanBehaviour : MonoBehaviour
         if (!isAttacking)
         {
             animator.SetBool("IsAttacking", false);
+        }
+    }
+
+    private void DestroyMonster()
+    {
+        if ((transform.position.x - _player.transform.position.x) < -30)
+        {
+            Destroy(gameObject);
         }
     }
 }

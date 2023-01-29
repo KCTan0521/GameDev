@@ -210,14 +210,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f034e8dda2a47d94b92160c5cdfae835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 1150
-  horizontalForce: -300
+  highJumpXTile: 6
+  highJumpY: 1169
+  highJumpTriggerDistance: 22
+  longJumpX: -1320
+  longJumpY: 530
+  longJumpTriggerDistance: 11.26
+  longJumpFlipDistance: 10
   impulseForceX: 8
   recoverTime: 3.5
   dropMultiplier: 1000
+  fictionMultiplier: 0.01
+  attackDistance: 0
   healthSystem: {fileID: 0}
+  groundCheckRadius: 0.3
   groundCheck: {fileID: 6731919470081640686}
-  groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

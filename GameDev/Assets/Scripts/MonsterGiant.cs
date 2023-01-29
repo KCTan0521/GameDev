@@ -1,33 +1,42 @@
+﻿using static System.Random;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Monster_Giant : MonoBehaviour
+public class MonsterGiant : MonoBehaviour
 {
 
-    public float jumpForce;
-    public float horizontalForce;
+    public float highJumpXTile;
+    public float highJumpY;
+    public float highJumpTriggerDistance;
+    public float longJumpX;
+    public float longJumpY;
+    public float longJumpTriggerDistance;
+    public float longJumpFlipDistance;
+
     public float impulseForceX;
     public float recoverTime;
     public float dropMultiplier;
-    public float attackDistance;
+    public float fictionMultiplier;
     public Health healthSystem;
 
-    public Transform groundCheck;
     public float groundCheckRadius;
+    public Transform groundCheck;
     public LayerMask groundLayer;
 
     private bool isGrounded;
     private bool isAttack;
     private bool isJumping;
     private bool isDrop = false;
+    private bool isLaunch = false;
     private bool isStop = false;
-    private int ignoreFrame = 0;     //number of frame to ignore to avoid multiple detect collision in one real collision
+    private bool jumpType;
     private float isStopTimer = 0;
+    private double highJumpX;
 
-    private Rigidbody2D _player;
     private Rigidbody2D myBody;
+    private Rigidbody2D _player;
     private Animator anim;
     private Transform trans;
     
@@ -37,45 +46,60 @@ public class Monster_Giant : MonoBehaviour
 
     public void Awake()
     {
-        myBody = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        trans = GetComponent<Transform>();
+        myBody = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<Animator>();
+        trans = gameObject.GetComponent<Transform>();
+        _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         isAttack = false;
+        jumpType = getJumpType();
+
+        if(!jumpType)
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
     }
 
     public void Start()
     {
-        //_player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-        //Physics2D.IgnoreLayerCollision(6, 9, false);
+        Physics2D.IgnoreLayerCollision(6, 9, false);
     }
     
     public void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    }
+        float distancePlayerX = (myBody.transform.position.x - _player.transform.position.x);
 
-    public void Update()
-    {
-        
-
-        if (isGrounded && !isAttack /*&& (myBody.transform.x - _player.transform.x) <= attackDistance*/)
+        if (isGrounded && !isAttack)
         {
-            anim.SetBool("isSmash", true);
 
-            if(ignoreFrame <= 0)
-                MonsterJump();
-        }
+            if (!isLaunch)
+            {
+                //launch once and avoid jumping again
+                if (((distancePlayerX - longJumpFlipDistance) <= longJumpTriggerDistance) && !jumpType)
+                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
 
-        if(isJumping)
-        {
-            //check velocity y to know if dropping down
-            anim.SetFloat("speed_y", myBody.velocity.y);
+                if ((distancePlayerX <= longJumpTriggerDistance) && !jumpType)
+                { 
+                    MonsterJump(false);
+                }
+                else if (distancePlayerX <= highJumpTriggerDistance && jumpType)
+                {
+                    MonsterJump();
+                }
+
+            }
+
         }
 
         if (isJumping && !isGrounded && myBody.velocity.y < 0 && !isDrop)
         {
+            //add drop acceleration
             myBody.AddForce(new Vector2(0, -1 * dropMultiplier), ForceMode2D.Impulse);
             isDrop = true;
+        }
+
+        if (isJumping && !isGrounded && myBody.velocity.x < 0)
+        {
+            //add horizontal friction
+            myBody.AddForce(new Vector2(1 * fictionMultiplier, 0), ForceMode2D.Impulse);
         }
 
         if (isJumping && isGrounded && myBody.velocity.y == 0)
@@ -86,10 +110,18 @@ public class Monster_Giant : MonoBehaviour
 
             myBody.velocity = new Vector2(0f, 0f);
         }
-            
+    }
 
-        DestroyMonster();
-        ignoreFrame--;
+    public void Update()
+    {
+       
+
+        if (isJumping)
+        {
+            //check velocity y to know if dropping down
+            anim.SetFloat("speed_y", myBody.velocity.y);
+        }
+            
 
         if (isStop)
         {
@@ -101,10 +133,11 @@ public class Monster_Giant : MonoBehaviour
                 isStop = false;
                 GetComponent<BoxCollider2D>().enabled = true;
                 Physics2D.IgnoreLayerCollision(6, 9, false);
-                Debug.Log("Cancel ignore");
                 isStopTimer = 0;
             }
         }
+
+        DestroyMonster();
     }
 
     private void DestroyMonster()
@@ -116,14 +149,32 @@ public class Monster_Giant : MonoBehaviour
     }
 
 
-    private void MonsterJump()
+    private bool getJumpType()
+    {
+        //random generate true(high jump), false(long jump)
+        System.Random gen = new System.Random();
+        int prob = gen.Next(100);
+        return prob < 50;
+    }
+
+
+    private void MonsterJump(bool isHighJump = true)
     {
         //Launching
-        myBody.AddForce(new Vector2(horizontalForce, jumpForce), ForceMode2D.Impulse);
+        if (isHighJump)
+        {
+            highJumpX = (-57.035 * (double)highJumpXTile) - 1.15;
+            myBody.AddForce(new Vector2((float)highJumpX, highJumpY), ForceMode2D.Impulse);
+        } else
+        {
+            myBody.AddForce(new Vector2(longJumpX, longJumpY), ForceMode2D.Impulse);
+        }
+
+        anim.SetBool("isSmash", true);
 
         isJumping = true;
         isAttack = true;
-        ignoreFrame = 10;               //set ignore frame here
+        isLaunch = true;
     }
 
 
@@ -149,7 +200,6 @@ public class Monster_Giant : MonoBehaviour
             isStop = true;  
 
         }
-
            
 
     }

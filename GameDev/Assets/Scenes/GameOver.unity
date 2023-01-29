@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &465726690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2768009768655147910, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.30178237
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.378998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4727336
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029860847602868790, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 80d0b76626bf5cf439de02eaa742a971, type: 3}
 --- !u!1 &788797500
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +282,7 @@ RectTransform:
   - {fileID: 1000435596}
   - {fileID: 1559572963}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -806,7 +863,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1360507434
 GameObject:
@@ -1078,63 +1135,6 @@ RectTransform:
   m_AnchoredPosition: {x: 216.82, y: 22.5}
   m_SizeDelta: {x: 313.63, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1655942519
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3161959046810739410, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.30178237
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.378998
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.4727336
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7126859401152123746, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dc016dbfbbbebd949829311a82ec51ba, type: 3}
 --- !u!1 &1684050579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1877947623
 PrefabInstance:
