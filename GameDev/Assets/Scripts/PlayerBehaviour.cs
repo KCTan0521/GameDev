@@ -129,8 +129,7 @@ public class PlayerBehaviour : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
             {
-                if (!isSliding)
-                    FindObjectOfType<AudioManager>().Play("Player - Slide");
+                FindObjectOfType<AudioManager>().Play("Player - Slide");
                 isSliding = true;
             }
 
@@ -182,7 +181,7 @@ public class PlayerBehaviour : MonoBehaviour
                 _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
             }
 
-            if (moveSpeed < 15f) //Set max speed here
+            /*if (moveSpeed < 15f) //Set max speed here
             {
                 targetedSpeed += .1f * Time.fixedDeltaTime;
                 if (targetedSpeed >= Math.Truncate(targetedSpeed))
@@ -190,7 +189,7 @@ public class PlayerBehaviour : MonoBehaviour
                     moveSpeed = (float)Math.Truncate(targetedSpeed);
                 }
 
-            }
+            }*/
 
             if (canJump && IsGrounded())
             {
@@ -208,7 +207,6 @@ public class PlayerBehaviour : MonoBehaviour
                     _rb.velocity = new Vector2(_rb.velocity.x, 0f);
                     _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
                     _rb.AddForce(Vector2.right * 7f, ForceMode2D.Impulse);
-                    Debug.Log("push");
                 }
 
                 else
