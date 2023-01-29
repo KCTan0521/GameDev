@@ -315,9 +315,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void JumpBoost(float duration)
     {
-        isJumpBoost = true;
+        if (!isJumpBoost)
+        {
+            isJumpBoost = true;
+            jumpForce *= (float)1.5;
+        }
+
         jumpBoostDuration = duration;
-        jumpForce *= (float)1.5;
     }
 
     private void StopJumpBoost()
@@ -336,7 +340,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void HealthRegen(float duration)
     {
-        isHealthRegen = true;
+        if (!isHealthRegen)
+        {
+            isHealthRegen = true;
+        }
+
         healthRegenDuration = duration;
     }
 
