@@ -490,7 +490,10 @@ MonoBehaviour:
 
     Version 1.0
 
-    Copyright 2023'
+    Copyright 2023
+
+    @Drunk
+    Kitchen'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dd1141be01229cc4bb085bff7c3ce6ef, type: 2}
   m_sharedMaterial: {fileID: 6851806830008300353, guid: dd1141be01229cc4bb085bff7c3ce6ef, type: 2}
@@ -603,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 104.869995, y: -111.1}
+  m_AnchoredPosition: {x: 104.869995, y: -111.100006}
   m_SizeDelta: {x: 50, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1409773310

@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class MainMenuController : MonoBehaviour
 {
+   
     private void Start()
     {
         FindObjectOfType<AudioManager>().Play("Song1");
     }
+
+
     public void PlayGame()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button1");
