@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PowerUpsController : MonoBehaviour
@@ -9,6 +10,7 @@ public class PowerUpsController : MonoBehaviour
     private GameObject[] powerUpsReference;
     public int powerUpsLimit;
     public float distanceX;
+    public PlatformGeneration platformGeneration;
 
     private GameObject _player;
 
@@ -34,8 +36,8 @@ public class PowerUpsController : MonoBehaviour
     {
         while (true)
         {
-            // set the time gap for power ups generation to 30 - 120 seconds
-            yield return new WaitForSeconds(Random.Range(30, 120));
+            // set the time gap for power ups generation to 15 - 50 seconds
+            yield return new WaitForSeconds(Random.Range(15, 50));
 
             if (spawnedPowerUpsList.Count <= powerUpsLimit)
             {
@@ -45,8 +47,24 @@ public class PowerUpsController : MonoBehaviour
                 spawnedPowerUps = Instantiate(powerUpsReference[randomIndex]);
                 spawnedPowerUpsList.Add(spawnedPowerUps);
 
-                // spawn the monster with on the ground with a certain distance away
-                spawnedPowerUps.transform.position = new Vector2(_player.transform.position.x + distanceX, spawnedPowerUps.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+                //decide randomly spawn on platform or on ground
+                if (Random.Range(0, 2) == 0)
+                {
+                    // spawn the monster with on the ground with a certain distance away
+                    spawnedPowerUps.transform.position = new Vector2 (
+                        platformGeneration.platforms.Last().transform.position.x + 0.5f,
+                        platformGeneration.platforms.Last().transform.position.y + 1 + (spawnedPowerUps.GetComponent<SpriteRenderer>().bounds.size.y / 2)
+                    );
+                } else
+                {
+                    // spawn the monster with on the ground with a certain distance away
+                    spawnedPowerUps.transform.position = new Vector2 (
+                        _player.transform.position.x + distanceX, 
+                        spawnedPowerUps.GetComponent<SpriteRenderer>().bounds.size.y / 2
+                    );
+                }
+
+                
             }
 
         } // while loop
