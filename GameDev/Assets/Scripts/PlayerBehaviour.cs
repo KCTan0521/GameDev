@@ -53,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         gameObject.AddComponent<Health>();
         gameObject.AddComponent<TouchDetector>();
     }
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -85,6 +86,7 @@ public class PlayerBehaviour : MonoBehaviour
                     isPulled = false;
                     isPulling = true;
                     isStrangled = false;
+                    animator.SetBool("IsTangled", false);
                 }
             }
 
@@ -102,6 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     isStrangled = false;
                     isBreakFree = true;
+                    animator.SetBool("IsTangled", false);
                 }
             }
 
@@ -109,6 +112,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isStrangled = false;
                 isBreakFree = true;
+                animator.SetBool("IsTangled", false);
             }
         }
 
@@ -170,6 +174,8 @@ public class PlayerBehaviour : MonoBehaviour
                 isSliding = false;
                 animator.SetBool("IsSliding", false);
             }
+            animator.SetBool("IsTangled", true);
+
             _rb.velocity = new Vector2(0f, 0f);
             Physics2D.gravity = new Vector2(0f, 0f);
             struggleCount -= Time.fixedDeltaTime * 5; // control struggle speed
@@ -383,6 +389,16 @@ public class PlayerBehaviour : MonoBehaviour
                 isHealthRegen = false;
             }
         }
+    }
+
+    private void TangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Tighten");
+    }
+
+    private void UntangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Snap");
     }
 
 }

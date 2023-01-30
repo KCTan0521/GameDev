@@ -30,7 +30,7 @@ public class GamePlayController : MonoBehaviour
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-        
+       
     }
 
     void Start()
@@ -41,7 +41,6 @@ public class GamePlayController : MonoBehaviour
         Time.timeScale = 1;
         startTime = Time.time;
         pauseButton.GetComponent<Image>().sprite = pauseUI;
-        FindObjectOfType<AudioManager>().Play("Song2");
     }
 
     void gameSettingStatus(bool status)
@@ -77,6 +76,7 @@ public class GamePlayController : MonoBehaviour
     public void RestartGame()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button2");
+        FindObjectOfType<AudioManager>().Play("Song2");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
