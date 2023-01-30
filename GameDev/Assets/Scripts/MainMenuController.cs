@@ -17,6 +17,7 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button1");
+        FindObjectOfType<AudioManager>().Play("Song2");
         SceneManager.LoadScene("GamePlay");
     }
 

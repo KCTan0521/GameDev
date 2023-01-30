@@ -53,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         gameObject.AddComponent<Health>();
         gameObject.AddComponent<TouchDetector>();
     }
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
