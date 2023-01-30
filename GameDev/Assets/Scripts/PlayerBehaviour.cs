@@ -90,9 +90,9 @@ public class PlayerBehaviour : MonoBehaviour
                 }
             }
 
-            else if (struggleDuration < 5f)
+            else if (struggleDuration < 4f)
             {
-                if (struggleCount < 10f)
+                if (struggleCount < 6f)
                 {
                     if (jumpButton || dashButton || Input.GetKeyDown(KeyCode.Space))
                     {
@@ -326,7 +326,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             isStrangled = true;
-            struggleCount = 5;
+            struggleCount = 4;
             struggleDuration = 0f;
         }
             
