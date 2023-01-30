@@ -85,6 +85,7 @@ public class PlayerBehaviour : MonoBehaviour
                     isPulled = false;
                     isPulling = true;
                     isStrangled = false;
+                    animator.SetBool("IsTangled", false);
                 }
             }
 
@@ -102,6 +103,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     isStrangled = false;
                     isBreakFree = true;
+                    animator.SetBool("IsTangled", false);
                 }
             }
 
@@ -109,6 +111,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isStrangled = false;
                 isBreakFree = true;
+                animator.SetBool("IsTangled", false);
             }
         }
 
@@ -170,6 +173,8 @@ public class PlayerBehaviour : MonoBehaviour
                 isSliding = false;
                 animator.SetBool("IsSliding", false);
             }
+            animator.SetBool("IsTangled", true);
+
             _rb.velocity = new Vector2(0f, 0f);
             Physics2D.gravity = new Vector2(0f, 0f);
             struggleCount -= Time.fixedDeltaTime * 5; // control struggle speed
