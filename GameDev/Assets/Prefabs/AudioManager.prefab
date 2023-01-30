@@ -47,7 +47,7 @@ MonoBehaviour:
   sounds:
   - name: Song1
     clip: {fileID: 8300000, guid: 4300ef09b2499ee498f5d7ba0f849a6b, type: 3}
-    volume: 0.35
+    volume: 0.387
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     loop: 0
   - name: Giant - Land
     clip: {fileID: 8300000, guid: 46de05bb91ccbb84fbcf836ec0fb5381, type: 3}
-    volume: 0.5
+    volume: 0.259
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -113,25 +113,25 @@ MonoBehaviour:
     loop: 0
   - name: Giant - Crush1
     clip: {fileID: 8300000, guid: 8125f5d894a39c144b7ba99d013a61bd, type: 3}
-    volume: 0.5
+    volume: 0.086
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush2
     clip: {fileID: 8300000, guid: 19d52a2f89ef9354a9b50aa25b8c4d0d, type: 3}
-    volume: 0.5
+    volume: 0.059
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush3
     clip: {fileID: 8300000, guid: c6abf9032758fc54e9b792e7788dd29e, type: 3}
-    volume: 0.5
+    volume: 0.052
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush4
     clip: {fileID: 8300000, guid: c063400d45def224090f410007bdcb53, type: 3}
-    volume: 0.5
+    volume: 0.052
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -143,13 +143,13 @@ MonoBehaviour:
     loop: 0
   - name: Hair - Tighten
     clip: {fileID: 8300000, guid: dc92bb7336db65e4081cdbcb4f3d31cd, type: 3}
-    volume: 0.5
+    volume: 0.272
     pitch: 1
     source: {fileID: 0}
     loop: 0
   - name: Hair - Snap
-    clip: {fileID: 8300000, guid: cf60709d4cafb894fb7430844089b033, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: 82f15adb1446b0648bad734b34f0442b, type: 3}
+    volume: 0.266
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -203,6 +203,12 @@ MonoBehaviour:
     loop: 0
   - name: Player - Run
     clip: {fileID: 8300000, guid: 3e1735b5a87683542b2fc4a799445fb7, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Player - PowerUp
+    clip: {fileID: 8300000, guid: 315f90c40191ae445b35d3bade010610, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}

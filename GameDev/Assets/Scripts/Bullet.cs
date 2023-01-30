@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         pull = GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull;
-        if (hitTarget)
+        if (pull)
         {
             _col.isTrigger = enabled;
         }
