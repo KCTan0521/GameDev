@@ -112,6 +112,8 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isStrangled = false;
                 isBreakFree = true;
+                gameObject.GetComponent<Stamina>().Exhaust(1f);
+                gameObject.GetComponent<Health>().Damage(.5f);
                 animator.SetBool("IsTangled", false);
             }
         }
@@ -381,7 +383,6 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 gameObject.GetComponent<Health>().Regen();
                 addHealthDuration = 0;
-                Debug.Log("add health");
             }
 
             if (healthRegenDuration <= 0)
