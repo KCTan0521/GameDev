@@ -147,4 +147,9 @@ public class WomanBehaviour : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void AttackSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Release");
+    }
 }

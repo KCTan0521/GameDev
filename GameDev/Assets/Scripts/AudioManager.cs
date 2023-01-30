@@ -67,14 +67,13 @@ public class AudioManager : MonoBehaviour
         s.source.Pause();
     }
 
-    public Sound randomPlay(Sound[] audioList)
+    public void RandomPlay(string[] audioNameList)
     {
         //randomly play a sound and return that sound object
-        Sound sound = audioList[UnityEngine.Random.Range(0, audioList.Length)];
+        string soundName = audioNameList[UnityEngine.Random.Range(0, audioNameList.Length)];
 
-        sound.source.Play();
+        Play(soundName);
 
-        return sound;
     }
 
     public static void MuteAllSound()

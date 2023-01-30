@@ -378,4 +378,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    private void TangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Tighten");
+    }
+
+    private void UntangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Snap");
+    }
+
 }
