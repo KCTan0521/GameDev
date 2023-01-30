@@ -251,7 +251,7 @@ MonoBehaviour:
   - Jump Over the Attack from Monster
   - If Monster tangled Player Before<br>It Tangles Player Again<br>Keep Dashing to
     Escape
-  - The Hearts are Health<br>The Green Bar is Stamina
+  - The Red Hearts are Health<br>The Green Bar is Stamina
   - Collect the Power ups<br>They Take Effects on the Player
   - Survived as Long as You can<br>Travel as Far as You can
   tutBoard: {fileID: 2116896798}

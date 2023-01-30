@@ -476,24 +476,21 @@ MonoBehaviour:
   m_text: 'CREDIT
 
 
-    Authors:
-
     Teh Chong Shin
 
     Koh Wei Zhong
 
-    Tan
-    Jie Yang
+    Tan Jie Yang
 
-    Tan Khang Chuan
+    Tan
+    Khang Chuan
 
 
     Version 1.0
 
     Copyright 2023
 
-    @Drunk
-    Kitchen'
+    @Drunk Kitchen'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dd1141be01229cc4bb085bff7c3ce6ef, type: 2}
   m_sharedMaterial: {fileID: 6851806830008300353, guid: dd1141be01229cc4bb085bff7c3ce6ef, type: 2}
