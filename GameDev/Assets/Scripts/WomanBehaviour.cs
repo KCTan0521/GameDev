@@ -35,6 +35,11 @@ public class WomanBehaviour : MonoBehaviour
         AttackRange();
         Animation();
 
+        if (transform.position.x - _player.transform.position.x < -40f)
+        {
+            Destroy(_rb.gameObject);
+        }
+
         if (isIncapacitate)
         {
             GetComponent<BoxCollider2D>().enabled = false;

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MonsterGiant : MonoBehaviour
 {
-
     public float highJumpXTile;
     public float highJumpY;
     public float highJumpTriggerDistance;
@@ -114,7 +113,10 @@ public class MonsterGiant : MonoBehaviour
 
     public void Update()
     {
-       
+        if (transform.position.x - _player.transform.position.x < -40f)
+        {
+            Destroy(myBody.gameObject);
+        }
 
         if (isJumping)
         {
