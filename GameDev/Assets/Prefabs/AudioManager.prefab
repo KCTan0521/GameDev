@@ -136,7 +136,7 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: Hair - Release
-    clip: {fileID: 8300000, guid: 711c67d2fe058b14aa98624d9ebb9616, type: 3}
+    clip: {fileID: 8300000, guid: 8992ad8046753e847b46d86141a01f4b, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: Player - Jump
-    clip: {fileID: 8300000, guid: bb5c89ef37d9897449137b3172e56378, type: 3}
+    clip: {fileID: 8300000, guid: 7b9337fcb6a8d094b969167f37409f1e, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: Player - Hurt
-    clip: {fileID: 8300000, guid: 4169c69e0358edc4d83bd7ce63bd2bb2, type: 3}
+    clip: {fileID: 8300000, guid: 3c61208bc0a421845b4c5d8f688f77ac, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -190,7 +190,7 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: Player - Slide
-    clip: {fileID: 8300000, guid: c1ecc4ca01f312949b03803b4b88381e, type: 3}
+    clip: {fileID: 8300000, guid: d8b43055617eaa6498dd3d21fcac8ea2, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
