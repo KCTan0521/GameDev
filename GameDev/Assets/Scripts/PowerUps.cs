@@ -40,6 +40,7 @@ public class PowerUps : MonoBehaviour
 
             if (powerUpType == PowerUpType.HealthRegen)
                 _player.GetComponent<PlayerBehaviour>().HealthRegen(15);
+            FindObjectOfType<AudioManager>().Play("Player - PowerUp");
 
             Destroy(gameObject);
         }

@@ -207,3 +207,9 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
+  - name: Player - PowerUp
+    clip: {fileID: 8300000, guid: 315f90c40191ae445b35d3bade010610, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
