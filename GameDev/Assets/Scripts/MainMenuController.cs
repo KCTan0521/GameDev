@@ -34,4 +34,10 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void ExitGame()
+    {
+        Debug.Log("Exit Game");
+        Application.Quit();
+    }
+
 }
