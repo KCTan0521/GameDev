@@ -90,9 +90,9 @@ public class PlayerBehaviour : MonoBehaviour
                 }
             }
 
-            else if (struggleDuration < 4f)
+            else if (struggleDuration < 6f)
             {
-                if (struggleCount < 6f)
+                if (struggleCount < 10f)
                 {
                     if (jumpButton || dashButton || Input.GetKeyDown(KeyCode.Space))
                     {
@@ -178,7 +178,7 @@ public class PlayerBehaviour : MonoBehaviour
 
             _rb.velocity = new Vector2(0f, 0f);
             Physics2D.gravity = new Vector2(0f, 0f);
-            struggleCount -= Time.fixedDeltaTime * 5; // control struggle speed
+            struggleCount -= Time.fixedDeltaTime * 2; // control struggle speed
         }
 
         else if (isPulling)
