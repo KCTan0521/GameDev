@@ -53,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         gameObject.AddComponent<Health>();
         gameObject.AddComponent<TouchDetector>();
     }
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -210,6 +211,14 @@ public class PlayerBehaviour : MonoBehaviour
                 canJump = false;
                 jumpCount = 1;
                 _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+                if (isSliding)
+                {
+                    standing.enabled = true;
+                    sliding.enabled = false;
+                    slideDuration = 1f;
+                    isSliding = false;
+                    animator.SetBool("IsSliding", false);
+                }
             }
 
             if (canDoubleJump)
@@ -282,7 +291,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void IsSliding()
     {
-        if (slideDuration > 0 && !canJump && !isStrangled)
+        if (slideDuration > 0 && !isStrangled)
         {
             standing.enabled = false;
             sliding.enabled = true;
@@ -307,6 +316,11 @@ public class PlayerBehaviour : MonoBehaviour
             gameObject.GetComponent<Health>().Damage(.5f);
             isPulling = false;
             Physics2D.IgnoreLayerCollision(6, 8, false);
+        }
+
+        if (collision.gameObject.tag == "Monster")
+        {
+            isPulling = false;
         }
 
         if (collision.gameObject.tag == "Bullet")
@@ -375,6 +389,16 @@ public class PlayerBehaviour : MonoBehaviour
                 isHealthRegen = false;
             }
         }
+    }
+
+    private void TangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Tighten");
+    }
+
+    private void UntangledSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Hair - Snap");
     }
 
 }

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MonsterGiant : MonoBehaviour
 {
-
     public float highJumpXTile;
     public float highJumpY;
     public float highJumpTriggerDistance;
@@ -114,7 +113,10 @@ public class MonsterGiant : MonoBehaviour
 
     public void Update()
     {
-       
+        if (transform.position.x - _player.transform.position.x < -40f)
+        {
+            Destroy(myBody.gameObject);
+        }
 
         if (isJumping)
         {
@@ -165,9 +167,11 @@ public class MonsterGiant : MonoBehaviour
         {
             highJumpX = (-57.035 * (double)highJumpXTile) - 1.15;
             myBody.AddForce(new Vector2((float)highJumpX, highJumpY), ForceMode2D.Impulse);
+            JumpSound();
         } else
         {
             myBody.AddForce(new Vector2(longJumpX, longJumpY), ForceMode2D.Impulse);
+            JumpSound();
         }
 
         anim.SetBool("isSmash", true);
@@ -211,8 +215,39 @@ public class MonsterGiant : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform"))
         {
             Destroy(collision.gameObject);
+            CrushSound();
         }
 
+    }
+
+    private void StompSound()
+    {
+        string[] names = {
+            "Giant - Stomp1",
+            "Giant - Stomp2",
+            "Giant - Stomp3",
+            "Giant - Stomp4",
+            "Giant - Stomp5"
+        };
+
+        FindObjectOfType<AudioManager>().RandomPlay(names);
+    }
+
+    private void JumpSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Giant - Jump");
+    }
+
+    private void CrushSound()
+    {
+        string[] names = {
+            "Giant - Crush1",
+            "Giant - Crush2",
+            "Giant - Crush3",
+            "Giant - Crush4"
+        };
+
+        FindObjectOfType<AudioManager>().RandomPlay(names);
     }
 
 }
