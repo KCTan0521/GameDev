@@ -54,18 +54,16 @@ public class TutorialController : MonoBehaviour
 
     public void previousSection()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         enableAndDisableButton(true);
-        
-        displayTutMaterial();
-        
+        displayTutMaterial();        
     }
 
     public void nextSection()
     {
-        enableAndDisableButton(false);
-        
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
+        enableAndDisableButton(false);        
         displayTutMaterial();
-
     }
 
     void enableAndDisableButton(bool isPreviousButton)
