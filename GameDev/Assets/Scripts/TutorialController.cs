@@ -32,6 +32,7 @@ public class TutorialController : MonoBehaviour
   
     public void BackHomePage()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         SceneManager.LoadScene("MainMenu");
     }
 

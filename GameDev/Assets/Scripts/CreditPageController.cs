@@ -24,6 +24,7 @@ public class CreditPageController : MonoBehaviour
 
     public void BackHomePage()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         SceneManager.LoadScene("MainMenu");
     }
 
