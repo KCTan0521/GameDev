@@ -115,7 +115,6 @@ public class MonsterController : MonoBehaviour
 
         if (mobCount == 10)
         {
-            Debug.Log("hello");
             int[] powerUps = { 1, 2 };
             System.Random rnd_2 = new System.Random();
             int randIndex_2 = rnd_2.Next(powerUps.Length);

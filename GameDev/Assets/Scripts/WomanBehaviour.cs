@@ -10,6 +10,7 @@ public class WomanBehaviour : MonoBehaviour
     private Rigidbody2D _player;
     private float loadingTimer;
     private bool attack;
+    private bool isReloaded;
     private bool isStrangling;
     private bool isAttacking;
     private bool isPulled;
@@ -65,10 +66,16 @@ public class WomanBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (attack && !isStrangling && !isAttacking && !isIncapacitate)
+        if (attack && !isStrangling && !isAttacking && !isIncapacitate && isReloaded)
         {
             Instantiate(_bullet, transform.position, Quaternion.identity);
             GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
+            isReloaded = false;
+        }
+
+        if (!attack)
+        {
+            isReloaded = true;
         }
 
         if (distance < 0)
