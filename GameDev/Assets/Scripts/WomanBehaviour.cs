@@ -8,6 +8,7 @@ public class WomanBehaviour : MonoBehaviour
     [SerializeField] private GameObject _bullet;
     private Rigidbody2D _rb;
     private Rigidbody2D _player;
+    private float loadingTimer;
     private float attackTimer;
     private bool attack;
     private bool isStrangling;
@@ -111,14 +112,22 @@ public class WomanBehaviour : MonoBehaviour
 
     private void AttackRange()
     {
-        if ((distance > 1f && distance <= 15f) || (distance < -1f && distance >= -15f))
+        if ((distance > 1f && distance <= 20f) || (distance < -1f && distance >= -20f))
         {
-            attack = true;
+            float loadingDuration = 0.25f;
+            loadingTimer += Time.deltaTime;
+            Debug.Log(loadingTimer);
+            if (loadingTimer >= loadingDuration)
+            {
+                attack = true;
+                loadingTimer = 0f;
+            }
         }
 
         else
         {
             attack = false;
+            loadingTimer = 0f;
         }
     }
 
