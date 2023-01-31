@@ -120,6 +120,12 @@ public class WomanBehaviour : MonoBehaviour
             loadingTimer += Time.deltaTime;
             isCrying = true;
 
+            if (isAttacking || isIncapacitate)
+            {
+                isCrying = false;
+                Debug.Log("stop crying");
+            }
+
             if (loadingTimer >= loadingDuration)
             {
                 FindObjectOfType<AudioManager>().Pause("Women - Cry");
@@ -178,6 +184,11 @@ public class WomanBehaviour : MonoBehaviour
         {
             FindObjectOfType<AudioManager>().PlayOnce("Women - Cry");
             isCrying = false;
+        }
+
+        else
+        {
+            FindObjectOfType<AudioManager>().Pause("Women - Cry");
         }
     }
 }

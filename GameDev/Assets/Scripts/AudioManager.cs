@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
         if (!s.source.isPlaying)
         {
             s.source.Play();
-            Debug.Log("Cry");
+            Debug.Log("cry");
         }
     }
 }
