@@ -183,7 +183,7 @@ public class PlatformGeneration : MonoBehaviour
         indexY = rnd.Next(randomPos.Count);
         posY = randomPos.Keys.ElementAt(indexY);
 
-        while (platformPos.y + posY < 3f) // Set min height for platform here
+        while (platformPos.y + posY < 2f) // Set min height for platform here
         {
             indexY = rnd.Next(randomPos.Count);
             posY = randomPos.Keys.ElementAt(indexY);

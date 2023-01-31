@@ -90,13 +90,13 @@ public class PlayerBehaviour : MonoBehaviour
                 }
             }
 
-            else if (struggleDuration < 5f)
+            else if (struggleDuration < 6f)
             {
                 if (struggleCount < 10f)
                 {
                     if (jumpButton || dashButton || Input.GetKeyDown(KeyCode.Space))
                     {
-                        struggleCount += 1f;
+                        struggleCount += 2f;
                     }
                 }
 
@@ -112,6 +112,8 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isStrangled = false;
                 isBreakFree = true;
+                gameObject.GetComponent<Stamina>().Exhaust(1f);
+                gameObject.GetComponent<Health>().Damage(.5f);
                 animator.SetBool("IsTangled", false);
             }
         }
@@ -178,7 +180,7 @@ public class PlayerBehaviour : MonoBehaviour
 
             _rb.velocity = new Vector2(0f, 0f);
             Physics2D.gravity = new Vector2(0f, 0f);
-            struggleCount -= Time.fixedDeltaTime * 5; // control struggle speed
+            struggleCount -= Time.fixedDeltaTime * 3.5f; // control struggle speed
         }
 
         else if (isPulling)
@@ -326,7 +328,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             isStrangled = true;
-            struggleCount = 5;
+            struggleCount = 4;
             struggleDuration = 0f;
         }
             
@@ -381,7 +383,6 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 gameObject.GetComponent<Health>().Regen();
                 addHealthDuration = 0;
-                Debug.Log("add health");
             }
 
             if (healthRegenDuration <= 0)

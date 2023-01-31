@@ -22,11 +22,14 @@ public class TutorialController : MonoBehaviour
 
     public GameObject previousButton;
     public GameObject nextButton;
-
+    public GameObject canvas;
     // private
-    public int index = 0;
-    public int maxIndex = 0;
-    public bool isFirstTime = true;
+    private int index = 0;
+    private int maxIndex = 0;
+    private const float DEFAULT_SCREEN_WIDTH = 1920f;
+    private float scale = 1;
+    private CanvasScaler canvasScaler;
+  
     public void BackHomePage()
     {
         SceneManager.LoadScene("MainMenu");
@@ -36,14 +39,15 @@ public class TutorialController : MonoBehaviour
     {
         tutImage = tutBoard.GetComponent<Image>();
         tutVideo = GetComponent<VideoPlayer>();
-        spriteRender =tutBoard.GetComponent<SpriteRenderer>();
+        spriteRender = tutBoard.GetComponent<SpriteRenderer>();
+        canvasScaler = canvas.GetComponent<CanvasScaler>();
     }
 
     void Start()
     {
         maxIndex = tutMaterial.Length - 1;
         previousButton.SetActive(false);
-        
+        ModifyCanvasScaler();
         displayTutMaterial();
     }
 
@@ -121,6 +125,13 @@ public class TutorialController : MonoBehaviour
             tutVideo.Play();
         }
         tutText.text = description[index];
+    }
+
+    void ModifyCanvasScaler()
+    {
+        scale = Mathf.Round(Screen.width / DEFAULT_SCREEN_WIDTH * 1000) / 1000;
+        scale = scale >= 1.0f ? 1.0f : scale;
+        canvasScaler.scaleFactor = scale;
     }
 
 }

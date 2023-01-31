@@ -249,9 +249,7 @@ MonoBehaviour:
   tutText: {fileID: 1220964437}
   previousButton: {fileID: 1929387182}
   nextButton: {fileID: 1948368704}
-  index: 0
-  maxIndex: 0
-  isFirstTime: 1
+  canvas: {fileID: 945060158}
 --- !u!4 &430930309
 Transform:
   m_ObjectHideFlags: 0
