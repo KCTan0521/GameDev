@@ -213,3 +213,9 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
+  - name: Women - Cry
+    clip: {fileID: 8300000, guid: eed56c137dd23e449b420926c02677d8, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1

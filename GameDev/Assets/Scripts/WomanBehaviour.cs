@@ -17,6 +17,7 @@ public class WomanBehaviour : MonoBehaviour
     private bool isIncapacitate;
     private float incapacitateTimer;
     private bool isBreakFree;
+    private bool isCrying;
     private float distance;
 
     private void Start()
@@ -59,6 +60,7 @@ public class WomanBehaviour : MonoBehaviour
             isIncapacitate = true;
         }
 
+        CryingSound();
         DestroyMonster();
     }
 
@@ -116,9 +118,10 @@ public class WomanBehaviour : MonoBehaviour
         {
             float loadingDuration = 0.25f;
             loadingTimer += Time.deltaTime;
-            Debug.Log(loadingTimer);
+
             if (loadingTimer >= loadingDuration)
             {
+                FindObjectOfType<AudioManager>().Pause("Women - Cry");
                 attack = true;
                 loadingTimer = 0f;
             }
@@ -126,6 +129,7 @@ public class WomanBehaviour : MonoBehaviour
 
         else
         {
+            FindObjectOfType<AudioManager>().Pause("Women - Cry");
             attack = false;
             loadingTimer = 0f;
         }
@@ -165,5 +169,14 @@ public class WomanBehaviour : MonoBehaviour
     private void AttackSound()
     {
         FindObjectOfType<AudioManager>().Play("Hair - Release");
+    }
+
+    private void CryingSound()
+    {
+        if (isCrying)
+        {
+            FindObjectOfType<AudioManager>().PlayOnce("Women - Cry");
+            isCrying = false;
+        }
     }
 }
