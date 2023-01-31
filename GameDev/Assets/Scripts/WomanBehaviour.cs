@@ -9,7 +9,6 @@ public class WomanBehaviour : MonoBehaviour
     private Rigidbody2D _rb;
     private Rigidbody2D _player;
     private float loadingTimer;
-    private float attackTimer;
     private bool attack;
     private bool isStrangling;
     private bool isAttacking;
@@ -68,18 +67,8 @@ public class WomanBehaviour : MonoBehaviour
     {
         if (attack && !isStrangling && !isAttacking && !isIncapacitate)
         {
-            attackTimer += Time.fixedDeltaTime;
-            if (attackTimer >= 0.5f)
-            {
-                Instantiate(_bullet, transform.position, Quaternion.identity);
-                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
-                attackTimer = 0;
-            }
-        }
-
-        if (isStrangling || isAttacking || isIncapacitate || !attack)
-        {
-            attackTimer = 0;
+            Instantiate(_bullet, transform.position, Quaternion.identity);
+            GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
         }
 
         if (distance < 0)
@@ -114,21 +103,25 @@ public class WomanBehaviour : MonoBehaviour
 
     private void AttackRange()
     {
-        if ((distance > 1f && distance <= 20f) || (distance < -1f && distance >= -20f))
+        if ((distance > 1f && distance <= 15f) || (distance < -1f && distance >= -10f))
         {
-            float loadingDuration = 0.25f;
+            float loadingDuration = 0.5f;
             loadingTimer += Time.deltaTime;
             isCrying = true;
 
-            if (isAttacking || isIncapacitate)
+            if (isIncapacitate)
             {
                 isCrying = false;
-                Debug.Log("stop crying");
+                loadingTimer = 0;
+            }
+
+            if (isAttacking)
+            {
+                loadingTimer = 0;
             }
 
             if (loadingTimer >= loadingDuration)
             {
-                FindObjectOfType<AudioManager>().Pause("Women - Cry");
                 attack = true;
                 loadingTimer = 0f;
             }
@@ -136,7 +129,7 @@ public class WomanBehaviour : MonoBehaviour
 
         else
         {
-            FindObjectOfType<AudioManager>().Pause("Women - Cry");
+            isCrying = false;
             attack = false;
             loadingTimer = 0f;
         }
@@ -183,12 +176,11 @@ public class WomanBehaviour : MonoBehaviour
         if (isCrying)
         {
             FindObjectOfType<AudioManager>().PlayOnce("Women - Cry");
-            isCrying = false;
         }
 
         else
         {
-            FindObjectOfType<AudioManager>().Pause("Women - Cry");
+            FindObjectOfType<AudioManager>().Stop("Women - Cry");
         }
     }
 }
