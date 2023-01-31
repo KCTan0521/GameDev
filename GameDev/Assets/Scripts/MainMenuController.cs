@@ -36,6 +36,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ExitGame()
     {
+        FindObjectOfType<AudioManager>().Play("Menu - Button1");
         Debug.Log("Exit Game");
         Application.Quit();
     }
