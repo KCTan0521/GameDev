@@ -118,6 +118,7 @@ public class WomanBehaviour : MonoBehaviour
         {
             float loadingDuration = 0.25f;
             loadingTimer += Time.deltaTime;
+            isCrying = true;
 
             if (loadingTimer >= loadingDuration)
             {
