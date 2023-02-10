@@ -7,6 +7,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] Collider2D _col;
     private Rigidbody2D _player;
     private Rigidbody2D _rb;
+    private LineRenderer lineRenderer;
+    private SpriteRenderer spriteRenderer;
+
     private Vector3 initialTarget;
     private Vector3 initialPos;
     private Vector2 direction;
@@ -31,6 +34,16 @@ public class Bullet : MonoBehaviour
         hitTarget = false;
         timer = 0f;
         Physics2D.IgnoreLayerCollision(6, 10, false);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 2;
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+
+        Material lineMaterial = new Material(Shader.Find("Sprites/Default"));
+        lineMaterial.mainTexture = spriteRenderer.sprite.texture;
+        lineRenderer.material = lineMaterial;
     }
 
     private void Update()
@@ -40,6 +53,9 @@ public class Bullet : MonoBehaviour
         {
             _col.isTrigger = enabled;
         }
+
+        lineRenderer.SetPosition(0, initialPos);
+        lineRenderer.SetPosition(1, gameObject.transform.position);
     }
 
     private void FixedUpdate()
