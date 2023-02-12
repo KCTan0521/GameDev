@@ -112,7 +112,7 @@ public class WomanBehaviour : MonoBehaviour
     {
         if ((distance > 1f && distance <= 15f) || (distance < -1f && distance >= -10f))
         {
-            float loadingDuration = 0.5f;
+            float loadingDuration = 0.4f;
             loadingTimer += Time.deltaTime;
             isCrying = true;
 

@@ -12,7 +12,8 @@ public class Bullet : MonoBehaviour
     private Vector2 direction;
     private bool isStrangled;
     private bool isReflected;
-    private float timer;
+    private float attackTimer;
+    private float pullTimer;
     private bool hitTarget;
     private bool pull;
 
@@ -23,29 +24,40 @@ public class Bullet : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        _rb.velocity = new Vector2(0f, 0f);
         initialTarget = _player.transform.position;
         initialPos = _rb.transform.position;
         targetSetter();
         direction = initialTarget - initialPos;
         isReflected = false;
         hitTarget = false;
-        timer = 0f;
+        pullTimer = 0f;
         Physics2D.IgnoreLayerCollision(6, 10, false);
     }
 
     private void Update()
     {
+        float aimDuration = 0.1f;
+        isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         pull = GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull;
         if (pull)
         {
             _col.isTrigger = enabled;
         }
+
+        if (attackTimer < aimDuration)
+        {
+            attackTimer += Time.deltaTime;
+        }
+
+        else if (attackTimer >= aimDuration)
+        {
+            Attack();
+        }
     }
 
     private void FixedUpdate()
-    {
-        isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
-        Attack();
+    {      
         if (pull)
         {
             _player.velocity = new Vector2(-direction.x, -direction.y).normalized * speed;
@@ -58,8 +70,6 @@ public class Bullet : MonoBehaviour
     {
         if (isReflected)
         {
-            Physics2D.IgnoreLayerCollision(6, 10, true);
-
             if (initialTarget.x < initialPos.x)
             {
                 Fire(false);
@@ -91,16 +101,18 @@ public class Bullet : MonoBehaviour
             if (!isStrangled && hitTarget)
             {
                 isReflected = true;
+                attackTimer = 0f;
             }
 
             if (_rb.transform.position.x < initialTarget.x && !hitTarget)
             {
                 _rb.velocity = new Vector2(0f, 0f);
-                timer += Time.deltaTime;
-                if (timer >= attackSpeed)
+                pullTimer += Time.deltaTime;
+                if (pullTimer >= attackSpeed)
                 {
                     isReflected = true;
-                    timer = 0;
+                    attackTimer = 0f;
+                    pullTimer = 0;
                 }
             }
 
@@ -120,16 +132,18 @@ public class Bullet : MonoBehaviour
             if (!isStrangled && hitTarget)
             {
                 isReflected = true;
+                attackTimer = 0f;
             }
 
             else if (_rb.transform.position.x > initialTarget.x && !hitTarget)
             {
                 _rb.velocity = new Vector2(0f, 0f);
-                timer += Time.deltaTime;
-                if (timer >= attackSpeed)
+                pullTimer += Time.deltaTime;
+                if (pullTimer >= attackSpeed)
                 {
                     isReflected = true;
-                    timer = 0;
+                    attackTimer = 0f;
+                    pullTimer = 0;
                 }
             }
 
@@ -169,7 +183,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
             Destroy(collision.gameObject);
         }

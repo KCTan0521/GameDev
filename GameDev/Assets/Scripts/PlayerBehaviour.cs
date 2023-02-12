@@ -104,6 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     isStrangled = false;
                     isBreakFree = true;
+                    Physics2D.IgnoreLayerCollision(6, 10, true);
                     animator.SetBool("IsTangled", false);
                 }
             }
@@ -112,6 +113,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isStrangled = false;
                 isBreakFree = true;
+                Physics2D.IgnoreLayerCollision(6, 10, true);
                 gameObject.GetComponent<Stamina>().Exhaust(1f);
                 gameObject.GetComponent<Health>().Damage(.5f);
                 animator.SetBool("IsTangled", false);
@@ -126,7 +128,7 @@ public class PlayerBehaviour : MonoBehaviour
                 gameObject.GetComponent<Stamina>().Exhaust(1f);
             }
 
-            else if (Input.GetKeyDown(KeyCode.Space) || jumpButton)
+            else if ((Input.GetKeyDown(KeyCode.Space) || jumpButton) && IsGrounded())
             {
                 canJump = true;
                 animator.SetBool("IsJumping", true);
@@ -275,6 +277,7 @@ public class PlayerBehaviour : MonoBehaviour
         RaycastHit2D grounded = Physics2D.BoxCast(_col.bounds.center, _col.bounds.size, 0f, Vector2.down, groundAndTopCheck, ground);
         return grounded.collider != null;
     }
+
     private void IsDashing()
     {
         const float TIME_INTERVAL = 0.2f;

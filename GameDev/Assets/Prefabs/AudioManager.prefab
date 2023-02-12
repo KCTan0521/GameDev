@@ -114,25 +114,25 @@ MonoBehaviour:
   - name: Giant - Crush1
     clip: {fileID: 8300000, guid: 8125f5d894a39c144b7ba99d013a61bd, type: 3}
     volume: 0.086
-    pitch: 1
+    pitch: 0.5
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush2
     clip: {fileID: 8300000, guid: 19d52a2f89ef9354a9b50aa25b8c4d0d, type: 3}
     volume: 0.059
-    pitch: 1
+    pitch: 0.5
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush3
     clip: {fileID: 8300000, guid: c6abf9032758fc54e9b792e7788dd29e, type: 3}
     volume: 0.052
-    pitch: 1
+    pitch: 0.5
     source: {fileID: 0}
     loop: 0
   - name: Giant - Crush4
     clip: {fileID: 8300000, guid: c063400d45def224090f410007bdcb53, type: 3}
     volume: 0.052
-    pitch: 1
+    pitch: 0.5
     source: {fileID: 0}
     loop: 0
   - name: Hair - Release
