@@ -54,7 +54,7 @@ public class Bullet : MonoBehaviour
             _col.isTrigger = enabled;
         }
 
-        lineRenderer.SetPosition(0, initialPos);
+        lineRenderer.SetPosition(0, new Vector2(initialPos.x, initialPos.y + .5f));
         lineRenderer.SetPosition(1, gameObject.transform.position);
     }
 
