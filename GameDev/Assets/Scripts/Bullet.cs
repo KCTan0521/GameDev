@@ -63,14 +63,13 @@ public class Bullet : MonoBehaviour
             attackTimer += Time.deltaTime;
         }
 
-        lineRenderer.SetPosition(0, new Vector2(initialPos.x, initialPos.y + .5f));
-        lineRenderer.SetPosition(1, gameObject.transform.position);
-    }
-
         else if (attackTimer >= aimDuration)
         {
             Attack();
         }
+
+        lineRenderer.SetPosition(0, new Vector2(initialPos.x, initialPos.y + .5f));
+        lineRenderer.SetPosition(1, gameObject.transform.position);
     }
 
     private void FixedUpdate()
