@@ -60,8 +60,15 @@ public class WomanBehaviour : MonoBehaviour
             Destroy(_rb.gameObject);
         }
 
+        if (attack)
+        {
+            loadingTimer = 0;
+        }
+
         if (isIncapacitate)
         {
+            isCrying = false;
+            loadingTimer = 0;
             GetComponent<BoxCollider2D>().enabled = false;
             incapacitateTimer += Time.deltaTime;
             if (incapacitateTimer >= 2f) // change recover time here
@@ -113,17 +120,6 @@ public class WomanBehaviour : MonoBehaviour
             float loadingDuration = 0.4f;
             loadingTimer += Time.deltaTime;
             isCrying = true;
-
-            if (isIncapacitate)
-            {
-                isCrying = false;
-                loadingTimer = 0;
-            }
-
-            if (attack)
-            {
-                loadingTimer = 0;
-            }
 
             if (loadingTimer >= loadingDuration)
             {

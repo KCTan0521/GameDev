@@ -86,6 +86,7 @@ public class PlayerBehaviour : MonoBehaviour
                     isPulled = false;
                     isPulling = true;
                     isStrangled = false;
+                    Physics2D.IgnoreLayerCollision(6, 10, true);
                     animator.SetBool("IsTangled", false);
                 }
             }

@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
         hitTarget = false;
         pullTimer = 0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Physics2D.IgnoreLayerCollision(6, 10, false);
 
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
@@ -52,11 +53,6 @@ public class Bullet : MonoBehaviour
         float aimDuration = 0.1f;
         isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         pull = GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull;
-
-        if (pull)
-        {
-            _col.isTrigger = enabled;
-        }
 
         if (attackTimer < aimDuration)
         {
@@ -76,7 +72,8 @@ public class Bullet : MonoBehaviour
     {      
         if (pull)
         {
-            _player.velocity = new Vector2(-direction.x, -direction.y).normalized * speed;
+            Vector2 pullDirection = initialPos - _player.transform.position;
+            _player.velocity = pullDirection.normalized * speed;
             GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull = false;
             GameObject.Find("Player").GetComponent<PlayerBehaviour>().isPulled = true;
         }
@@ -86,6 +83,7 @@ public class Bullet : MonoBehaviour
     {
         if (isReflected)
         {
+            Physics2D.IgnoreLayerCollision(6, 10, true);
             if (initialTarget.x < initialPos.x)
             {
                 Fire(false);
