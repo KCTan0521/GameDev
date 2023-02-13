@@ -35,7 +35,6 @@ public class Bullet : MonoBehaviour
         isReflected = false;
         hitTarget = false;
         pullTimer = 0f;
-        Physics2D.IgnoreLayerCollision(6, 10, false);
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         lineRenderer = GetComponent<LineRenderer>();
@@ -53,6 +52,7 @@ public class Bullet : MonoBehaviour
         float aimDuration = 0.1f;
         isStrangled = GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled;
         pull = GameObject.Find("Player").GetComponent<PlayerBehaviour>().pull;
+
         if (pull)
         {
             _col.isTrigger = enabled;

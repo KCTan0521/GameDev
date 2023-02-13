@@ -19,6 +19,7 @@ public class WomanBehaviour : MonoBehaviour
     private bool isBreakFree;
     private bool isCrying;
     private float distance;
+    private GameObject bulletFired;
 
     private void Start()
     {
@@ -36,6 +37,23 @@ public class WomanBehaviour : MonoBehaviour
 
         AttackRange();
         Animation();
+
+        if (attack && !isStrangling && !isAttacking && !isIncapacitate && isReloaded)
+        {
+            Instantiate(_bullet, transform.position, Quaternion.identity);
+            GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
+            isReloaded = false;
+        }
+
+        if (!attack)
+        {
+            isReloaded = true;
+        }
+
+        if (distance < 0)
+        {
+            _rb.GetComponent<SpriteRenderer>().flipX = true;
+        }
 
         if (transform.position.x - _player.transform.position.x < -40f)
         {
@@ -62,26 +80,6 @@ public class WomanBehaviour : MonoBehaviour
 
         CryingSound();
         DestroyMonster();
-    }
-
-    private void FixedUpdate()
-    {
-        if (attack && !isStrangling && !isAttacking && !isIncapacitate && isReloaded)
-        {
-            Instantiate(_bullet, transform.position, Quaternion.identity);
-            GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBeingAttacked = true;
-            isReloaded = false;
-        }
-
-        if (!attack)
-        {
-            isReloaded = true;
-        }
-
-        if (distance < 0)
-        {
-            _rb.GetComponent<SpriteRenderer>().flipX = true;
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -122,7 +120,7 @@ public class WomanBehaviour : MonoBehaviour
                 loadingTimer = 0;
             }
 
-            if (isAttacking)
+            if (attack)
             {
                 loadingTimer = 0;
             }

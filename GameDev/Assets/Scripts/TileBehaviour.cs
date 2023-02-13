@@ -17,7 +17,7 @@ public class TileBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_player.transform.position.y < _col.transform.position.y + 1f)
+        if (_player.transform.position.y - 0.625f < _col.transform.position.y + 1f )
         {
             _col.isTrigger = enabled;
         }
