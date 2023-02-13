@@ -18,11 +18,13 @@ public class GamePlayController : MonoBehaviour
     private void OnEnable()
     {
         Health.echoGameOver += gameOver;
+        MonsterChasingMob.echoEnterBossMode += bossMode;
     }
 
     private void OnDisable()
     {
         Health.echoGameOver -= gameOver;
+        MonsterChasingMob.echoEnterBossMode -= bossMode;
     }
 
 
@@ -90,5 +92,10 @@ public class GamePlayController : MonoBehaviour
     {
         LocalStorage.WriteRecord(playerBehaviour.transform.position.x, Time.time - startTime);
         SceneManager.LoadScene("GameOver");
+    }
+
+    void bossMode()
+    {
+        Debug.Log("Enter Boss Mode");
     }
 }
