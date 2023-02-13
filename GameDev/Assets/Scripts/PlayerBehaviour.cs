@@ -32,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool pull;
     public bool isPulled;
     private bool isPulling;
+    private bool isPreviouslyGrounded;
 
     private bool isJumpBoost = false;
     private float jumpBoostDuration = 0;
@@ -211,7 +212,7 @@ public class PlayerBehaviour : MonoBehaviour
 
             }*/
 
-            if (canJump && IsGrounded())
+            if (canJump && IsGrounded() && _rb.velocity.y == 0f)
             {
                 canJump = false;
                 jumpCount = 1;
