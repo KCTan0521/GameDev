@@ -15,6 +15,7 @@ public class GamePlayController : MonoBehaviour
     private MonsterChasingMob chaseMob; 
     private GameObject[] gameSetting;
     private float startTime;
+    
 
     private void OnEnable()
     {

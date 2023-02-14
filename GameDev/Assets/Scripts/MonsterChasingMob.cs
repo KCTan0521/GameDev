@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterChasingMob : MonoBehaviour
 {
     
     [SerializeField]
     private float FIRST_GAP_DISTANCE;
-    [SerializeField]
+    [SerializeField] // 0.045
     private float mobSpeed;
     [SerializeField]
     private float MIN_MOB_DISTANCE;
+    [SerializeField]
+    private GameObject warningScreen;
+    [SerializeField]
+    private float DISTANCE_TO_START_ALERT;
 
     private PlayerBehaviour playerBehaviour;
     private Transform mobTrans;
@@ -18,7 +23,7 @@ public class MonsterChasingMob : MonoBehaviour
     private const float mobTransY = 1.3f;
     private float runningNum = 0f;
     private float mobPlayerDistance = 0f;
-
+    private float redScreenIntensity = 0f;
 
     public delegate void enterBossMode();
     public static event enterBossMode echoEnterBossMode;
@@ -56,9 +61,20 @@ public class MonsterChasingMob : MonoBehaviour
         
         Debug.Log("Mob & Player distance : " + mobPlayerDistance);
 
+        
+
         if (mobPlayerDistance <= MIN_MOB_DISTANCE)
         {
+            warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, 100);
             executeEchoEnterBossMode();
+        }
+
+        if(mobPlayerDistance <= DISTANCE_TO_START_ALERT)
+        {
+            redScreenIntensity = 1 - (mobPlayerDistance / DISTANCE_TO_START_ALERT);
+            redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
+            warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, (byte) redScreenIntensity);
+
         }
     }
 
