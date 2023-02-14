@@ -102,5 +102,6 @@ public class GamePlayController : MonoBehaviour
     void bossMode()
     {
         Debug.Log("Enter Boss Mode");
+        PauseGame();
     }
 }
