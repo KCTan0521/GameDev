@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class MonsterChasingMob : MonoBehaviour
 {
+    
+    [SerializeField]
+    private const float FIRST_GAP_DISTANCE = 3f;
+    [SerializeField]
+    private float mobSpeed = 0.1f;
+    [SerializeField]
+    private const float MIN_MOB_DISTANCE = 3f;
+
     private PlayerBehaviour playerBehaviour;
     private Transform mobTrans;
     private float mobTransX = 0f;
-    private const float FIRST_GAP_DISTANCE = 3f;
-    private float mobSpeed = 0.1f;
     private float mobPlayerDistance = 0f;
-    private const float MIN_MOB_DISTANCE = 3f;
 
 
     public delegate void enterBossMode();
