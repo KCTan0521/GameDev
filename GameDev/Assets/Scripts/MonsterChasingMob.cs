@@ -5,7 +5,11 @@ using UnityEngine;
 public class MonsterChasingMob : MonoBehaviour
 {
     private PlayerBehaviour playerBehaviour;
-    private Transform trans;
+    private Transform mobTrans;
+    private float mobTransX = 0f;
+    private const float FIRST_GAP_DISTANCE = 3f;
+    private float mobSpeed = 0.1f;
+    private float mobPlayerDistance = 0f;
 
 
     public delegate void enterBossMode();
@@ -22,11 +26,11 @@ public class MonsterChasingMob : MonoBehaviour
     private void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
-        trans = GetComponent<Transform>();
+        mobTrans = GetComponent<Transform>();
     }
     void Start()
     {
-        
+        mobTransX = playerBehaviour.transform.position.x - FIRST_GAP_DISTANCE;
     }
 
 
@@ -35,6 +39,16 @@ public class MonsterChasingMob : MonoBehaviour
         // temporarily make it follow player
         // can add speed at here
         // maybe use a loop count * speed
-        trans.transform.position = new Vector2(playerBehaviour.transform.position.x - 3f, 0f);  
+        mobTransX = (mobTransX + 1f) * mobSpeed;
+        mobTrans.transform.position = new Vector2(mobTransX, 0f);  
+
+    }
+
+    void distancePlayerAlert()
+    {
+
+        // red screen : either use analog method, or use switch case method to change red intensity
+        // mobPlayerDistance;
+        Debug.Log("");
     }
 }
