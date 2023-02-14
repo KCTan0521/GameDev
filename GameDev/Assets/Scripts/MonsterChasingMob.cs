@@ -10,6 +10,7 @@ public class MonsterChasingMob : MonoBehaviour
     private const float FIRST_GAP_DISTANCE = 3f;
     private float mobSpeed = 0.1f;
     private float mobPlayerDistance = 0f;
+    private const float MIN_MOB_DISTANCE = 3f;
 
 
     public delegate void enterBossMode();
@@ -30,7 +31,7 @@ public class MonsterChasingMob : MonoBehaviour
     }
     void Start()
     {
-        mobTransX = playerBehaviour.transform.position.x - FIRST_GAP_DISTANCE;
+        resetMonsterPlayerDistance();
     }
 
 
@@ -40,8 +41,8 @@ public class MonsterChasingMob : MonoBehaviour
         // can add speed at here
         // maybe use a loop count * speed
         mobTransX = (mobTransX + 1f) * mobSpeed;
-        mobTrans.transform.position = new Vector2(mobTransX, 0f);  
-
+        mobTrans.transform.position = new Vector2(mobTransX, 0f);
+        distancePlayerAlert();
     }
 
     void distancePlayerAlert()
@@ -49,6 +50,20 @@ public class MonsterChasingMob : MonoBehaviour
 
         // red screen : either use analog method, or use switch case method to change red intensity
         // mobPlayerDistance;
-        Debug.Log("");
+
+        mobPlayerDistance = playerBehaviour.transform.position.x - mobTrans.transform.position.x;
+        
+        Debug.Log("Mob & Player distance : " + mobPlayerDistance);
+
+        if (mobPlayerDistance <= MIN_MOB_DISTANCE)
+        {
+            executeEchoEnterBossMode();
+        }
+    }
+
+    void resetMonsterPlayerDistance()
+    {
+        mobTransX = playerBehaviour.transform.position.x - FIRST_GAP_DISTANCE;
+        mobTrans.transform.position = new Vector2(mobTransX, 0f);
     }
 }

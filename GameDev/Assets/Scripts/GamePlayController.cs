@@ -12,6 +12,7 @@ public class GamePlayController : MonoBehaviour
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
+    private MonsterChasingMob chaseMob; 
     private GameObject[] gameSetting;
     private float startTime;
 
@@ -31,6 +32,7 @@ public class GamePlayController : MonoBehaviour
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
+        chaseMob = GameObject.FindObjectOfType<MonsterChasingMob>();
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
        
     }
@@ -39,6 +41,7 @@ public class GamePlayController : MonoBehaviour
     {
         gameSettingStatus(false);
         playerBehaviour.enabled = true;
+        chaseMob.enabled = true;
         isGamePaused = false;
         Time.timeScale = 1;
         startTime = Time.time;
@@ -61,6 +64,7 @@ public class GamePlayController : MonoBehaviour
             Time.timeScale = 1;
             isGamePaused = false;
             playerBehaviour.enabled = true;
+            chaseMob.enabled = true;
             gameSettingStatus(false);
             pauseButton.GetComponent<Image>().sprite = pauseUI;
         }
@@ -70,6 +74,7 @@ public class GamePlayController : MonoBehaviour
             Time.timeScale = 0;
             isGamePaused = true;
             playerBehaviour.enabled = false;
+            chaseMob.enabled = false;
             gameSettingStatus(true);
             pauseButton.GetComponent<Image>().sprite = unPauseUI;
         }
