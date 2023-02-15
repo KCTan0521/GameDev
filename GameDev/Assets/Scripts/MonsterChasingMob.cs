@@ -8,7 +8,7 @@ public class MonsterChasingMob : MonoBehaviour
     
     [SerializeField]
     private float FIRST_GAP_DISTANCE;
-    [SerializeField] // 0.045
+    [SerializeField] // 0.045 or 0.06
     private float mobSpeed;
     [SerializeField]
     private float MIN_MOB_DISTANCE;
@@ -22,7 +22,7 @@ public class MonsterChasingMob : MonoBehaviour
     private float mobTransX = 0f;
     private const float mobTransY = 1.3f;
     private float runningNum = 0f;
-    private float mobPlayerDistance = 0f;
+    private float mobPlayerDistance = 0f; 
     private float redScreenIntensity = 0f;
 
     public delegate void enterBossMode();
@@ -78,11 +78,14 @@ public class MonsterChasingMob : MonoBehaviour
         }
     }
 
-    void resetMonsterPlayerDistance()
+    public void resetMonsterPlayerDistance()
     {
-
+        Debug.Log("player position x : " + playerBehaviour.transform.position.x);
         runningNum = playerBehaviour.transform.position.x - FIRST_GAP_DISTANCE;
+        Debug.Log("running number : " + runningNum);
         mobTrans.transform.position = new Vector2(runningNum, mobTransY);
+        Debug.Log("chasing mob position x : " + mobTrans.transform.position.x);
+        warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, 0);
     }
 
     void executeEchoEnterBossMode()
