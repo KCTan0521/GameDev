@@ -38,7 +38,6 @@ public class MonsterChasingMob : MonoBehaviour
         resetMonsterPlayerDistance();
     }
 
-
     void Update()
     {
         // temporarily make it follow player
@@ -53,19 +52,18 @@ public class MonsterChasingMob : MonoBehaviour
 
     void distancePlayerAlert()
     {
+        // this will change the intensity of red screen,
+        // depending on the mob distance with player
 
-        // red screen : either use analog method, or use switch case method to change red intensity
-        // mobPlayerDistance;
+        // this will call the boss mode function when the mob is near to the player
 
         mobPlayerDistance = playerBehaviour.transform.position.x - mobTrans.transform.position.x;
         
         Debug.Log("Mob & Player distance : " + mobPlayerDistance);
 
-        
-
         if (mobPlayerDistance <= MIN_MOB_DISTANCE)
         {
-            warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, 100);
+            setWarningScreenColor(255, 0, 0, 100);
             executeEchoEnterBossMode();
         }
 
@@ -73,7 +71,7 @@ public class MonsterChasingMob : MonoBehaviour
         {
             redScreenIntensity = 1 - (mobPlayerDistance / DISTANCE_TO_START_ALERT);
             redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
-            warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, (byte) redScreenIntensity);
+            setWarningScreenColor(255, 0, 0, (int)redScreenIntensity);
 
         }
     }
@@ -85,7 +83,12 @@ public class MonsterChasingMob : MonoBehaviour
         Debug.Log("running number : " + runningNum);
         mobTrans.transform.position = new Vector2(runningNum, mobTransY);
         Debug.Log("chasing mob position x : " + mobTrans.transform.position.x);
-        warningScreen.GetComponent<Image>().color = new Color32(255, 0, 0, 0);
+        setWarningScreenColor(255, 0, 0, 0);
+    }
+
+    void setWarningScreenColor(int red, int green, int blue, int transparency)
+    {
+        warningScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
     }
 
     void executeEchoEnterBossMode()

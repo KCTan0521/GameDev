@@ -52,6 +52,7 @@ public class GamePlayController : MonoBehaviour
         startTime = Time.time;
         pauseButton.GetComponent<Image>().sprite = pauseUI;
         isEnterBossMode = false;
+        setFlashScreenColor(0, 0, 0, 0);
     }
 
     void gameSettingStatus(bool status)
@@ -61,36 +62,9 @@ public class GamePlayController : MonoBehaviour
             gs.SetActive(status);
         }
     }
-
-    public void PauseGameBackup()
-    {
-        if (isGamePaused)
-        {
-            FindObjectOfType<AudioManager>().Play("Menu - Button1");
-            Time.timeScale = 1;
-            isGamePaused = false;
-            playerBehaviour.enabled = true;
-            chaseMob.enabled = true;
-            gameSettingStatus(false);
-            pauseButton.GetComponent<Image>().sprite = pauseUI;
-        }
-        else
-        {
-            FindObjectOfType<AudioManager>().Play("Menu - Button2");
-            Time.timeScale = 0;
-            isGamePaused = true;
-            playerBehaviour.enabled = false;
-            chaseMob.enabled = false;
-            gameSettingStatus(true);
-            pauseButton.GetComponent<Image>().sprite = unPauseUI;
-        }
-    }
-
+    
     void PauseGame()
     {
-        
-
-
         if (isGamePaused)
         {
             FindObjectOfType<AudioManager>().Play("Menu - Button1");
@@ -142,7 +116,6 @@ public class GamePlayController : MonoBehaviour
     }
 
 
-    
     void bossMode()
     {
         if (!isEnterBossMode)
@@ -152,7 +125,6 @@ public class GamePlayController : MonoBehaviour
             Debug.Log("Enter Boss Mode");
 
             StartCoroutine(animationTimeDelay(animationDelayTime));
-
         }
 
     }
@@ -174,32 +146,35 @@ public class GamePlayController : MonoBehaviour
         }
     }
 
-
-
     IEnumerator animationTimeDelay(float waitTime)
     {
         // preferred waitTime = 0.004
         flashScreenColorValue = 0;
-        flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
+        setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
         for (int cycle = 0; cycle < 3; cycle++)
         {
             
             for (flashScreenColorValue = 0; flashScreenColorValue <= 255; flashScreenColorValue += 10)
             {
-                
-                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
+
+                setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
                 yield return new WaitForSeconds(waitTime);
                 
             }
 
             for (flashScreenColorValue = 255; flashScreenColorValue >= 0; flashScreenColorValue -= 10)
             {
-                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
+                setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
                 yield return new WaitForSeconds(waitTime);
             }
         }
         StartCoroutine(bossModeGamePlay());
                 
+    }
+
+    void setFlashScreenColor(int red, int green, int blue, int transparency)
+    {
+        flashScreen.GetComponent<Image>().color = new Color32((byte) red, (byte)green, (byte)blue, (byte)transparency);
     }
 
     IEnumerator bossModeGamePlay()
@@ -216,7 +191,7 @@ public class GamePlayController : MonoBehaviour
         isEnterBossMode = false;
         pauseGameBossMode();
         chaseMob.resetMonsterPlayerDistance();
-        flashScreen.GetComponent<Image>().color = new Color32(0, 0, 0, 0);
+        setFlashScreenColor(0,0,0,0);
     }
 
 
