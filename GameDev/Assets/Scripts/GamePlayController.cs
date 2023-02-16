@@ -11,33 +11,45 @@ public class GamePlayController : MonoBehaviour
     public Sprite pauseUI;
     public GameObject flashScreen;
     public float animationDelayTime;
+    public float distanceValue;
+
+    [SerializeField]
+    private float MIN_MOB_DISTANCE;
+    [SerializeField]
+    private GameObject warningScreen;
+    [SerializeField]
+    private float DISTANCE_TO_START_ALERT;
+    [SerializeField]
+    private float timeValueDeductRatio;
+
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
-    private MonsterChasingMob chaseMob; 
+    
     private GameObject[] gameSetting;
     private float startTime;
     private int flashScreenColorValue = 0;
     private bool isEnterBossMode = false;
     private int flashScreenTransparency = 255;
+    private static float runTimeDistanceValue;
+    private float redScreenIntensity = 0f;
+    private static float runTimeTimeValueDeductRatio;
 
     private void OnEnable()
     {
         Health.echoGameOver += gameOver;
-        MonsterChasingMob.echoEnterBossMode += bossMode;
     }
 
     private void OnDisable()
     {
         Health.echoGameOver -= gameOver;
-        MonsterChasingMob.echoEnterBossMode -= bossMode;
     }
 
 
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
-        chaseMob = GameObject.FindObjectOfType<MonsterChasingMob>();
+        
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
        
     }
@@ -46,13 +58,50 @@ public class GamePlayController : MonoBehaviour
     {
         gameSettingStatus(false);
         playerBehaviour.enabled = true;
-        chaseMob.enabled = true;
         isGamePaused = false;
         Time.timeScale = 1;
         startTime = Time.time;
         pauseButton.GetComponent<Image>().sprite = pauseUI;
         isEnterBossMode = false;
         setFlashScreenColor(0, 0, 0, 0);
+        resetDistanceValue();
+        setWarningScreenColor(255, 0, 0, 0);
+        runTimeTimeValueDeductRatio = timeValueDeductRatio;
+    }
+
+    private void Update()
+    {
+        distancePlayerAlert();
+    }
+
+
+    void distancePlayerAlert()
+    {
+        // this will change the intensity of red screen,
+        // depending on the distance value
+
+        // this will call the boss mode function when the distance value <= 0
+
+        // Debug.Log("Mob & Player distance : " + runTimeDistanceValue);
+
+        if (runTimeDistanceValue <= MIN_MOB_DISTANCE)
+        {
+            setWarningScreenColor(255, 0, 0, 100);
+            checkIsBossMode();
+        }
+
+        if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
+        {
+            redScreenIntensity = 1 - (runTimeDistanceValue / DISTANCE_TO_START_ALERT);
+            redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
+            setWarningScreenColor(255, 0, 0, (int)redScreenIntensity);
+
+        }
+    }
+
+    void setWarningScreenColor(int red, int green, int blue, int transparency)
+    {
+        warningScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
     }
 
     void gameSettingStatus(bool status)
@@ -63,24 +112,14 @@ public class GamePlayController : MonoBehaviour
         }
     }
     
-    void PauseGame()
+    public void PauseGame()
     {
         if (isGamePaused)
         {
             FindObjectOfType<AudioManager>().Play("Menu - Button1");
             Time.timeScale = 1;
             isGamePaused = false;
-
-            if (isEnterBossMode)
-            {
-                playerBehaviour.enabled = false;
-                chaseMob.enabled = false;
-            }
-            else
-            {
-                playerBehaviour.enabled = true;
-                chaseMob.enabled = true;
-            }
+            playerBehaviour.enabled = true;
             gameSettingStatus(false);
             pauseButton.GetComponent<Image>().sprite = pauseUI;
         }
@@ -90,7 +129,6 @@ public class GamePlayController : MonoBehaviour
             Time.timeScale = 0;
             isGamePaused = true;
             playerBehaviour.enabled = false;
-            chaseMob.enabled = false;
             gameSettingStatus(true);
             pauseButton.GetComponent<Image>().sprite = unPauseUI;
         }
@@ -116,33 +154,17 @@ public class GamePlayController : MonoBehaviour
     }
 
 
-    void bossMode()
+
+
+    void checkIsBossMode()
     {
         if (!isEnterBossMode)
         {
             isEnterBossMode = true;
-            pauseGameBossMode();
+            pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
             StartCoroutine(animationTimeDelay(animationDelayTime));
-        }
-
-    }
-
-    void pauseGameBossMode()
-    {
-        if (isEnterBossMode)
-        {
-            // stop the previous game play
-            // Time.timeScale = 0;
-            playerBehaviour.enabled = false;
-            chaseMob.enabled = false;
-        }
-        else
-        {
-            // resume the previous game play
-            playerBehaviour.enabled = true;
-            chaseMob.enabled = true;
         }
     }
 
@@ -179,7 +201,9 @@ public class GamePlayController : MonoBehaviour
 
     IEnumerator bossModeGamePlay()
     {
-        // your boss mode code goes here
+
+        // call wei zhong boss mode function
+
         // temperarily use wait for second to replace
         yield return new WaitForSeconds(0.5f);
 
@@ -189,14 +213,43 @@ public class GamePlayController : MonoBehaviour
         // the following code is called after the boss mode end
         Debug.Log("end animation boss mode");
         isEnterBossMode = false;
-        pauseGameBossMode();
-        chaseMob.resetMonsterPlayerDistance();
+        pauseGameForBossMode();
         setFlashScreenColor(0,0,0,0);
+        resetDistanceValue();
     }
 
+    public static void changeDistanceValueBy(float value, bool isTimeValue = false)
+    {
+        if (isTimeValue)
+        {
+            // the value is given based on time
+            // exp: from the wehman struggle
+            // need special calculation to deduct the distance
+            
+            value = value * -1 * runTimeTimeValueDeductRatio;
+            runTimeDistanceValue += value;
 
+            Debug.Log("time distance value : " + runTimeDistanceValue + "\nmodify : " + value);
+        }
+        else
+        {
+            // it will add or deduct the distance 
+            // based on the value (negative or positive0
 
+            runTimeDistanceValue += value;
+            Debug.Log("distance value : " + runTimeDistanceValue + "\nmodify : " + value);
+        }
+    }
 
+    public void resetDistanceValue()
+    {
+        runTimeDistanceValue = distanceValue;
+        Debug.Log("Reset distance value");
+    }
 
+   void pauseGameForBossMode()
+    {
+
+    }
 
 }

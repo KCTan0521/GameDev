@@ -79,6 +79,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (isStrangled)
         {
             struggleDuration += Time.deltaTime;
+            GamePlayController.changeDistanceValueBy(Time.deltaTime, true);
             if (struggleCount <= 0f)
             {
                 pull = true;
@@ -88,6 +89,7 @@ public class PlayerBehaviour : MonoBehaviour
                     isPulling = true;
                     isStrangled = false;
                     Physics2D.IgnoreLayerCollision(6, 10, true);
+                    GamePlayController.changeDistanceValueBy(-10f);
                     animator.SetBool("IsTangled", false);
                 }
             }

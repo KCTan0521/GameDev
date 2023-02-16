@@ -40,6 +40,7 @@ public class Health : MonoBehaviour
     {
         health -= damage;
         FindObjectOfType<AudioManager>().Play("Player - Hurt");
+        GamePlayController.changeDistanceValueBy(-10f);
     }
 
     public void Regen()

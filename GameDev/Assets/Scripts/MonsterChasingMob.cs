@@ -59,7 +59,7 @@ public class MonsterChasingMob : MonoBehaviour
 
         mobPlayerDistance = playerBehaviour.transform.position.x - mobTrans.transform.position.x;
         
-        Debug.Log("Mob & Player distance : " + mobPlayerDistance);
+        // Debug.Log("Mob & Player distance : " + mobPlayerDistance);
 
         if (mobPlayerDistance <= MIN_MOB_DISTANCE)
         {
@@ -78,11 +78,11 @@ public class MonsterChasingMob : MonoBehaviour
 
     public void resetMonsterPlayerDistance()
     {
-        Debug.Log("player position x : " + playerBehaviour.transform.position.x);
+        // Debug.Log("player position x : " + playerBehaviour.transform.position.x);
         runningNum = playerBehaviour.transform.position.x - FIRST_GAP_DISTANCE;
-        Debug.Log("running number : " + runningNum);
+        // Debug.Log("running number : " + runningNum);
         mobTrans.transform.position = new Vector2(runningNum, mobTransY);
-        Debug.Log("chasing mob position x : " + mobTrans.transform.position.x);
+        // Debug.Log("chasing mob position x : " + mobTrans.transform.position.x);
         setWarningScreenColor(255, 0, 0, 0);
     }
 
