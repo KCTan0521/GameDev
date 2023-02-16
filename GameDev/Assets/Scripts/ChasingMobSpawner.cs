@@ -6,40 +6,45 @@ using Cinemachine;
 
 public class ChasingMobSpawner : MonoBehaviour
 {
+    [SerializeField] GameObject _chasingMob;
+    private GameObject chasingMob;
     private Camera mainCam;
     private CinemachineVirtualCamera playerCam;
     private float leftScreen;
     private float orthoSize;
     private float aspectRatio;
-    public Button m_Button;
 
-    void Start()
+    private void Start()
     {
         mainCam = this.GetComponent<Camera>();
         playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
         orthoSize = playerCam.m_Lens.OrthographicSize;
         aspectRatio = GetComponent<Camera>().aspect;
         leftScreen = orthoSize * aspectRatio;
-        m_Button.onClick.AddListener(SpawnChasingMob);
     }
 
-    void Update()
+    private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SpawnChasingMob();
+        }
     }
 
-    void SpawnChasingMob()
+    private void SpawnChasingMob()
     {
+        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight = true;
         PlayerPosShift();
         ClearMobs();
+        ChasingMobPos();
     }
 
-    void PlayerPosShift()
+    private void PlayerPosShift()
     {
         playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX = 0.5f;
     }
 
-    void ClearMobs()
+    private void ClearMobs()
     {
         gameObject.GetComponent<MonsterController>().enabled = false;
         foreach (GameObject giant in GameObject.FindGameObjectsWithTag("Monster"))
@@ -56,5 +61,10 @@ public class ChasingMobSpawner : MonoBehaviour
         {
             Destroy(bullet);
         }
+    }
+
+    private void ChasingMobPos()
+    {
+        Instantiate(_chasingMob, new Vector2(mainCam.transform.position.x - leftScreen, 0f), Quaternion.identity);
     }
 }

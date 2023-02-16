@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private BoxCollider2D _col;
     [SerializeField] private BoxCollider2D standing;
     [SerializeField] private BoxCollider2D sliding;
+    private CinemachineVirtualCamera playerCam;
     public Animator animator;
     public float moveSpeed = 10f;
     private float targetedSpeed;
@@ -32,7 +34,9 @@ public class PlayerBehaviour : MonoBehaviour
     public bool pull;
     public bool isPulled;
     private bool isPulling;
-    private bool isPreviouslyGrounded;
+    public bool isBossFight;
+    private bool isCameraShift;
+    private float shiftTimer;
 
     private bool isJumpBoost = false;
     private float jumpBoostDuration = 0;
@@ -58,6 +62,8 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
+        isBossFight = false;
         targetedSpeed = moveSpeed;
         standing.enabled = true;
         sliding.enabled = false;
@@ -141,7 +147,27 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 isDashing = true;
                 gameObject.GetComponent<Stamina>().Exhaust(2f);
+                if (isBossFight)
+                {
+                    isCameraShift = true;
+                }
             }
+
+            if (isCameraShift)
+            {
+                shiftTimer += Time.deltaTime;
+                if (shiftTimer < 0.2f)
+                {
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/5;
+                }
+
+                else
+                {
+                    shiftTimer = 0f;
+                    isCameraShift = false;
+                }
+            }
+                
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
             {
@@ -292,6 +318,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 gameObject.GetComponent<Stamina>().Exhaust(2f);
                 isDashing = true;
+                if (isBossFight)
+                {
+                    isCameraShift = true;
+                }
             }
         }
     }
