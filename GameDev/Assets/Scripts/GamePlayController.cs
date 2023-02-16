@@ -19,7 +19,7 @@ public class GamePlayController : MonoBehaviour
     private float startTime;
     private int flashScreenColorValue = 0;
     private bool isEnterBossMode = false;
-
+    private int flashScreenTransparency = 255;
 
     private void OnEnable()
     {
@@ -180,21 +180,21 @@ public class GamePlayController : MonoBehaviour
     {
         // preferred waitTime = 0.004
         flashScreenColorValue = 0;
-        flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, 255);
+        flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
         for (int cycle = 0; cycle < 3; cycle++)
         {
             
             for (flashScreenColorValue = 0; flashScreenColorValue <= 255; flashScreenColorValue += 10)
             {
                 
-                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, 255);
+                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
                 yield return new WaitForSeconds(waitTime);
                 
             }
 
             for (flashScreenColorValue = 255; flashScreenColorValue >= 0; flashScreenColorValue -= 10)
             {
-                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, 255);
+                flashScreen.GetComponent<Image>().color = new Color32((byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenColorValue, (byte)flashScreenTransparency);
                 yield return new WaitForSeconds(waitTime);
             }
         }
@@ -205,6 +205,7 @@ public class GamePlayController : MonoBehaviour
     IEnumerator bossModeGamePlay()
     {
         // your boss mode code goes here
+        // temperarily use wait for second to replace
         yield return new WaitForSeconds(0.5f);
 
 
@@ -217,6 +218,7 @@ public class GamePlayController : MonoBehaviour
         chaseMob.resetMonsterPlayerDistance();
         flashScreen.GetComponent<Image>().color = new Color32(0, 0, 0, 0);
     }
+
 
 
 
