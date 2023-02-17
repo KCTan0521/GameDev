@@ -26,6 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
     private int jumpCount;
     private bool isDashing;
     private bool isSliding;
+    private bool isSprinting;
     public bool isStrangled;
     private float struggleDuration = 0;
     public float struggleCount = 0;
@@ -48,9 +49,13 @@ public class PlayerBehaviour : MonoBehaviour
     private bool dashButton;
     private bool slideButton;
 
+    public bool isHitByBoss;
+    public float slowTimer;
+    private bool isPlunged;
+    public bool isSuckedByBoss;
+
     private Rigidbody2D _rb;
     private float playerStamina;
-    private float playerHealth;
 
     private void Awake()
     {
@@ -76,7 +81,6 @@ public class PlayerBehaviour : MonoBehaviour
         dashButton = gameObject.GetComponent<TouchDetector>().dashButton;
         slideButton = gameObject.GetComponent<TouchDetector>().slideButton;
         playerStamina = gameObject.GetComponent<Stamina>().stamina;
-        playerHealth = gameObject.GetComponent<Health>().health;
 
         IsDashing();
         IsGrounded();
@@ -130,6 +134,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         else if (!isStrangled && !isPulling)
         {
+            animator.SetBool("IsTangled", false);
+
             if ((jumpButton || Input.GetKeyDown(KeyCode.Space)) && !canDoubleJump && !IsGrounded() && jumpCount == 1 && playerStamina >= 1)
             {
                 canDoubleJump = true;
@@ -146,11 +152,6 @@ public class PlayerBehaviour : MonoBehaviour
             if (dashButton && playerStamina >= 2)
             {
                 isDashing = true;
-                gameObject.GetComponent<Stamina>().Exhaust(2f);
-                if (isBossFight)
-                {
-                    isCameraShift = true;
-                }
             }
 
             if (isCameraShift)
@@ -223,9 +224,46 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Physics2D.gravity = new Vector2(0f, -9.81f);
 
-            if (_rb.velocity.x <= moveSpeed && _rb.velocity.x > 0)
+            if (!isSuckedByBoss && !isHitByBoss && _rb.velocity.x <= moveSpeed && _rb.velocity.x > 0)
             {
                 _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+            }
+
+            if (isHitByBoss)
+            {
+                slowTimer += Time.fixedDeltaTime;
+                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 20f;
+                if (slowTimer < 1f)
+                {
+                    _rb.velocity = new Vector2(moveSpeed - 2f, _rb.velocity.y);
+                }
+                else
+                {
+                    slowTimer = 0f;
+                    isHitByBoss = false;
+                }
+            }
+
+            if (isPlunged)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+                isPlunged = false;
+            }
+
+            if (isSuckedByBoss)
+            {
+                if (isDashing)
+                {
+                    gameObject.GetComponent<Stamina>().Exhaust(0.5f);
+                    _rb.velocity = new Vector2(10f, _rb.velocity.y);
+                    isDashing = false;
+                }
+                else
+                {
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 20f;
+                    _rb.velocity = new Vector2(8f, _rb.velocity.y);
+                }
             }
 
             /*if (moveSpeed < 15f) //Set max speed here
@@ -278,10 +316,15 @@ public class PlayerBehaviour : MonoBehaviour
                 IsSliding();
             }
 
-            if (isDashing)
+            if (isDashing && !isSuckedByBoss)
             {
+                gameObject.GetComponent<Stamina>().Exhaust(2f);
                 _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
                 FindObjectOfType<AudioManager>().Play("Player - Run");
+                if (isBossFight)
+                {
+                    isCameraShift = true;
+                }
                 isDashing = false;
             }
 
@@ -316,12 +359,7 @@ public class PlayerBehaviour : MonoBehaviour
             firstTap = Time.time;
             if (timeSinceLastTap <= TIME_INTERVAL)
             {
-                gameObject.GetComponent<Stamina>().Exhaust(2f);
                 isDashing = true;
-                if (isBossFight)
-                {
-                    isCameraShift = true;
-                }
             }
         }
     }
@@ -348,25 +386,29 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Wahmen")
+        if (collision.gameObject.CompareTag("Wahmen"))
         {
             gameObject.GetComponent<Health>().Damage(.5f);
             isPulling = false;
             Physics2D.IgnoreLayerCollision(6, 8, false);
         }
 
-        if (collision.gameObject.tag == "Monster")
+        if (collision.gameObject.CompareTag("Monster"))
         {
             isPulling = false;
         }
 
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             isStrangled = true;
             struggleCount = 4;
             struggleDuration = 0f;
         }
-            
+
+        if (collision.gameObject.CompareTag("Wave"))
+        {
+            isPlunged = true;
+        }
     }
 
     public void JumpBoost(float duration)

@@ -7,7 +7,7 @@ using Cinemachine;
 public class ChasingMobSpawner : MonoBehaviour
 {
     [SerializeField] GameObject _chasingMob;
-    private GameObject chasingMob;
+    private PlayerBehaviour _player;
     private Camera mainCam;
     private CinemachineVirtualCamera playerCam;
     private float leftScreen;
@@ -21,11 +21,12 @@ public class ChasingMobSpawner : MonoBehaviour
         orthoSize = playerCam.m_Lens.OrthographicSize;
         aspectRatio = GetComponent<Camera>().aspect;
         leftScreen = orthoSize * aspectRatio;
+        _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_player.isBossFight)
         {
             SpawnChasingMob();
         }
@@ -33,10 +34,11 @@ public class ChasingMobSpawner : MonoBehaviour
 
     private void SpawnChasingMob()
     {
-        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight = true;
         PlayerPosShift();
         ClearMobs();
         ChasingMobPos();
+        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight = true;
+        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isStrangled = false;
     }
 
     private void PlayerPosShift()
@@ -65,6 +67,6 @@ public class ChasingMobSpawner : MonoBehaviour
 
     private void ChasingMobPos()
     {
-        Instantiate(_chasingMob, new Vector2(mainCam.transform.position.x - leftScreen, 0f), Quaternion.identity);
+        Instantiate(_chasingMob, new Vector2(mainCam.transform.position.x - leftScreen, 4.5f), Quaternion.identity);
     }
 }

@@ -8,6 +8,7 @@ public class TouchDetector : MonoBehaviour
     public bool jumpButton;
     public bool dashButton;
     public bool slideButton;
+    public bool sprintButton;
     private Touch touch;
     private Vector2 startPos, endPos;
     private float screenWidth;
@@ -22,6 +23,7 @@ public class TouchDetector : MonoBehaviour
         jumpButton = false;
         dashButton = false;
         slideButton = false;
+        sprintButton = false;
 
         if (Input.touchCount > 0)
         {
@@ -51,9 +53,16 @@ public class TouchDetector : MonoBehaviour
 
                     else if (startPos != endPos)
                     {
-                        slideButton = true;
+                        if (startPos.y > endPos.y)
+                        {
+                            slideButton = true;
+                        }
                     }
 
+                    break;
+
+                case TouchPhase.Stationary:
+                    sprintButton = true;
                     break;
             }
         }
