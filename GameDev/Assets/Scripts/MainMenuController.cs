@@ -21,7 +21,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField]
     private int MIN_PLAY_BUTTON_TRANSPARENCY;
     [SerializeField]
-    private float playButtonColorChangeRate;
+    private float playButtonColorChangeRate; // 0.07f
 
 
     private const string readTutorialText = "Do you want to read the tutorial first?";
@@ -52,21 +52,24 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Start play button animation");
         while (true)
         {
-            Debug.Log(playButtonTransparencyValue);
+            // Debug.Log(playButtonTransparencyValue);
             for (playButtonTransparencyValue = 255; playButtonTransparencyValue >= MIN_PLAY_BUTTON_TRANSPARENCY; playButtonTransparencyValue -= 10)
             {
-                Debug.Log(playButtonTransparencyValue);
-                Debug.Log(MIN_PLAY_BUTTON_TRANSPARENCY);
+                // Debug.Log(playButtonTransparencyValue);
+                // Debug.Log(MIN_PLAY_BUTTON_TRANSPARENCY);
                 setPlayButtonColor(playButtonColorValue, playButtonColorValue, playButtonColorValue, playButtonTransparencyValue);
+                // Debug.Log("Before wait for seconds");
                 yield return new WaitForSeconds(colorChangeRate);
-
+                // Debug.Log(playButtonTransparencyValue);
             }
+            // Debug.Log("Second times");
 
             for (; playButtonTransparencyValue <= 255; playButtonTransparencyValue += 10)
             {
                 setPlayButtonColor(playButtonColorValue, playButtonColorValue, playButtonColorValue, playButtonTransparencyValue);
                 yield return new WaitForSeconds(colorChangeRate);
             }
+            // Debug.Log("end times");
         }
     }
 

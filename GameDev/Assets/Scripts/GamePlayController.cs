@@ -170,7 +170,7 @@ public class GamePlayController : MonoBehaviour
     public void GoBackHomePage()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button2");
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void gameOver()
