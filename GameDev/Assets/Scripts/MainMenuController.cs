@@ -7,11 +7,14 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject messageBox;
    
     private void Start()
     {
         FindObjectOfType<AudioManager>().Pause("Song2");
         FindObjectOfType<AudioManager>().Play("Song1");
+        messageBox.SetActive(false);
     }
 
     private void Update()
@@ -21,9 +24,15 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayGame()
     {
+        // isFirstTimePlay();
         FindObjectOfType<AudioManager>().Play("Menu - Button1");
         FindObjectOfType<AudioManager>().Play("Song2");
         SceneManager.LoadScene("GamePlay");
+    }
+
+    private void isFirstTimePlay()
+    {
+        messageBox.SetActive(true);
     }
 
     public void OpenCreditPage()
