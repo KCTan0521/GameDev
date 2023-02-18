@@ -219,3 +219,9 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
+  - name: Boss - Stomp
+    clip: {fileID: 8300000, guid: 908e49e58233edc4eb2a152529bbc096, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
