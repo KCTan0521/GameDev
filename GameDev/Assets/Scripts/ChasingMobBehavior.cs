@@ -208,4 +208,9 @@ public class ChasingMobBehavior : MonoBehaviour
     {
         FindObjectOfType<AudioManager>().Play("Boss - Stomp");
     }
+
+    private void StepSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Boss - Step");
+    }
 }
