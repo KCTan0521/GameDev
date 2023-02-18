@@ -23,6 +23,10 @@ public class GamePlayController : MonoBehaviour
     private float distanceToIncreaseDistanceValue;
     [SerializeField]
     private float MAX_DISTANCE_VALUE;
+    [SerializeField]
+    private GameObject flashScreenMob;
+    [SerializeField]
+    private float[] flashScreenMobSizeRatio;
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
@@ -37,6 +41,7 @@ public class GamePlayController : MonoBehaviour
     private static float runTimeTimeValueDeductRatio;
     private float runTimeDistanceToIncreaseDistanceValue;
     private float DISTANCE_TO_START_ALERT;
+    private bool enableFlashScreenMob = true;
 
 
     private void OnEnable()
@@ -73,6 +78,8 @@ public class GamePlayController : MonoBehaviour
         runTimeTimeValueDeductRatio = timeValueDeductRatio;
         DISTANCE_TO_START_ALERT = runTimeDistanceValue * 0.7f;
         runTimeDistanceToIncreaseDistanceValue = distanceToIncreaseDistanceValue;
+        flashScreenMob.SetActive(false);
+        enableFlashScreenMob = true;
     }
 
     private void Update()
@@ -190,25 +197,41 @@ public class GamePlayController : MonoBehaviour
             pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
-            StartCoroutine(animationTimeDelay(animationDelayTime, 1));
+            StartCoroutine(animationTimeDelay(animationDelayTime, 1, true));
 
         }
     }
 
-    IEnumerator animationTimeDelay(float waitTime, int selection)
+    IEnumerator animationTimeDelay(float waitTime, int selection, bool enableFlashMob = false)
     {
+        // preferred waitTime = 0.004
+
+        enableFlashScreenMob = enableFlashMob;
+
         setWarningScreenColor(255, 0, 0, 0);
 
-        // preferred waitTime = 0.004
+        if (enableFlashScreenMob)
+        {
+            flashScreenMob.SetActive(true);
+        }
+                
         flashScreenColorValue = 0;
         setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
+        
         for (int cycle = 0; cycle < 3; cycle++)
         {
-            
+            if (enableFlashScreenMob)
+            {
+                FlashScreenMobSize(cycle);
+            }
             for (flashScreenColorValue = 0; flashScreenColorValue <= 255; flashScreenColorValue += 10)
             {
 
                 setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
+                if (enableFlashScreenMob)
+                {
+                    setFlashScreenMobColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
+                }
                 yield return new WaitForSeconds(waitTime);
                 
             }
@@ -216,8 +239,17 @@ public class GamePlayController : MonoBehaviour
             for (flashScreenColorValue = 255; flashScreenColorValue >= 0; flashScreenColorValue -= 10)
             {
                 setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
+                if (enableFlashScreenMob)
+                {
+                    setFlashScreenMobColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
+                }
                 yield return new WaitForSeconds(waitTime);
             }
+        }
+
+        if (enableFlashScreenMob)
+        {
+            flashScreenMob.SetActive(false);
         }
 
         switch (selection)
@@ -227,6 +259,29 @@ public class GamePlayController : MonoBehaviour
                 break;
             case 2:
                 
+                break;
+        }
+    }
+
+    void setFlashScreenMobColor(int red, int green, int blue, int transparency)
+    {
+        flashScreenMob.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
+    }
+
+    void FlashScreenMobSize(int size)
+    {
+        switch (size)
+        {
+            case 0:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0]);
+                break;
+            case 1:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1]);
+                break;
+            case 2:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2]);
+                break;
+            default:
                 break;
         }
     }
