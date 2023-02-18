@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - Platform
   - Wahmen
+  - Wave
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Platform
   - Giant
   - Bullet
-  - 
+  - ChasingMob
   - 
   - 
   - 
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: GameSetting
     uniqueID: 2492025465
+    locked: 0
+  - name: Gameplay
+    uniqueID: 257828881
     locked: 0

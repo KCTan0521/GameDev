@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private BoxCollider2D _col;
     [SerializeField] private BoxCollider2D standing;
     [SerializeField] private BoxCollider2D sliding;
+    private CinemachineVirtualCamera playerCam;
     public Animator animator;
     public float moveSpeed = 10f;
     private float targetedSpeed;
@@ -32,7 +34,9 @@ public class PlayerBehaviour : MonoBehaviour
     public bool pull;
     public bool isPulled;
     private bool isPulling;
-    private bool isPreviouslyGrounded;
+    public bool isBossFight;
+    private bool isCameraShift;
+    private float shiftTimer;
 
     private bool isJumpBoost = false;
     private float jumpBoostDuration = 0;
@@ -43,10 +47,17 @@ public class PlayerBehaviour : MonoBehaviour
     private bool jumpButton;
     private bool dashButton;
     private bool slideButton;
+    private bool sprintButton;
+
+    public bool isHitByBoss;
+    public float slowTimer;
+    private bool isPlunged;
+    public bool isSuckedByBoss;
+    private bool isSprinting;
+    private float sprintTimer;
 
     private Rigidbody2D _rb;
     private float playerStamina;
-    private float playerHealth;
 
     private void Awake()
     {
@@ -58,6 +69,8 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
+        isBossFight = false;
         targetedSpeed = moveSpeed;
         standing.enabled = true;
         sliding.enabled = false;
@@ -69,8 +82,8 @@ public class PlayerBehaviour : MonoBehaviour
         jumpButton = gameObject.GetComponent<TouchDetector>().jumpButton;
         dashButton = gameObject.GetComponent<TouchDetector>().dashButton;
         slideButton = gameObject.GetComponent<TouchDetector>().slideButton;
+        sprintButton = gameObject.GetComponent<TouchDetector>().sprintButton;
         playerStamina = gameObject.GetComponent<Stamina>().stamina;
-        playerHealth = gameObject.GetComponent<Health>().health;
 
         IsDashing();
         IsGrounded();
@@ -126,6 +139,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         else if (!isStrangled && !isPulling)
         {
+            animator.SetBool("IsTangled", false);
+
             if ((jumpButton || Input.GetKeyDown(KeyCode.Space)) && !canDoubleJump && !IsGrounded() && jumpCount == 1 && playerStamina >= 1)
             {
                 canDoubleJump = true;
@@ -139,11 +154,27 @@ public class PlayerBehaviour : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("Player - Jump");
             }
 
-            if (dashButton && playerStamina >= 2)
+            if (sprintButton || Input.GetKey(KeyCode.RightArrow))
             {
-                isDashing = true;
-                gameObject.GetComponent<Stamina>().Exhaust(2f);
+                isSprinting = true;
+                sprintTimer = 0f;
             }
+
+            if (isCameraShift)
+            {
+                shiftTimer += Time.deltaTime;
+                if (shiftTimer < 0.2f)
+                {
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/5;
+                }
+
+                else
+                {
+                    shiftTimer = 0f;
+                    isCameraShift = false;
+                }
+            }
+                
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || slideButton)
             {
@@ -199,9 +230,54 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Physics2D.gravity = new Vector2(0f, -9.81f);
 
-            if (_rb.velocity.x <= moveSpeed && _rb.velocity.x > 0)
+            if (!isSuckedByBoss && !isHitByBoss && _rb.velocity.x <= moveSpeed && _rb.velocity.x > 0)
             {
                 _rb.velocity = new Vector2(moveSpeed, _rb.velocity.y);
+            }
+
+            if (isHitByBoss)
+            {
+                slowTimer += Time.fixedDeltaTime;
+                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 20f;
+                if (slowTimer < 1f)
+                {
+                    _rb.velocity = new Vector2(moveSpeed - 2f, _rb.velocity.y);
+                }
+                else
+                {
+                    slowTimer = 0f;
+                    isHitByBoss = false;
+                }
+            }
+
+            if (isPlunged)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+                _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
+                isPlunged = false;
+            }
+
+            if (isSuckedByBoss)
+            {
+                if (isSprinting)
+                {
+                    sprintTimer += Time.deltaTime;
+                    if (sprintTimer <= 0.1f)
+                    {
+                        _rb.velocity = new Vector2(8f, _rb.velocity.y);
+                    }
+
+                    else
+                    {
+                        isSprinting = false;
+                        sprintTimer = 0f;
+                    }     
+                }
+                else
+                {
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 10f;
+                    _rb.velocity = new Vector2(6f, _rb.velocity.y);
+                }
             }
 
             /*if (moveSpeed < 15f) //Set max speed here
@@ -214,10 +290,11 @@ public class PlayerBehaviour : MonoBehaviour
 
             }*/
 
-            if (canJump && IsGrounded() && _rb.velocity.y == 0f)
+            if (canJump)
             {
                 canJump = false;
                 jumpCount = 1;
+                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
                 _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
                 if (isSliding)
                 {
@@ -256,8 +333,13 @@ public class PlayerBehaviour : MonoBehaviour
 
             if (isDashing)
             {
+                gameObject.GetComponent<Stamina>().Exhaust(2f);
                 _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
                 FindObjectOfType<AudioManager>().Play("Player - Run");
+                if (isBossFight)
+                {
+                    isCameraShift = true;
+                }
                 isDashing = false;
             }
 
@@ -286,13 +368,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         const float TIME_INTERVAL = 0.2f;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && playerStamina >= 2)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || dashButton) && playerStamina >= 2 && !isSuckedByBoss)
         {
             float timeSinceLastTap = Time.time - firstTap;
             firstTap = Time.time;
             if (timeSinceLastTap <= TIME_INTERVAL)
             {
-                gameObject.GetComponent<Stamina>().Exhaust(2f);
                 isDashing = true;
             }
         }
@@ -320,25 +401,29 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Wahmen")
+        if (collision.gameObject.CompareTag("Wahmen"))
         {
             gameObject.GetComponent<Health>().Damage(.5f);
             isPulling = false;
             Physics2D.IgnoreLayerCollision(6, 8, false);
         }
 
-        if (collision.gameObject.tag == "Monster")
+        if (collision.gameObject.CompareTag("Monster"))
         {
             isPulling = false;
         }
 
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             isStrangled = true;
             struggleCount = 4;
             struggleDuration = 0f;
         }
-            
+
+        if (collision.gameObject.CompareTag("Wave"))
+        {
+            isPlunged = true;
+        }
     }
 
     public void JumpBoost(float duration)
