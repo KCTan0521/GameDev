@@ -5,8 +5,9 @@ using Cinemachine;
 
 public class ChasingMobBehavior : MonoBehaviour
 {
-    [SerializeField] GameObject _stompAttack;
-    private Rigidbody2D _chasingMob;
+    [SerializeField] private GameObject _stompAttack;
+    [SerializeField] private GameObject _windPressure;
+    private GameObject windPressure;
     private Rigidbody2D _player;
     private Camera mainCam;
     private CinemachineVirtualCamera playerCam;
@@ -27,11 +28,11 @@ public class ChasingMobBehavior : MonoBehaviour
     private bool suckAttack;
     private float attackRangeMax;
     private float attackRangeMin;
+    private float windPressureYPos;
     public Animator animator;
 
     private void Start()
     {
-        _chasingMob = this.GetComponent<Rigidbody2D>();
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
         playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
@@ -45,20 +46,25 @@ public class ChasingMobBehavior : MonoBehaviour
 
     private void Update()
     {
-        _chasingMob.transform.position = new Vector2(mainCam.transform.position.x - leftScreen - 2f, 4.5f);
         warmupTimer += Time.deltaTime;
         attackTimer += Time.deltaTime;
 
         if (warmupTimer >= 1f)
         {
-            if (_player.position.x < mainCam.transform.position.x - leftScreen + 4f)
+            if (_player.position.x < mainCam.transform.position.x - leftScreen + 4f && GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight)
             {
                 GameObject.Find("Player").GetComponent<Health>().Damage(3f);
             }
 
+            if (_player.position.x > mainCam.transform.position.x + leftScreen - 4f)
+            {
+                attackTimer = 0f;
+                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight = false;
+                GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().isRegressing = true;
+            }
         }
 
-        if (attackTimer >= 1f)
+        if (attackTimer >= 2f)
         {
             Attack();
         }
@@ -146,26 +152,32 @@ public class ChasingMobBehavior : MonoBehaviour
 
         else if (isAttacking)
         {
-            suckTimer += Time.deltaTime;
-
-            if (suckTimer >= 1f && !suckTargetSet)
+            if (!suckAttack)
             {
-                attackRangeMax = _player.transform.position.y + 1.5f;
-                attackRangeMin = _player.transform.position.y - 1.5f;
-                suckTargetSet = true;
-            }
+                suckTimer += Time.deltaTime;
 
-            if (suckTimer >= 1.5f)
-            {
-                suckTimer = 0f;
-                suckTargetSet = false;
-                suckAttack = true;
-            }
+                if (suckTimer >= 1f && !suckTargetSet)
+                {
+                    attackRangeMax = _player.transform.position.y + 1.5f;
+                    attackRangeMin = _player.transform.position.y - 1.5f;
+                    windPressureYPos = _player.transform.position.y;
+                    suckTargetSet = true;
+                }
 
+                if (suckTimer >= 1.5f)
+                {
+                    suckTimer = 0f;
+                    suckTargetSet = false;
+                    suckAttack = true;
+                    windPressure = Instantiate(_windPressure, new Vector2(_player.transform.position.x - 1f, windPressureYPos), Quaternion.identity);
+                }
+            }
+            
             if (suckAttack)
             {
                 if (suckLength < 2f)
                 {
+                    windPressure.transform.position = new Vector2(_player.transform.position.x - 1f, windPressureYPos);
                     if (_player.transform.position.y <= attackRangeMax && _player.transform.position.y >= attackRangeMin)
                     {
                         suckLength += Time.deltaTime;
@@ -185,9 +197,20 @@ public class ChasingMobBehavior : MonoBehaviour
                     animator.SetBool("isSucking", false);
                     attackTimer = 0f;
                     GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
+                    Destroy(windPressure);
                     suckAttack = false;
                 }
             } 
         }        
+    }
+
+    private void StompSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Boss - Stomp");
+    }
+
+    private void StepSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Boss - Step");
     }
 }

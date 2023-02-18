@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GamePlayController : MonoBehaviour
+public class TutorialPlayController : MonoBehaviour
 {
     public GameObject pauseButton;
     public Sprite unPauseUI;
@@ -26,7 +26,7 @@ public class GamePlayController : MonoBehaviour
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
-    
+
     private GameObject[] gameSetting;
     private float startTime;
     private int flashScreenColorValue = 0;
@@ -39,23 +39,12 @@ public class GamePlayController : MonoBehaviour
     private float DISTANCE_TO_START_ALERT;
 
 
-    private void OnEnable()
-    {
-        Health.echoGameOver += gameOver;
-    }
-
-    private void OnDisable()
-    {
-        Health.echoGameOver -= gameOver;
-    }
-
-
     void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
-        
+
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-       
+
     }
 
     void Start()
@@ -85,7 +74,8 @@ public class GamePlayController : MonoBehaviour
 
     private void checkMobileBackButton()
     {
-        if(MainMenuController.mobileBackButtonStatus()){
+        if (MainMenuController.mobileBackButtonStatus())
+        {
             PauseGame();
         }
     }
@@ -137,7 +127,7 @@ public class GamePlayController : MonoBehaviour
             gs.SetActive(status);
         }
     }
-    
+
     public void PauseGame()
     {
         if (isGamePaused)
@@ -170,7 +160,7 @@ public class GamePlayController : MonoBehaviour
     public void GoBackHomePage()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button2");
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void gameOver()
@@ -180,14 +170,11 @@ public class GamePlayController : MonoBehaviour
     }
 
 
-
-
     void checkIsBossMode()
     {
         if (!isEnterBossMode)
         {
             isEnterBossMode = true;
-            pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
             StartCoroutine(animationTimeDelay(animationDelayTime, 1));
@@ -204,13 +191,13 @@ public class GamePlayController : MonoBehaviour
         setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
         for (int cycle = 0; cycle < 3; cycle++)
         {
-            
+
             for (flashScreenColorValue = 0; flashScreenColorValue <= 255; flashScreenColorValue += 10)
             {
 
                 setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
                 yield return new WaitForSeconds(waitTime);
-                
+
             }
 
             for (flashScreenColorValue = 255; flashScreenColorValue >= 0; flashScreenColorValue -= 10)
@@ -226,14 +213,16 @@ public class GamePlayController : MonoBehaviour
                 StartCoroutine(bossModeGamePlay());
                 break;
             case 2:
-                
+
+                break;
+            default:
                 break;
         }
     }
 
     void setFlashScreenColor(int red, int green, int blue, int transparency)
     {
-        flashScreen.GetComponent<Image>().color = new Color32((byte) red, (byte)green, (byte)blue, (byte)transparency);
+        flashScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
     }
 
     IEnumerator bossModeGamePlay()
@@ -252,8 +241,7 @@ public class GamePlayController : MonoBehaviour
         // the following code is called after the boss mode end
         Debug.Log("end animation boss mode");
         isEnterBossMode = false;
-        pauseGameForBossMode();
-        setFlashScreenColor(0,0,0,0);
+        setFlashScreenColor(0, 0, 0, 0);
         setWarningScreenColor(255, 0, 0, 0);
         resetDistanceValue();
     }
@@ -274,7 +262,7 @@ public class GamePlayController : MonoBehaviour
             // the value is given based on time
             // exp: from the wehman struggle
             // need special calculation to deduct the distance
-            
+
             value = value * -1 * runTimeTimeValueDeductRatio;
             runTimeDistanceValue += value;
 
@@ -296,9 +284,5 @@ public class GamePlayController : MonoBehaviour
         Debug.Log("Reset distance value");
     }
 
-    void pauseGameForBossMode()
-    {
-
-    }
 
 }
