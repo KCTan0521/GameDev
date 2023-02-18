@@ -32,7 +32,7 @@ public class ChasingMobSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnChasingMob()
+    public void SpawnChasingMob()
     {
         PlayerPosShift();
         ClearMobs();

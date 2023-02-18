@@ -21,6 +21,8 @@ public class GamePlayController : MonoBehaviour
     private float timeValueDeductRatio;
     [SerializeField]
     private float distanceToIncreaseDistanceValue;
+    [SerializeField]
+    private float MAX_DISTANCE_VALUE;
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
@@ -77,6 +79,7 @@ public class GamePlayController : MonoBehaviour
     {
         distancePlayerAlert();
         increaseDistanceValueByPlayerDistance();
+        checkMaxDistanceValue();
     }
 
     void increaseDistanceValueByPlayerDistance()
@@ -84,7 +87,7 @@ public class GamePlayController : MonoBehaviour
 
         if (playerBehaviour.transform.position.x >= runTimeDistanceToIncreaseDistanceValue)
         {
-            changeDistanceValueBy(5f);
+            changeDistanceValueBy(0f);
             runTimeDistanceToIncreaseDistanceValue += distanceToIncreaseDistanceValue;
         }
 
@@ -179,7 +182,8 @@ public class GamePlayController : MonoBehaviour
             pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
-            StartCoroutine(animationTimeDelay(animationDelayTime));
+            //StartCoroutine(animationTimeDelay(animationDelayTime));
+            StartCoroutine(bossModeGamePlay());
         }
     }
 
@@ -222,6 +226,8 @@ public class GamePlayController : MonoBehaviour
         // temperarily use wait for second to replace
         yield return new WaitForSeconds(0f);
 
+        GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().SpawnChasingMob();
+
 
 
 
@@ -232,6 +238,15 @@ public class GamePlayController : MonoBehaviour
         setFlashScreenColor(0,0,0,0);
         setWarningScreenColor(255, 0, 0, 0);
         resetDistanceValue();
+    }
+
+    public void checkMaxDistanceValue()
+    {
+        if (runTimeDistanceValue > MAX_DISTANCE_VALUE)
+        {
+            runTimeDistanceValue = MAX_DISTANCE_VALUE;
+            Debug.Log("Reach Max Distance Distance, reset to : " + runTimeDistanceValue);
+        }
     }
 
     public static void changeDistanceValueBy(float value, bool isTimeValue = false)
