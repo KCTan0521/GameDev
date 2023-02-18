@@ -26,7 +26,6 @@ public class PlayerBehaviour : MonoBehaviour
     private int jumpCount;
     private bool isDashing;
     private bool isSliding;
-    private bool isSprinting;
     public bool isStrangled;
     private float struggleDuration = 0;
     public float struggleCount = 0;
@@ -48,11 +47,14 @@ public class PlayerBehaviour : MonoBehaviour
     private bool jumpButton;
     private bool dashButton;
     private bool slideButton;
+    private bool sprintButton;
 
     public bool isHitByBoss;
     public float slowTimer;
     private bool isPlunged;
     public bool isSuckedByBoss;
+    private bool isSprinting;
+    private float sprintTimer;
 
     private Rigidbody2D _rb;
     private float playerStamina;
@@ -80,6 +82,7 @@ public class PlayerBehaviour : MonoBehaviour
         jumpButton = gameObject.GetComponent<TouchDetector>().jumpButton;
         dashButton = gameObject.GetComponent<TouchDetector>().dashButton;
         slideButton = gameObject.GetComponent<TouchDetector>().slideButton;
+        sprintButton = gameObject.GetComponent<TouchDetector>().sprintButton;
         playerStamina = gameObject.GetComponent<Stamina>().stamina;
 
         IsDashing();
@@ -149,9 +152,10 @@ public class PlayerBehaviour : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("Player - Jump");
             }
 
-            if (dashButton && playerStamina >= 2)
+            if (sprintButton || Input.GetKey(KeyCode.RightArrow))
             {
-                isDashing = true;
+                isSprinting = true;
+                sprintTimer = 0f;
             }
 
             if (isCameraShift)
@@ -253,16 +257,24 @@ public class PlayerBehaviour : MonoBehaviour
 
             if (isSuckedByBoss)
             {
-                if (isDashing)
+                if (isSprinting)
                 {
-                    gameObject.GetComponent<Stamina>().Exhaust(0.5f);
-                    _rb.velocity = new Vector2(10f, _rb.velocity.y);
-                    isDashing = false;
+                    sprintTimer += Time.deltaTime;
+                    if (sprintTimer <= 0.1f)
+                    {
+                        _rb.velocity = new Vector2(8f, _rb.velocity.y);
+                    }
+
+                    else
+                    {
+                        isSprinting = false;
+                        sprintTimer = 0f;
+                    }     
                 }
                 else
                 {
-                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 20f;
-                    _rb.velocity = new Vector2(8f, _rb.velocity.y);
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 10f;
+                    _rb.velocity = new Vector2(6f, _rb.velocity.y);
                 }
             }
 
@@ -276,10 +288,11 @@ public class PlayerBehaviour : MonoBehaviour
 
             }*/
 
-            if (canJump && IsGrounded() && _rb.velocity.y == 0f)
+            if (canJump)
             {
                 canJump = false;
                 jumpCount = 1;
+                _rb.velocity = new Vector2(_rb.velocity.x, 0f);
                 _rb.AddForce(Vector2.up * (jumpForce + 9.81f), ForceMode2D.Impulse);
                 if (isSliding)
                 {
@@ -316,7 +329,7 @@ public class PlayerBehaviour : MonoBehaviour
                 IsSliding();
             }
 
-            if (isDashing && !isSuckedByBoss)
+            if (isDashing)
             {
                 gameObject.GetComponent<Stamina>().Exhaust(2f);
                 _rb.AddForce(Vector2.right * dashTranslate, ForceMode2D.Impulse);
@@ -353,7 +366,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         const float TIME_INTERVAL = 0.2f;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && playerStamina >= 2)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || dashButton) && playerStamina >= 2 && !isSuckedByBoss)
         {
             float timeSinceLastTap = Time.time - firstTap;
             firstTap = Time.time;

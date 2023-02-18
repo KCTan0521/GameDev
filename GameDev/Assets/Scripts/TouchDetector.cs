@@ -47,6 +47,7 @@ public class TouchDetector : MonoBehaviour
 
                         else
                         {
+                            sprintButton = true;
                             dashButton = true;
                         }
                     }
@@ -59,10 +60,6 @@ public class TouchDetector : MonoBehaviour
                         }
                     }
 
-                    break;
-
-                case TouchPhase.Stationary:
-                    sprintButton = true;
                     break;
             }
         }

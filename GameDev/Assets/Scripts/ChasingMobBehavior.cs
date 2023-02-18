@@ -14,15 +14,20 @@ public class ChasingMobBehavior : MonoBehaviour
     private float orthoSize;
     private float aspectRatio;
     private float warmupTimer;
+    private float attackTimer;
+    private int randAttack;
     private int stompCount;
     private int randStomp;
     private float stompTimer;
+    private bool isStomped;
     private float suckTimer;
     private float suckLength;
     private bool isAttacking;
     private bool suckTargetSet;
+    private bool suckAttack;
     private float attackRangeMax;
     private float attackRangeMin;
+    public Animator animator;
 
     private void Start()
     {
@@ -41,12 +46,8 @@ public class ChasingMobBehavior : MonoBehaviour
     private void Update()
     {
         _chasingMob.transform.position = new Vector2(mainCam.transform.position.x - leftScreen - 2f, 4.5f);
-        Attack();
-    }
-
-    private void Attack()
-    {
         warmupTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
 
         if (warmupTimer >= 1f)
         {
@@ -54,7 +55,45 @@ public class ChasingMobBehavior : MonoBehaviour
             {
                 GameObject.Find("Player").GetComponent<Health>().Damage(3f);
             }
-            SuckAttack();
+
+        }
+
+        if (attackTimer >= 1f)
+        {
+            Attack();
+        }
+    }
+
+    private void Attack()
+    {
+        if (!isAttacking)
+        {
+            int[] attackType = { 1, 2 };
+            System.Random rnd = new System.Random();
+            int randIndex = rnd.Next(attackType.Length);
+            randAttack = attackType[randIndex];
+            
+            if (randAttack == 1)
+            {
+                StompAttack();
+            }
+
+            else
+            {
+                SuckAttack();
+            }
+        }
+
+        else if (isAttacking)
+        {
+            if (randAttack == 1)
+            {
+                StompAttack();
+            }
+            else
+            {
+                SuckAttack();
+            }
         }
     }
 
@@ -77,13 +116,22 @@ public class ChasingMobBehavior : MonoBehaviour
             {
                 stompCount = 0;
                 isAttacking = false;
+                attackTimer = 0f;
             }
 
-            else if (stompTimer > 2f)
+            if (stompTimer >= 1.25f && !isStomped)
+            {
+                animator.SetBool("isStomping", true);
+                isStomped = true;
+            }
+
+            if (stompTimer > 2f)
             {
                 stompCount += 1;
                 Instantiate(_stompAttack, new Vector2(mainCam.transform.position.x - leftScreen + 2f, 1.75f), Quaternion.identity);
                 stompTimer = 0f;
+                animator.SetBool("isStomping", false);
+                isStomped = false;
             }
         }
     }
@@ -92,42 +140,53 @@ public class ChasingMobBehavior : MonoBehaviour
     {
         if (!isAttacking)
         {
+            isAttacking = true;
+            animator.SetBool("isSucking", true);
+        }
+
+        else if (isAttacking)
+        {
             suckTimer += Time.deltaTime;
 
-            if (suckTimer >= 0.5f && !suckTargetSet)
+            if (suckTimer >= 1f && !suckTargetSet)
             {
                 attackRangeMax = _player.transform.position.y + 1.5f;
                 attackRangeMin = _player.transform.position.y - 1.5f;
                 suckTargetSet = true;
             }
 
-            if (suckTimer >= 1f)
+            if (suckTimer >= 1.5f)
             {
-                isAttacking = true;
                 suckTimer = 0f;
                 suckTargetSet = false;
-            }
-        }
-
-        else if (isAttacking)
-        {
-            if (suckLength < 3f && _player.transform.position.y <= attackRangeMax && _player.transform.position.y >= attackRangeMin)
-            {
-                suckLength += Time.deltaTime;
-                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = true;
+                suckAttack = true;
             }
 
-            else if (suckLength < 3f && (_player.transform.position.y >= attackRangeMax || _player.transform.position.y <= attackRangeMin))
+            if (suckAttack)
             {
-                suckLength += Time.deltaTime;
-                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
-            }
+                if (suckLength < 2f)
+                {
+                    if (_player.transform.position.y <= attackRangeMax && _player.transform.position.y >= attackRangeMin)
+                    {
+                        suckLength += Time.deltaTime;
+                        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = true;
+                    }
+                    else
+                    {
+                        suckLength += Time.deltaTime;
+                        GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
+                    }
+                }
 
-            else
-            {
-                suckLength = 0f;
-                isAttacking = false;
-                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
+                else
+                {
+                    suckLength = 0f;
+                    isAttacking = false;
+                    animator.SetBool("isSucking", false);
+                    attackTimer = 0f;
+                    GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
+                    suckAttack = false;
+                }
             } 
         }        
     }

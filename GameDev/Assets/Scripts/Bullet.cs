@@ -192,6 +192,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             hitTarget = true;
+            Physics2D.IgnoreLayerCollision(6, 10, true);
         }
     }
 
