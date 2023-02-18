@@ -199,4 +199,9 @@ public class ChasingMobBehavior : MonoBehaviour
             } 
         }        
     }
+
+    private void StompSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Boss - Stomp");
+    }
 }

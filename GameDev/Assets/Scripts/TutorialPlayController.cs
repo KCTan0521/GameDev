@@ -170,8 +170,6 @@ public class TutorialPlayController : MonoBehaviour
     }
 
 
-
-
     void checkIsBossMode()
     {
         if (!isEnterBossMode)
