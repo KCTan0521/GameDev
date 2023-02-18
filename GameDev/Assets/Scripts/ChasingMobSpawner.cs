@@ -91,6 +91,7 @@ public class ChasingMobSpawner : MonoBehaviour
 
         foreach (GameObject wahmen in GameObject.FindGameObjectsWithTag("Wahmen"))
         {
+            _player.isBeingAttacked = false;
             Destroy(wahmen);
         }
 
