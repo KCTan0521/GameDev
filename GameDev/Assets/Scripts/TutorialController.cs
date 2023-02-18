@@ -29,7 +29,20 @@ public class TutorialController : MonoBehaviour
     private const float DEFAULT_SCREEN_WIDTH = 1920f;
     private float scale = 1;
     private CanvasScaler canvasScaler;
-  
+
+    private void Update()
+    {
+        checkMobileBackButton();
+    }
+
+    private void checkMobileBackButton()
+    {
+        if (MainMenuController.mobileBackButtonStatus())
+        {
+            BackHomePage();
+        }
+    }
+
     public void BackHomePage()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button1");

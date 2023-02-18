@@ -80,6 +80,14 @@ public class GamePlayController : MonoBehaviour
         distancePlayerAlert();
         increaseDistanceValueByPlayerDistance();
         checkMaxDistanceValue();
+        checkMobileBackButton();
+    }
+
+    private void checkMobileBackButton()
+    {
+        if(MainMenuController.mobileBackButtonStatus()){
+            PauseGame();
+        }
     }
 
     void increaseDistanceValueByPlayerDistance()
@@ -108,7 +116,7 @@ public class GamePlayController : MonoBehaviour
             checkIsBossMode();
         }
 
-        if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
+        else if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
         {
             redScreenIntensity = 1 - (runTimeDistanceValue / DISTANCE_TO_START_ALERT);
             redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
@@ -182,12 +190,12 @@ public class GamePlayController : MonoBehaviour
             pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
-            StartCoroutine(animationTimeDelay(animationDelayTime));
-            
+            StartCoroutine(animationTimeDelay(animationDelayTime, 1));
+
         }
     }
 
-    IEnumerator animationTimeDelay(float waitTime)
+    IEnumerator animationTimeDelay(float waitTime, int selection)
     {
         setWarningScreenColor(255, 0, 0, 0);
 
@@ -211,8 +219,18 @@ public class GamePlayController : MonoBehaviour
                 yield return new WaitForSeconds(waitTime);
             }
         }
-        StartCoroutine(bossModeGamePlay());
+
+        switch (selection)
+        {
+            case 1:
+                StartCoroutine(bossModeGamePlay());
+                break;
+            case 2:
                 
+                break;
+            default: 
+                break;
+        }
     }
 
     void setFlashScreenColor(int red, int green, int blue, int transparency)
@@ -280,7 +298,7 @@ public class GamePlayController : MonoBehaviour
         Debug.Log("Reset distance value");
     }
 
-   void pauseGameForBossMode()
+    void pauseGameForBossMode()
     {
 
     }

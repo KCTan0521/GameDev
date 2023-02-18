@@ -51,9 +51,16 @@ public class GameOverController : MonoBehaviour
 
     private void Update()
     {
-
+        checkMobileBackButton();
     }
 
+    private void checkMobileBackButton()
+    {
+        if (MainMenuController.mobileBackButtonStatus())
+        {
+            GoBackHomePage();
+        }
+    }
 
 
     public void RestartGame()
