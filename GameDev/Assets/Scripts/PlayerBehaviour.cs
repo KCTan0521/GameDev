@@ -154,7 +154,7 @@ public class PlayerBehaviour : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("Player - Jump");
             }
 
-            if (sprintButton || Input.GetKey(KeyCode.RightArrow))
+            if ((sprintButton || Input.GetKey(KeyCode.RightArrow)) && isSuckedByBoss && playerStamina > 0f)
             {
                 isSprinting = true;
                 sprintTimer = 0f;
@@ -165,7 +165,7 @@ public class PlayerBehaviour : MonoBehaviour
                 shiftTimer += Time.deltaTime;
                 if (shiftTimer < 0.2f)
                 {
-                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/5;
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/5f;
                 }
 
                 else
@@ -238,7 +238,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (isHitByBoss)
             {
                 slowTimer += Time.fixedDeltaTime;
-                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 20f;
+                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 15f;
                 if (slowTimer < 1f)
                 {
                     _rb.velocity = new Vector2(moveSpeed - 2f, _rb.velocity.y);
@@ -265,6 +265,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (sprintTimer <= 0.1f)
                     {
                         _rb.velocity = new Vector2(8f, _rb.velocity.y);
+                        gameObject.GetComponent<Stamina>().Exhaust(2f * Time.fixedDeltaTime);
                     }
 
                     else
@@ -275,7 +276,7 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 else
                 {
-                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 10f;
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 5f;
                     _rb.velocity = new Vector2(6f, _rb.velocity.y);
                 }
             }

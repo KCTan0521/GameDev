@@ -141,4 +141,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stompAttack: {fileID: 3137430555586061470, guid: 1a0cfd0ae098b314abef70472e1dd97f, type: 3}
+  _windPressure: {fileID: 8230990900829164386, guid: 3ecf2e95f6b9a9640a442ca604daf69d, type: 3}
   animator: {fileID: 3543170234675944157}

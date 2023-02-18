@@ -5,7 +5,9 @@ using Cinemachine;
 
 public class ChasingMobBehavior : MonoBehaviour
 {
-    [SerializeField] GameObject _stompAttack;
+    [SerializeField] private GameObject _stompAttack;
+    [SerializeField] private GameObject _windPressure;
+    private GameObject windPressure;
     private Rigidbody2D _chasingMob;
     private Rigidbody2D _player;
     private Camera mainCam;
@@ -27,6 +29,7 @@ public class ChasingMobBehavior : MonoBehaviour
     private bool suckAttack;
     private float attackRangeMax;
     private float attackRangeMin;
+    private float windPressureYPos;
     public Animator animator;
 
     private void Start()
@@ -58,7 +61,7 @@ public class ChasingMobBehavior : MonoBehaviour
 
         }
 
-        if (attackTimer >= 1f)
+        if (attackTimer >= 2f)
         {
             Attack();
         }
@@ -146,26 +149,32 @@ public class ChasingMobBehavior : MonoBehaviour
 
         else if (isAttacking)
         {
-            suckTimer += Time.deltaTime;
-
-            if (suckTimer >= 1f && !suckTargetSet)
+            if (!suckAttack)
             {
-                attackRangeMax = _player.transform.position.y + 1.5f;
-                attackRangeMin = _player.transform.position.y - 1.5f;
-                suckTargetSet = true;
-            }
+                suckTimer += Time.deltaTime;
 
-            if (suckTimer >= 1.5f)
-            {
-                suckTimer = 0f;
-                suckTargetSet = false;
-                suckAttack = true;
-            }
+                if (suckTimer >= 1f && !suckTargetSet)
+                {
+                    attackRangeMax = _player.transform.position.y + 1.5f;
+                    attackRangeMin = _player.transform.position.y - 1.5f;
+                    windPressureYPos = _player.transform.position.y;
+                    suckTargetSet = true;
+                }
 
+                if (suckTimer >= 1.5f)
+                {
+                    suckTimer = 0f;
+                    suckTargetSet = false;
+                    suckAttack = true;
+                    windPressure = Instantiate(_windPressure, new Vector2(_player.transform.position.x - 1f, windPressureYPos), Quaternion.identity);
+                }
+            }
+            
             if (suckAttack)
             {
                 if (suckLength < 2f)
                 {
+                    windPressure.transform.position = new Vector2(_player.transform.position.x - 1f, windPressureYPos);
                     if (_player.transform.position.y <= attackRangeMax && _player.transform.position.y >= attackRangeMin)
                     {
                         suckLength += Time.deltaTime;
