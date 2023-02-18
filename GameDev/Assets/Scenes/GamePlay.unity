@@ -567,8 +567,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 257828881
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &224176803
 GameObject:
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   unPauseUI: {fileID: -2018544702, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
   pauseUI: {fileID: -1629685436, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
   flashScreen: {fileID: 203099084}
-  animationDelayTime: 0
+  animationDelayTime: 0.004
   distanceValue: 50
   MIN_MOB_DISTANCE: 0
   warningScreen: {fileID: 1300385762}
