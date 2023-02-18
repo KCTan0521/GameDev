@@ -1195,11 +1195,11 @@ MonoBehaviour:
   pauseUI: {fileID: -1629685436, guid: 9bb3428932a072c4f8ca62ca55a35712, type: 3}
   flashScreen: {fileID: 2026220048}
   animationDelayTime: 0.004
-  distanceValue: 100
+  distanceValue: 35
   MIN_MOB_DISTANCE: 0
   warningScreen: {fileID: 1474495697}
-  DISTANCE_TO_START_ALERT: 50
   timeValueDeductRatio: 1.5
+  distanceToIncreaseDistanceValue: 200
 --- !u!1 &385190642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,7 +1467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.22, y: 4.2999997, z: -10}
+  m_LocalPosition: {x: 6.2233143, y: 4.2999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3438,7 +3438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976825042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.22, y: 4.2999997, z: -10}
+  m_LocalPosition: {x: 6.2233143, y: 4.2999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -18,10 +18,9 @@ public class GamePlayController : MonoBehaviour
     [SerializeField]
     private GameObject warningScreen;
     [SerializeField]
-    private float DISTANCE_TO_START_ALERT;
-    [SerializeField]
     private float timeValueDeductRatio;
-
+    [SerializeField]
+    private float distanceToIncreaseDistanceValue;
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
@@ -34,6 +33,9 @@ public class GamePlayController : MonoBehaviour
     private static float runTimeDistanceValue;
     private float redScreenIntensity = 0f;
     private static float runTimeTimeValueDeductRatio;
+    private float runTimeDistanceToIncreaseDistanceValue;
+    private float DISTANCE_TO_START_ALERT;
+
 
     private void OnEnable()
     {
@@ -67,13 +69,26 @@ public class GamePlayController : MonoBehaviour
         resetDistanceValue();
         setWarningScreenColor(255, 0, 0, 0);
         runTimeTimeValueDeductRatio = timeValueDeductRatio;
+        DISTANCE_TO_START_ALERT = runTimeDistanceValue * 0.7f;
+        runTimeDistanceToIncreaseDistanceValue = distanceToIncreaseDistanceValue;
     }
 
     private void Update()
     {
         distancePlayerAlert();
+        increaseDistanceValueByPlayerDistance();
     }
 
+    void increaseDistanceValueByPlayerDistance()
+    {
+
+        if (playerBehaviour.transform.position.x >= runTimeDistanceToIncreaseDistanceValue)
+        {
+            changeDistanceValueBy(5f);
+            runTimeDistanceToIncreaseDistanceValue += distanceToIncreaseDistanceValue;
+        }
+
+    }
 
     void distancePlayerAlert()
     {
@@ -205,7 +220,7 @@ public class GamePlayController : MonoBehaviour
         // call wei zhong boss mode function
 
         // temperarily use wait for second to replace
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0f);
 
 
 
@@ -215,6 +230,7 @@ public class GamePlayController : MonoBehaviour
         isEnterBossMode = false;
         pauseGameForBossMode();
         setFlashScreenColor(0,0,0,0);
+        setWarningScreenColor(255, 0, 0, 0);
         resetDistanceValue();
     }
 
