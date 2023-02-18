@@ -165,7 +165,7 @@ public class PlayerBehaviour : MonoBehaviour
                 shiftTimer += Time.deltaTime;
                 if (shiftTimer < 0.2f)
                 {
-                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/5f;
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime/4.75f;
                 }
 
                 else

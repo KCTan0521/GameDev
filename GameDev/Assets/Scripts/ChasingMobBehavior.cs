@@ -8,7 +8,6 @@ public class ChasingMobBehavior : MonoBehaviour
     [SerializeField] private GameObject _stompAttack;
     [SerializeField] private GameObject _windPressure;
     private GameObject windPressure;
-    private Rigidbody2D _chasingMob;
     private Rigidbody2D _player;
     private Camera mainCam;
     private CinemachineVirtualCamera playerCam;
@@ -34,7 +33,6 @@ public class ChasingMobBehavior : MonoBehaviour
 
     private void Start()
     {
-        _chasingMob = this.GetComponent<Rigidbody2D>();
         _player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
         playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
@@ -48,17 +46,22 @@ public class ChasingMobBehavior : MonoBehaviour
 
     private void Update()
     {
-        _chasingMob.transform.position = new Vector2(mainCam.transform.position.x - leftScreen - 2f, 4.5f);
         warmupTimer += Time.deltaTime;
         attackTimer += Time.deltaTime;
 
         if (warmupTimer >= 1f)
         {
-            if (_player.position.x < mainCam.transform.position.x - leftScreen + 4f)
+            if (_player.position.x < mainCam.transform.position.x - leftScreen + 4f && GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight)
             {
                 GameObject.Find("Player").GetComponent<Health>().Damage(3f);
             }
 
+            if (_player.position.x > mainCam.transform.position.x + leftScreen - 4f)
+            {
+                attackTimer = 0f;
+                GameObject.Find("Player").GetComponent<PlayerBehaviour>().isBossFight = false;
+                GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().isRegressing = true;
+            }
         }
 
         if (attackTimer >= 2f)
@@ -194,6 +197,7 @@ public class ChasingMobBehavior : MonoBehaviour
                     animator.SetBool("isSucking", false);
                     attackTimer = 0f;
                     GameObject.Find("Player").GetComponent<PlayerBehaviour>().isSuckedByBoss = false;
+                    Destroy(windPressure);
                     suckAttack = false;
                 }
             } 

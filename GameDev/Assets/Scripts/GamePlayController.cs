@@ -228,8 +228,6 @@ public class GamePlayController : MonoBehaviour
             case 2:
                 
                 break;
-            default: 
-                break;
         }
     }
 
