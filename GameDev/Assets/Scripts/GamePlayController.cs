@@ -80,6 +80,14 @@ public class GamePlayController : MonoBehaviour
         distancePlayerAlert();
         increaseDistanceValueByPlayerDistance();
         checkMaxDistanceValue();
+        checkMobileBackButton();
+    }
+
+    private void checkMobileBackButton()
+    {
+        if(MainMenuController.mobileBackButtonStatus()){
+            PauseGame();
+        }
     }
 
     void increaseDistanceValueByPlayerDistance()
@@ -108,7 +116,7 @@ public class GamePlayController : MonoBehaviour
             checkIsBossMode();
         }
 
-        if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
+        else if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
         {
             redScreenIntensity = 1 - (runTimeDistanceValue / DISTANCE_TO_START_ALERT);
             redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
@@ -280,7 +288,7 @@ public class GamePlayController : MonoBehaviour
         Debug.Log("Reset distance value");
     }
 
-   void pauseGameForBossMode()
+    void pauseGameForBossMode()
     {
 
     }

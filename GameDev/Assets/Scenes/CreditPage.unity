@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 566532882}
   - component: {fileID: 566532881}
-  - component: {fileID: 566532880}
   m_Layer: 10
   m_Name: CreditBgVideo
   m_TagString: Untagged
@@ -141,18 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &566532880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566532879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007aca508d223b348944d5a6ae08229d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!328 &566532881
 VideoPlayer:
   m_ObjectHideFlags: 0

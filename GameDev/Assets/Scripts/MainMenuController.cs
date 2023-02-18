@@ -14,6 +14,10 @@ public class MainMenuController : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("Song1");
     }
 
+    private void Update()
+    {
+        checkMobileBackButton();
+    }
 
     public void PlayGame()
     {
@@ -41,4 +45,34 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
     }
 
+
+    private void checkMobileBackButton()
+    {
+        if (MainMenuController.mobileBackButtonStatus())
+        {
+            ExitGame();
+        }
+    }
+
+    public static bool mobileBackButtonStatus()
+    {
+        // uncomment the code when processing into apk
+        /*
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                return true;
+            }
+        }
+        return false;
+        */
+
+        // remove the code when processing into apk
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            return true;            
+        }
+        return false;
+    }
 }

@@ -22,6 +22,19 @@ public class CreditPageController : MonoBehaviour
         ModifyCanvasScaler();
     }
 
+    private void Update()
+    {
+        checkMobileBackButton();        
+    }
+
+    private void checkMobileBackButton()
+    {
+        if (MainMenuController.mobileBackButtonStatus())
+        {
+            BackHomePage();
+        }
+    }
+
     public void BackHomePage()
     {
         FindObjectOfType<AudioManager>().Play("Menu - Button1");
