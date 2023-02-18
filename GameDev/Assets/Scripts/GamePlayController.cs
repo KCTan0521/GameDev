@@ -182,13 +182,15 @@ public class GamePlayController : MonoBehaviour
             pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
-            //StartCoroutine(animationTimeDelay(animationDelayTime));
-            StartCoroutine(bossModeGamePlay());
+            StartCoroutine(animationTimeDelay(animationDelayTime));
+            
         }
     }
 
     IEnumerator animationTimeDelay(float waitTime)
     {
+        setWarningScreenColor(255, 0, 0, 0);
+
         // preferred waitTime = 0.004
         flashScreenColorValue = 0;
         setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
