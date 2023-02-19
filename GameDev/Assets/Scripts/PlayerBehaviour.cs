@@ -33,7 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isBreakFree;
     public bool pull;
     public bool isPulled;
-    private bool isPulling;
+    public bool isPulling;
     public bool isBossFight;
     private bool isCameraShift;
     private float shiftTimer;
@@ -276,7 +276,7 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 else
                 {
-                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 5f;
+                    playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 10f;
                     _rb.velocity = new Vector2(6f, _rb.velocity.y);
                 }
             }
@@ -413,6 +413,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Monster"))
         {
             isPulling = false;
+            isBeingAttacked = false;
         }
 
         if (collision.gameObject.CompareTag("Bullet"))

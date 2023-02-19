@@ -12,6 +12,7 @@ TagManager:
   - Platform
   - Wahmen
   - Wave
+  - Wind
   layers:
   - Default
   - TransparentFX
@@ -46,18 +47,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 1155971373
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: PlayerInfo
-    uniqueID: 3242171671
+  - name: Background
+    uniqueID: 874582375
     locked: 0
-  - name: GameSetting
-    uniqueID: 2492025465
+  - name: Wind
+    uniqueID: 604945373
+    locked: 0
+  - name: Ground
+    uniqueID: 3062395593
     locked: 0
   - name: Gameplay
-    uniqueID: 257828881
+    uniqueID: 1730955005
+    locked: 0
+  - name: PlayerInfo
+    uniqueID: 1182308199
+    locked: 0
+  - name: Flash
+    uniqueID: 1593090457
+    locked: 0
+  - name: UI
+    uniqueID: 3848986627
     locked: 0

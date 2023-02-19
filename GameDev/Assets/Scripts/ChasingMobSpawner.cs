@@ -28,11 +28,6 @@ public class ChasingMobSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !_player.isBossFight)
-        {
-            SpawnChasingMob();
-        }
-
         if (_player.isBossFight)
         {
             chasingMob.transform.position = new Vector2(mainCam.transform.position.x - leftScreen - 2f, 4.5f);
@@ -63,6 +58,7 @@ public class ChasingMobSpawner : MonoBehaviour
                 gameObject.GetComponent<MonsterController>().enabled = true;
                 Destroy(chasingMob);
                 isRegressing = false;
+                GameObject.Find("MainCamera").GetComponent<MonsterController>().spawnX = _player.transform.position.x + 10f;
             }
         }
     }
@@ -91,6 +87,7 @@ public class ChasingMobSpawner : MonoBehaviour
 
         foreach (GameObject wahmen in GameObject.FindGameObjectsWithTag("Wahmen"))
         {
+            _player.isPulling = false;
             _player.isBeingAttacked = false;
             Destroy(wahmen);
         }
