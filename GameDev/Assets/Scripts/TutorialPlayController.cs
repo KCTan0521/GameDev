@@ -13,6 +13,7 @@ public class TutorialPlayController : MonoBehaviour
     public float animationDelayTime;
     public float distanceValue;
 
+   
     [SerializeField]
     private float MIN_MOB_DISTANCE;
     [SerializeField]
@@ -28,6 +29,7 @@ public class TutorialPlayController : MonoBehaviour
     private PlayerBehaviour playerBehaviour;
 
     private GameObject[] gameSetting;
+
     private float startTime;
     private int flashScreenColorValue = 0;
     private bool isEnterBossMode = false;
@@ -70,6 +72,9 @@ public class TutorialPlayController : MonoBehaviour
         increaseDistanceValueByPlayerDistance();
         checkMaxDistanceValue();
         checkMobileBackButton();
+
+        
+
     }
 
     private void checkMobileBackButton()
@@ -236,8 +241,6 @@ public class TutorialPlayController : MonoBehaviour
         GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().SpawnChasingMob();
 
 
-
-
         // the following code is called after the boss mode end
         Debug.Log("end animation boss mode");
         isEnterBossMode = false;
@@ -285,4 +288,4 @@ public class TutorialPlayController : MonoBehaviour
     }
 
 
-}
+}    
