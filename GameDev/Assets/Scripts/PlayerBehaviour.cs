@@ -21,11 +21,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float groundAndTopCheck = 0.2f;
     private float firstTap;
-    private bool canJump;
-    private bool canDoubleJump;
+    public bool canJump;
+    public bool canDoubleJump;
     private int jumpCount;
-    private bool isDashing;
-    private bool isSliding;
+    public bool isDashing;
+    public bool isSliding;
     public bool isStrangled;
     private float struggleDuration = 0;
     public float struggleCount = 0;

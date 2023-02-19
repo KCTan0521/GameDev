@@ -1303,7 +1303,7 @@ MonoBehaviour:
   warningScreen: {fileID: 1300385762}
   timeValueDeductRatio: 10
   distanceToIncreaseDistanceValue: 200
-  MAX_DISTANCE_VALUE: 110
+  MAX_DISTANCE_VALUE: 40
 --- !u!1 &404068195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chasingMob: {fileID: 3543170234675944156, guid: 81aa08b8441dbff479b2fdab8d9f67db, type: 3}
+  isRegressing: 0
 --- !u!1 &569438159
 GameObject:
   m_ObjectHideFlags: 0

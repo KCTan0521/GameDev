@@ -12,6 +12,9 @@ TagManager:
   - Platform
   - Wahmen
   - Wave
+  - Wind
+  - Tutorial
+  - Dash
   layers:
   - Default
   - TransparentFX

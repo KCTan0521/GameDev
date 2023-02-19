@@ -20,6 +20,8 @@ public class MonsterGiant : MonoBehaviour
     public float fictionMultiplier;
     public Health healthSystem;
 
+    public int tutorialJumpType;
+
     public float groundCheckRadius;
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -153,10 +155,21 @@ public class MonsterGiant : MonoBehaviour
 
     private bool getJumpType()
     {
-        //random generate true(high jump), false(long jump)
-        System.Random gen = new System.Random();
-        int prob = gen.Next(100);
-        return prob < 50;
+        if (tutorialJumpType == 1)
+        {
+            return true;
+        }
+        else if (tutorialJumpType == 2)
+        {
+            return false;
+        }
+        else
+        {
+            //random generate true(high jump), false(long jump)
+            System.Random gen = new System.Random();
+            int prob = gen.Next(100);
+            return prob < 50;
+        }
     }
 
 
