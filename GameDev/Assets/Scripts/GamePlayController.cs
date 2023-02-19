@@ -197,7 +197,7 @@ public class GamePlayController : MonoBehaviour
             pauseGameForBossMode();
             Debug.Log("Enter Boss Mode");
 
-            StartCoroutine(animationTimeDelay(animationDelayTime, 1, true));
+            StartCoroutine(animationTimeDelay(animationDelayTime, 1));
 
         }
     }
