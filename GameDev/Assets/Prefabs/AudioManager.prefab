@@ -226,7 +226,19 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: Boss - Step
-    clip: {fileID: 8300000, guid: 197a6eebdc619ff4daf7743792d62d3e, type: 3}
+    clip: {fileID: 8300000, guid: 26d4566a243e1f54fad9635cc04a44d6, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Boss - Roar
+    clip: {fileID: 8300000, guid: ff1fd2c7a77530f498d2ebfa5fa26aa3, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Boss - Inhale
+    clip: {fileID: 8300000, guid: 0546b9d6aa084264782140faea60a342, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
