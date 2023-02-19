@@ -16,7 +16,7 @@ public class MonsterController : MonoBehaviour
     private float orthoSize;
     private float aspectRatio;
     private float camEnd;
-    private float spawnX;
+    public float spawnX;
     private float spawnY;
     private float lastWahmenX;
     private float mobCount;
