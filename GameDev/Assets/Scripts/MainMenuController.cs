@@ -142,7 +142,7 @@ public class MainMenuController : MonoBehaviour
     {
         LocalStorage.WriteIsFirstTimePlayRecord();
         FindObjectOfType<AudioManager>().Play("Menu - Button1");
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("TutorialPlay");
     }
 
     public void ExitGame()
