@@ -42,6 +42,8 @@ public class GamePlayController : MonoBehaviour
     private float runTimeDistanceToIncreaseDistanceValue;
     private float DISTANCE_TO_START_ALERT;
     private bool enableFlashScreenMob = true;
+    private Animator flashScreenAnim;
+    private const string FLASH_ANIMATION = "Flash";
 
 
     private void OnEnable()
@@ -54,16 +56,16 @@ public class GamePlayController : MonoBehaviour
         Health.echoGameOver -= gameOver;
     }
 
-
-    void Awake()
+    private void Awake()
     {
         playerBehaviour = GameObject.FindObjectOfType<PlayerBehaviour>();
         
         gameSetting = GameObject.FindGameObjectsWithTag("GameSetting");
-       
+
+        flashScreenAnim = flashScreen.GetComponent<Animator>();
     }
 
-    void Start()
+    private void Start()
     {
         gameSettingStatus(false);
         playerBehaviour.enabled = true;
@@ -80,71 +82,19 @@ public class GamePlayController : MonoBehaviour
         runTimeDistanceToIncreaseDistanceValue = distanceToIncreaseDistanceValue;
         flashScreenMob.SetActive(false);
         enableFlashScreenMob = true;
+        flashScreenAnim.SetBool(FLASH_ANIMATION, false);
     }
 
     private void Update()
     {
         distancePlayerAlert();
-        increaseDistanceValueByPlayerDistance();
         checkMaxDistanceValue();
         checkMobileBackButton();
     }
 
-    private void checkMobileBackButton()
-    {
-        if(MainMenuController.mobileBackButtonStatus()){
-            PauseGame();
-        }
-    }
 
-    void increaseDistanceValueByPlayerDistance()
-    {
 
-        if (playerBehaviour.transform.position.x >= runTimeDistanceToIncreaseDistanceValue)
-        {
-            changeDistanceValueBy(0f);
-            runTimeDistanceToIncreaseDistanceValue += distanceToIncreaseDistanceValue;
-        }
-
-    }
-
-    void distancePlayerAlert()
-    {
-        // this will change the intensity of red screen,
-        // depending on the distance value
-
-        // this will call the boss mode function when the distance value <= 0
-
-        // Debug.Log("Mob & Player distance : " + runTimeDistanceValue);
-
-        if (runTimeDistanceValue <= MIN_MOB_DISTANCE)
-        {
-            setWarningScreenColor(255, 0, 0, 100);
-            checkIsBossMode();
-        }
-
-        else if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
-        {
-            redScreenIntensity = 1 - (runTimeDistanceValue / DISTANCE_TO_START_ALERT);
-            redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
-            setWarningScreenColor(255, 0, 0, (int)redScreenIntensity);
-
-        }
-    }
-
-    void setWarningScreenColor(int red, int green, int blue, int transparency)
-    {
-        warningScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
-    }
-
-    void gameSettingStatus(bool status)
-    {
-        foreach (GameObject gs in gameSetting)
-        {
-            gs.SetActive(status);
-        }
-    }
-    
+    // GAME MENU RELATED    
     public void PauseGame()
     {
         if (isGamePaused)
@@ -186,142 +136,51 @@ public class GamePlayController : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
+    private void checkMobileBackButton()
+    {
+        if (MainMenuController.mobileBackButtonStatus())
+        {
+            PauseGame();
+        }
+    }
+
+    void gameSettingStatus(bool status)
+    {
+        foreach (GameObject gs in gameSetting)
+        {
+            gs.SetActive(status);
+        }
+    }
 
 
 
+    // BOSS MODE RELATED
     void checkIsBossMode()
     {
         if (!isEnterBossMode)
         {
             isEnterBossMode = true;
-            pauseGameForBossMode();
+            setWarningScreenColor(0, 0, 0, 0);
             Debug.Log("Enter Boss Mode");
-
             StartCoroutine(animationTimeDelay(animationDelayTime, 1));
-
         }
     }
 
-    IEnumerator animationTimeDelay(float waitTime, int selection, bool enableFlashMob = false)
+    void bossModeGamePlay()
     {
-        // preferred waitTime = 0.004
-
-        enableFlashScreenMob = enableFlashMob;
-
-        setWarningScreenColor(255, 0, 0, 0);
-
-        if (enableFlashScreenMob)
-        {
-            flashScreenMob.SetActive(true);
-        }
-                
-        flashScreenColorValue = 0;
-        setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
-        
-        for (int cycle = 0; cycle < 3; cycle++)
-        {
-            if (enableFlashScreenMob)
-            {
-                FlashScreenMobSize(cycle);
-            }
-            for (flashScreenColorValue = 0; flashScreenColorValue <= 255; flashScreenColorValue += 10)
-            {
-
-                setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
-                if (enableFlashScreenMob)
-                {
-                    setFlashScreenMobColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
-                }
-                yield return new WaitForSeconds(waitTime);
-                
-            }
-
-            for (flashScreenColorValue = 255; flashScreenColorValue >= 0; flashScreenColorValue -= 10)
-            {
-                setFlashScreenColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
-                if (enableFlashScreenMob)
-                {
-                    setFlashScreenMobColor(flashScreenColorValue, flashScreenColorValue, flashScreenColorValue, flashScreenTransparency);
-                }
-                yield return new WaitForSeconds(waitTime);
-            }
-        }
-
-        if (enableFlashScreenMob)
-        {
-            flashScreenMob.SetActive(false);
-        }
-
-        switch (selection)
-        {
-            case 1:
-                StartCoroutine(bossModeGamePlay());
-                break;
-            case 2:
-                
-                break;
-        }
-    }
-
-    void setFlashScreenMobColor(int red, int green, int blue, int transparency)
-    {
-        flashScreenMob.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
-    }
-
-    void FlashScreenMobSize(int size)
-    {
-        switch (size)
-        {
-            case 0:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0]);
-                break;
-            case 1:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1]);
-                break;
-            case 2:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2]);
-                break;
-            default:
-                break;
-        }
-    }
-
-    void setFlashScreenColor(int red, int green, int blue, int transparency)
-    {
-        flashScreen.GetComponent<Image>().color = new Color32((byte) red, (byte)green, (byte)blue, (byte)transparency);
-    }
-
-    IEnumerator bossModeGamePlay()
-    {
-
-        // call wei zhong boss mode function
-
-        // temperarily use wait for second to replace
-        yield return new WaitForSeconds(0f);
-
         GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().SpawnChasingMob();
-
-
-
 
         // the following code is called after the boss mode end
         Debug.Log("end animation boss mode");
         isEnterBossMode = false;
-        pauseGameForBossMode();
         setFlashScreenColor(0,0,0,0);
         setWarningScreenColor(255, 0, 0, 0);
         resetDistanceValue();
     }
 
-    public void checkMaxDistanceValue()
-    {
-        if (runTimeDistanceValue > MAX_DISTANCE_VALUE)
-        {
-            runTimeDistanceValue = MAX_DISTANCE_VALUE;
-            Debug.Log("Reach Max Distance Distance, reset to : " + runTimeDistanceValue);
-        }
-    }
 
+
+    // DISTANCE VALUE RELATED
     public static void changeDistanceValueBy(float value, bool isTimeValue = false)
     {
         if (isTimeValue)
@@ -344,6 +203,46 @@ public class GamePlayController : MonoBehaviour
             Debug.Log("distance value : " + runTimeDistanceValue + "\nmodify : " + value);
         }
     }
+    
+    void distancePlayerAlert()
+    {
+        // this will change the intensity of red screen,
+        // depending on the distance value
+
+        // this will call the boss mode function when the distance value <= 0
+
+        // Debug.Log("Mob & Player distance : " + runTimeDistanceValue);
+
+        if (runTimeDistanceValue <= MIN_MOB_DISTANCE)
+        {
+            checkIsBossMode();
+        }
+
+        else if (runTimeDistanceValue <= DISTANCE_TO_START_ALERT)
+        {
+            redScreenIntensity = 1 - (runTimeDistanceValue / DISTANCE_TO_START_ALERT);
+            redScreenIntensity = Mathf.Round(redScreenIntensity * 100);
+            if (redScreenIntensity > 255)
+            {
+                setWarningScreenColor(255, 0, 0, 255);
+            }
+            else
+            {
+
+                setWarningScreenColor(255, 0, 0, (int)redScreenIntensity);
+            }
+
+        }
+    }
+
+    public void checkMaxDistanceValue()
+    {
+        if (runTimeDistanceValue > MAX_DISTANCE_VALUE)
+        {
+            runTimeDistanceValue = MAX_DISTANCE_VALUE;
+            Debug.Log("Reach Max Distance Distance, reset to : " + runTimeDistanceValue);
+        }
+    }
 
     public void resetDistanceValue()
     {
@@ -351,9 +250,62 @@ public class GamePlayController : MonoBehaviour
         Debug.Log("Reset distance value");
     }
 
-    void pauseGameForBossMode()
-    {
 
+    // SCREEN & COLOR RELATED
+    void setWarningScreenColor(int red, int green, int blue, int transparency)
+    {
+        warningScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
+    }
+    
+    void setFlashScreenColor(int red, int green, int blue, int transparency)
+    {
+        flashScreen.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
     }
 
+    IEnumerator animationTimeDelay(float waitTime, int selection)
+    {
+        // start flash animation        
+        Debug.Log("start flash animation");
+        flashScreenAnim.SetBool(FLASH_ANIMATION, true);
+        yield return new WaitForSeconds(waitTime);
+
+        // end flash animation
+        Debug.Log("end flash animation");
+        flashScreenAnim.SetBool(FLASH_ANIMATION, false);
+        switch (selection)
+        {
+            case 1:
+                bossModeGamePlay();
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    // FLASH SCREEN MOB FUNCTIONS
+    void setFlashScreenMobColor(int red, int green, int blue, int transparency)
+    {
+        flashScreenMob.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
+    }
+
+    void FlashScreenMobSize(int size)
+    {
+        switch (size)
+        {
+            case 0:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0]);
+                break;
+            case 1:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1]);
+                break;
+            case 2:
+                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2]);
+                break;
+            default:
+                break;
+        }
+    }
 }
