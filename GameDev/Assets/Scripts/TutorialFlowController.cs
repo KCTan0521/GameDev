@@ -90,6 +90,12 @@ public class TutorialFlowController : MonoBehaviour
             slideTutorial = true;
             showTutorialUI(false);
             resetControl = true;
+        } 
+        else
+        {
+            _player.GetComponent<PlayerBehaviour>().isDashing = false;
+            _player.GetComponent<PlayerBehaviour>().canJump = false;
+            _player.GetComponent<PlayerBehaviour>().canDoubleJump = false;
         }
 
     }
@@ -111,6 +117,12 @@ public class TutorialFlowController : MonoBehaviour
             areaDash.SetActive(false);
             resetControl = true;
         }
+        else
+        {
+            _player.GetComponent<PlayerBehaviour>().isSliding = false;
+            _player.GetComponent<PlayerBehaviour>().canJump = false;
+            _player.GetComponent<PlayerBehaviour>().canDoubleJump = false;
+        }
     }
 
     private void JumpTutorial()
@@ -130,6 +142,12 @@ public class TutorialFlowController : MonoBehaviour
             areaJump.SetActive(false);
             resetControl = true;
         }
+        else
+        {
+            _player.GetComponent<PlayerBehaviour>().isDashing = false;
+            _player.GetComponent<PlayerBehaviour>().isSliding = false;
+            _player.GetComponent<PlayerBehaviour>().canDoubleJump = false;
+        }
     }
 
     private void DoubleJumpTutorial()
@@ -148,6 +166,11 @@ public class TutorialFlowController : MonoBehaviour
             doubleJumpTutorial = true;
             showTutorialUI(false);
             areaJump.SetActive(false);
+        }
+        else
+        {
+            _player.GetComponent<PlayerBehaviour>().isDashing = false;
+            _player.GetComponent<PlayerBehaviour>().isSliding = false;
         }
     }
 
