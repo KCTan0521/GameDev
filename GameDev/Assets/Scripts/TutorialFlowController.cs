@@ -23,6 +23,7 @@ public class TutorialFlowController : MonoBehaviour
     private bool dashTutorial = false;
     private bool jumpTutorial = false;
     private bool doubleJumpTutorial = false;
+    private bool struggleTutorial = false;
 
 
     // Start is called before the first frame update
@@ -51,11 +52,14 @@ public class TutorialFlowController : MonoBehaviour
         if (dashGiant != null && dashGiant.transform.position.x <= (_player.transform.position.x + 4f) && !dashTutorial)
             DashTutorial();
 
-        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 9f) && !jumpTutorial)
+        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 20.5f) && !jumpTutorial)
             JumpTutorial();
 
-        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 9f) && !doubleJumpTutorial)
+        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 19f) && !doubleJumpTutorial)
             DoubleJumpTutorial();
+
+        if (_player.GetComponent<PlayerBehaviour>().isStrangled && !struggleTutorial)
+            StruggleTutorial();
     }
 
 
@@ -108,7 +112,8 @@ public class TutorialFlowController : MonoBehaviour
     private void JumpTutorial()
     {
         Time.timeScale = 0;
-        finger.GetComponent<Animator>().SetBool("dash", true);
+        finger.GetComponent<Animator>().SetBool("jump", true);
+        finger.GetComponent<Animator>().SetBool("dash", false);
         showTutorialUI(true);
         areaJump.SetActive(true);
 
@@ -118,6 +123,45 @@ public class TutorialFlowController : MonoBehaviour
         {
             Time.timeScale = 1;
             jumpTutorial = true;
+            showTutorialUI(false);
+            areaJump.SetActive(false);
+            resetControl = true;
+        }
+    }
+
+    private void DoubleJumpTutorial()
+    {
+        Time.timeScale = 0;
+        finger.GetComponent<Animator>().SetBool("jump", true);
+        finger.GetComponent<Animator>().SetBool("dash", false);
+        showTutorialUI(true);
+        areaJump.SetActive(true);
+
+        _player.GetComponent<TouchDetector>().enabled = true;
+
+        if (_player.GetComponent<PlayerBehaviour>().canDoubleJump)
+        {
+            Time.timeScale = 1;
+            doubleJumpTutorial = true;
+            showTutorialUI(false);
+            areaJump.SetActive(false);
+            resetControl = true;
+        }
+    }
+
+    private void StruggleTutorial()
+    {
+        Time.timeScale = 0;
+        finger.GetComponent<Animator>().SetBool("dash", true);
+        showTutorialUI(true);
+        areaJump.SetActive(true);
+
+        _player.GetComponent<TouchDetector>().enabled = true;
+
+        if (_player.GetComponent<PlayerBehaviour>().canDoubleJump)
+        {
+            Time.timeScale = 1;
+            doubleJumpTutorial = true;
             showTutorialUI(false);
             areaJump.SetActive(false);
             resetControl = true;
