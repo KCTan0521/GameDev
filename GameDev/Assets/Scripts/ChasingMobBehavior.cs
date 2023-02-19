@@ -213,4 +213,9 @@ public class ChasingMobBehavior : MonoBehaviour
     {
         FindObjectOfType<AudioManager>().Play("Boss - Step");
     }
+
+    private void SuckSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Boss - Inhale");
+    }
 }
