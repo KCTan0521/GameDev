@@ -14,6 +14,7 @@ public class TutorialFlowController : MonoBehaviour
     public GameObject finger;
     public GameObject areaDash;
     public GameObject areaJump;
+    public GameObject highlight;
 
     private GameObject[] tutorialUI;
 
@@ -60,6 +61,9 @@ public class TutorialFlowController : MonoBehaviour
 
         if (_player.GetComponent<PlayerBehaviour>().isStrangled && !struggleTutorial)
             StruggleTutorial();
+
+        if (struggleTutorial && _player.GetComponent<PlayerBehaviour>().isBreakFree)
+            resetControl = true;
     }
 
 
@@ -118,7 +122,6 @@ public class TutorialFlowController : MonoBehaviour
         areaJump.SetActive(true);
 
         _player.GetComponent<TouchDetector>().enabled = true;
-
         if (_player.GetComponent<PlayerBehaviour>().canJump)
         {
             Time.timeScale = 1;
@@ -145,26 +148,26 @@ public class TutorialFlowController : MonoBehaviour
             doubleJumpTutorial = true;
             showTutorialUI(false);
             areaJump.SetActive(false);
-            resetControl = true;
         }
     }
 
     private void StruggleTutorial()
     {
         Time.timeScale = 0;
-        finger.GetComponent<Animator>().SetBool("dash", true);
+        finger.GetComponent<Animator>().SetBool("strangle", true);
+        finger.GetComponent<Animator>().SetBool("jump", false);
+        finger.GetComponent<Animator>().SetBool("dash", false);
         showTutorialUI(true);
-        areaJump.SetActive(true);
+        highlight.SetActive(true);
 
         _player.GetComponent<TouchDetector>().enabled = true;
 
-        if (_player.GetComponent<PlayerBehaviour>().canDoubleJump)
-        {
+        if (_player.GetComponent<PlayerBehaviour>().struggleCount >= 6f) 
+        { 
             Time.timeScale = 1;
-            doubleJumpTutorial = true;
+            struggleTutorial = true;
             showTutorialUI(false);
-            areaJump.SetActive(false);
-            resetControl = true;
+            highlight.SetActive(false);
         }
     }
 
