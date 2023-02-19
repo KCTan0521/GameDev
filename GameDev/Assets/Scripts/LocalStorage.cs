@@ -10,6 +10,7 @@ public class LocalStorage : MonoBehaviour
     public static LocalStorage instance;
     static string path = Application.persistentDataPath + "/game-record.txt";
     static string bestGamePath = Application.persistentDataPath + "/best-game-record.txt";
+    static string isFirstTimePlayPath = Application.persistentDataPath + "/is-first-time-play.txt";
 
     private void Awake()
     {
@@ -116,4 +117,28 @@ public class LocalStorage : MonoBehaviour
         string[] data = { distance, time, bestDistance, bestTime };
         return data;
     }
+
+    static public void WriteIsFirstTimePlayRecord()
+    {
+        if (!File.Exists(isFirstTimePlayPath))
+        {
+            StreamWriter writer = new StreamWriter(isFirstTimePlayPath, false);
+            writer.WriteLine("1");
+            writer.Close();
+        }
+    }
+
+    public static bool ReadIsFirstTimePlayRecord()
+    {
+        if (File.Exists(isFirstTimePlayPath))
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+
 }
