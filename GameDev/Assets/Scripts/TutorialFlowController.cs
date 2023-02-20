@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class TutorialFlowController : MonoBehaviour
 {
-
+    [SerializeField] private GameObject _chasingMob;
     public Cinemachine.CinemachineVirtualCamera playerCam;
     public GameObject _player;
     public GameObject _boss;
@@ -25,13 +26,26 @@ public class TutorialFlowController : MonoBehaviour
     private bool jumpTutorial = false;
     private bool doubleJumpTutorial = false;
     private bool struggleTutorial = false;
+    private bool isBossSpawned = false;
+    private bool isRegressing;
 
+    private Camera mainCam;
+    private CinemachineVirtualCamera player_Cam;
+    private float leftScreen;
+    private float orthoSize;
+    private float aspectRatio;
+    private GameObject chasingMob;
 
     // Start is called before the first frame update
     void Start()
     {
         tutorialUI = GameObject.FindGameObjectsWithTag("Tutorial");
         showTutorialUI(false);
+        mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
+        player_Cam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
+        orthoSize = playerCam.m_Lens.OrthographicSize;
+        aspectRatio = mainCam.GetComponent<Camera>().aspect;
+        leftScreen = orthoSize * aspectRatio;
     }
 
     // Update is called once per frame
@@ -53,10 +67,10 @@ public class TutorialFlowController : MonoBehaviour
         if (dashGiant != null && dashGiant.transform.position.x <= (_player.transform.position.x + 4f) && !dashTutorial)
             DashTutorial();
 
-        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 20.5f) && !jumpTutorial)
+        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 35.5f) && !jumpTutorial)
             JumpTutorial();
 
-        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 19f) && !doubleJumpTutorial)
+        if (jumpWoman != null && jumpWoman.transform.position.x <= (_player.transform.position.x + 33f) && !doubleJumpTutorial)
             DoubleJumpTutorial();
 
         if (_player.GetComponent<PlayerBehaviour>().isStrangled && !struggleTutorial)
@@ -64,6 +78,54 @@ public class TutorialFlowController : MonoBehaviour
 
         if (struggleTutorial && _player.GetComponent<PlayerBehaviour>().isBreakFree)
             resetControl = true;
+
+        if (_player.transform.position.x >= 150f && !isRegressing)
+        {
+            if (playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX < 0.5f)
+            {
+                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX += Time.deltaTime / 2.5f;
+            }
+
+            else if (!isBossSpawned)
+            {
+                chasingMob = Instantiate(_chasingMob, new Vector2(mainCam.transform.position.x - leftScreen, 4.5f), Quaternion.identity); 
+                isBossSpawned = true;
+            }
+
+            else
+            {
+                if (_player.transform.position.x < mainCam.transform.position.x + leftScreen - 4f)
+                {
+                    chasingMob.transform.position = new Vector2(mainCam.transform.position.x - leftScreen, 4.5f);
+                    chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
+                    _player.GetComponent<TouchDetector>().enabled = true;
+                    _player.GetComponent<PlayerBehaviour>().isBossFight = true;
+                }
+
+                else
+                {
+                    _player.GetComponent<PlayerBehaviour>().isBossFight = false;
+                    chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
+                    isRegressing = true;
+
+                }
+            }
+        }
+
+        if (isRegressing)
+        {
+            if (playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX > 0.15f)
+            {
+                chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
+                chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
+                playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.deltaTime / 2.5f;
+            }
+
+            else
+            {
+                Destroy(chasingMob);
+            }
+        }
     }
 
 
@@ -166,6 +228,7 @@ public class TutorialFlowController : MonoBehaviour
             doubleJumpTutorial = true;
             showTutorialUI(false);
             areaJump.SetActive(false);
+            resetControl = true;
         }
         else
         {
@@ -210,5 +273,4 @@ public class TutorialFlowController : MonoBehaviour
         _player.GetComponent<TouchDetector>().jumpButton = false;
         _player.GetComponent<TouchDetector>().enabled = false;
     }
-
 }
