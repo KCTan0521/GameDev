@@ -239,6 +239,24 @@ MonoBehaviour:
     loop: 0
   - name: Boss - Inhale
     clip: {fileID: 8300000, guid: 0546b9d6aa084264782140faea60a342, type: 3}
+    volume: 0.619
+    pitch: 1.18
+    source: {fileID: 0}
+    loop: 0
+  - name: Boss -Flash1
+    clip: {fileID: 8300000, guid: 2e40cfaa85e3d9c4b8f9fb8083a32f75, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Boss - Flash2
+    clip: {fileID: 8300000, guid: 879fef160dd980f4582c85113c212816, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Boss - Flash3
+    clip: {fileID: 8300000, guid: b08f48468c51c534dbf3af29c6f76498, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
