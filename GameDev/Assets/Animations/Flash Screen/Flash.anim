@@ -562,7 +562,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.76666665
+  - time: 0.3
     functionName: RoarSound
     data: 
     objectReferenceParameter: {fileID: 0}
