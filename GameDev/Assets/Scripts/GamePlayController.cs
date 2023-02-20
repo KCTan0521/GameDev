@@ -23,28 +23,19 @@ public class GamePlayController : MonoBehaviour
     private float distanceToIncreaseDistanceValue;
     [SerializeField]
     private float MAX_DISTANCE_VALUE;
-    [SerializeField]
-    private GameObject flashScreenMob;
-    [SerializeField]
-    private float[] flashScreenMobSizeRatio;
 
     private bool isGamePaused;
     private PlayerBehaviour playerBehaviour;
     
     private GameObject[] gameSetting;
-    private float startTime;
-    private int flashScreenColorValue = 0;
-    private bool isEnterBossMode = false;
-    private int flashScreenTransparency = 255;
+    private float startTime;    
+    private bool isEnterBossMode = false;   
     private static float runTimeDistanceValue;
     private float redScreenIntensity = 0f;
-    private static float runTimeTimeValueDeductRatio;
-    private float runTimeDistanceToIncreaseDistanceValue;
-    private float DISTANCE_TO_START_ALERT;
-    private bool enableFlashScreenMob = true;
+    private static float runTimeTimeValueDeductRatio;    
+    private float DISTANCE_TO_START_ALERT;    
     private Animator flashScreenAnim;
     private const string FLASH_ANIMATION = "Flash";
-
 
     private void OnEnable()
     {
@@ -79,9 +70,6 @@ public class GamePlayController : MonoBehaviour
         setWarningScreenColor(255, 0, 0, 0);
         runTimeTimeValueDeductRatio = timeValueDeductRatio;
         DISTANCE_TO_START_ALERT = runTimeDistanceValue * 0.7f;
-        runTimeDistanceToIncreaseDistanceValue = distanceToIncreaseDistanceValue;
-        flashScreenMob.SetActive(false);
-        enableFlashScreenMob = true;
         flashScreenAnim.SetBool(FLASH_ANIMATION, false);
     }
 
@@ -160,7 +148,6 @@ public class GamePlayController : MonoBehaviour
         if (!isEnterBossMode)
         {
             isEnterBossMode = true;
-            setWarningScreenColor(0, 0, 0, 0);
             Debug.Log("Enter Boss Mode");
             StartCoroutine(animationTimeDelay(animationDelayTime, 1));
         }
@@ -169,8 +156,8 @@ public class GamePlayController : MonoBehaviour
     void bossModeGamePlay()
     {
         GameObject.Find("MainCamera").GetComponent<ChasingMobSpawner>().SpawnChasingMob();
-
-        // the following code is called after the boss mode end
+        
+        // the following code is called after the boss mode is called
         Debug.Log("end animation boss mode");
         isEnterBossMode = false;
         setFlashScreenColor(0,0,0,0);
@@ -186,7 +173,7 @@ public class GamePlayController : MonoBehaviour
         if (isTimeValue)
         {
             // the value is given based on time
-            // exp: from the wehman struggle
+            // exp: from the wehman struggle & strangle
             // need special calculation to deduct the distance
             
             value = value * -1 * runTimeTimeValueDeductRatio;
@@ -197,7 +184,7 @@ public class GamePlayController : MonoBehaviour
         else
         {
             // it will add or deduct the distance 
-            // based on the value (negative or positive0
+            // based on the value (negative or positive)
 
             runTimeDistanceValue += value;
             Debug.Log("distance value : " + runTimeDistanceValue + "\nmodify : " + value);
@@ -212,9 +199,10 @@ public class GamePlayController : MonoBehaviour
         // this will call the boss mode function when the distance value <= 0
 
         // Debug.Log("Mob & Player distance : " + runTimeDistanceValue);
-
+        
         if (runTimeDistanceValue <= MIN_MOB_DISTANCE)
         {
+            setWarningScreenColor(255, 0, 0, 100);
             checkIsBossMode();
         }
 
@@ -233,6 +221,7 @@ public class GamePlayController : MonoBehaviour
             }
 
         }
+        
     }
 
     public void checkMaxDistanceValue()
@@ -265,12 +254,10 @@ public class GamePlayController : MonoBehaviour
     IEnumerator animationTimeDelay(float waitTime, int selection)
     {
         // start flash animation        
-        Debug.Log("start flash animation");
         flashScreenAnim.SetBool(FLASH_ANIMATION, true);
         yield return new WaitForSeconds(waitTime);
 
         // end flash animation
-        Debug.Log("end flash animation");
         flashScreenAnim.SetBool(FLASH_ANIMATION, false);
         switch (selection)
         {
@@ -278,34 +265,11 @@ public class GamePlayController : MonoBehaviour
                 bossModeGamePlay();
                 break;
             case 2:
+
                 break;
             default:
                 break;
         }
     }
 
-
-    // FLASH SCREEN MOB FUNCTIONS
-    void setFlashScreenMobColor(int red, int green, int blue, int transparency)
-    {
-        flashScreenMob.GetComponent<Image>().color = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
-    }
-
-    void FlashScreenMobSize(int size)
-    {
-        switch (size)
-        {
-            case 0:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0], flashScreenMobSizeRatio[0]);
-                break;
-            case 1:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1], flashScreenMobSizeRatio[1]);
-                break;
-            case 2:
-                flashScreenMob.GetComponent<RectTransform>().transform.localScale = new Vector3(flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2], flashScreenMobSizeRatio[2]);
-                break;
-            default:
-                break;
-        }
-    }
 }

@@ -342,7 +342,7 @@ public class PlayerBehaviour : MonoBehaviour
                     isCameraShift = true;
                 }
                 isDashing = false;
-                GamePlayController.changeDistanceValueBy(1f);
+                GamePlayController.changeDistanceValueBy(3f);
             }
 
             else if (_rb.velocity.x > moveSpeed)
