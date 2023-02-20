@@ -20,16 +20,12 @@ public class MainMenuController : MonoBehaviour
     private Button playButton;
     [SerializeField]
     private int MIN_PLAY_BUTTON_TRANSPARENCY;
-    [SerializeField]
-    private float playButtonColorChangeRate; // 0.07f
 
 
     private const string readTutorialText = "Do you want to read the tutorial first?";
     private const string quitGameText = "Are you sure to quit game?";
     private bool isShowingFirstTimePlayMenu = false;
     private bool isShowingQuitGameMenu = false;
-    private int playButtonColorValue = 255;
-    private int playButtonTransparencyValue = 0;
 
     
     private void Start()
@@ -38,46 +34,11 @@ public class MainMenuController : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("Song1");
         messageBox.SetActive(false);
         isShowingFirstTimePlayMenu = false;
-        setPlayButtonColor(playButtonColorValue, playButtonColorValue, playButtonColorValue, 255);
-        StartCoroutine(playButtonColorChange(playButtonColorChangeRate));
     }
 
     private void Update()
     {
         checkMobileBackButton();
-    }
-
-    IEnumerator playButtonColorChange(float colorChangeRate)
-    {
-        Debug.Log("Start play button animation");
-        while (true)
-        {
-            // Debug.Log(playButtonTransparencyValue);
-            for (playButtonTransparencyValue = 255; playButtonTransparencyValue >= MIN_PLAY_BUTTON_TRANSPARENCY; playButtonTransparencyValue -= 10)
-            {
-                // Debug.Log(playButtonTransparencyValue);
-                // Debug.Log(MIN_PLAY_BUTTON_TRANSPARENCY);
-                setPlayButtonColor(playButtonColorValue, playButtonColorValue, playButtonColorValue, playButtonTransparencyValue);
-                // Debug.Log("Before wait for seconds");
-                yield return new WaitForSeconds(colorChangeRate);
-                // Debug.Log(playButtonTransparencyValue);
-            }
-            // Debug.Log("Second times");
-
-            for (; playButtonTransparencyValue <= 255; playButtonTransparencyValue += 10)
-            {
-                setPlayButtonColor(playButtonColorValue, playButtonColorValue, playButtonColorValue, playButtonTransparencyValue);
-                yield return new WaitForSeconds(colorChangeRate);
-            }
-            // Debug.Log("end times");
-        }
-    }
-
-    private void setPlayButtonColor(int red, int green, int blue, int transparency)
-    {
-        ColorBlock playButtonRGBAColor = playButton.GetComponent<Button>().colors;
-        playButtonRGBAColor.normalColor = new Color32((byte)red, (byte)green, (byte)blue, (byte)transparency);
-        playButton.GetComponent<Button>().colors = playButtonRGBAColor;
     }
 
     public void PlayGame()
