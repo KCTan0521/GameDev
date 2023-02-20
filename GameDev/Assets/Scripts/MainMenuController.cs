@@ -148,7 +148,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 return true;
             }
