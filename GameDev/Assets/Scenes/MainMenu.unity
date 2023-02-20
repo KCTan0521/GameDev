@@ -710,7 +710,6 @@ MonoBehaviour:
   messageBoxText: {fileID: 1856989378}
   playButton: {fileID: 1883744873}
   MIN_PLAY_BUTTON_TRANSPARENCY: 150
-  playButtonColorChangeRate: 0.07
 --- !u!1 &581809663
 GameObject:
   m_ObjectHideFlags: 0
