@@ -20,19 +20,40 @@ public class GameOverController : MonoBehaviour
     [SerializeField]
     private GameObject bestTimeSurvived;
 
+    [SerializeField]
+    private GameObject encourageText;
 
-    private void Awake()
-    {
+    private string[] encourageTextArr = 
+        {
+            "Wishing you the best of luck during today’s game",
+            "When the going gets tough, the tough gets going!",
+            "Play hard tonight and don't leave anything out there",
+            "Let's see how far you can go",
+            "Good luck and play hard",
+            "The game tonight is going to be a good one",
+            "Best of luck out there today!",
+            "You were born to be a player. You were meant to be here. This moment is yours",
+            "Have fun tonight",
+            "Be sure to run a smart race and to try your hardest",
+            "Put on a good show and good luck",
+            "Play hard, play smart",
+            "The game goes fast. Play hard and good luck",
+            "Stay calm, stay focused, and try your hardest",
+            "Have a great game and play hard",
+            "Good luck in today's game",
+            "Stay confident in your abilities and give it your all",
+            "It's hard to beat a person who never gives up",
+            "A champion is someone who gets up when he can’t"
+        };
 
-    }
+
     private void Start()
     {
         string[] data;
         data = LocalStorage.ReadRecord();
         textDisplay(data[0], data[1], data[2], data[3]);
-        
+        encourageText.GetComponent<TextMeshProUGUI>().text = encourageTextArr[Random.Range(0, encourageTextArr.Length)];
     }
-
 
     void textDisplay(string distance, string time, string bestDistance, string bestTime) {
         distanceTravelled.GetComponent<TextMeshProUGUI>().text = "Distance : " +  distance + "m";

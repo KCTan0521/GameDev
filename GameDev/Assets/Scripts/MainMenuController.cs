@@ -146,23 +146,23 @@ public class MainMenuController : MonoBehaviour
 
     public static bool mobileBackButtonStatus()
     {
-        // uncomment the code when processing into apk
-        /*
         if (Application.platform == RuntimePlatform.Android)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 return true;
             }
         }
         return false;
-        */
+        
 
         // remove the code when processing into apk
+        /*
         if (Input.GetKeyDown(KeyCode.B))
         {
             return true;            
         }
         return false;
+        */
     }
 }
