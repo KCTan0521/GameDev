@@ -241,7 +241,7 @@ public class PlayerBehaviour : MonoBehaviour
                 playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX -= Time.fixedDeltaTime / 15f;
                 if (slowTimer < 1f)
                 {
-                    _rb.velocity = new Vector2(moveSpeed - 2f, _rb.velocity.y);
+                    _rb.velocity = new Vector2(moveSpeed - 2.3f, _rb.velocity.y);
                 }
                 else
                 {
