@@ -1129,7 +1129,7 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_XDamping: 1
+  m_XDamping: 20
   m_YDamping: 1
   m_ZDamping: 1
   m_TargetMovementOnly: 1
@@ -2191,6 +2191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bbeec3b2fd6154dbd16c402e67f366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chasingMob: {fileID: 3543170234675944156, guid: 81aa08b8441dbff479b2fdab8d9f67db, type: 3}
   playerCam: {fileID: 1976825043}
   _player: {fileID: 1349859213}
   _boss: {fileID: 276060614}
@@ -2367,7 +2368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 4.2999997, z: -10}
+  m_LocalPosition: {x: 5.6, y: 4.2999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2468,6 +2469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chasingMob: {fileID: 3543170234675944156, guid: 81aa08b8441dbff479b2fdab8d9f67db, type: 3}
+  chasingMob: {fileID: 0}
   isRegressing: 0
 --- !u!1 &569438159
 GameObject:
@@ -2927,7 +2929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 685831052822321995, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 135.15
+      value: 139.2
       objectReference: {fileID: 0}
     - target: {fileID: 685831052822321995, guid: 9662960fed9e92a4cb704ca54b39edc3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5538,7 +5540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976825042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 4.2999997, z: -10}
+  m_LocalPosition: {x: 5.6, y: 4.2999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

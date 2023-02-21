@@ -7,7 +7,7 @@ using Cinemachine;
 public class ChasingMobSpawner : MonoBehaviour
 {
     [SerializeField] GameObject _chasingMob;
-    private GameObject chasingMob;
+    public GameObject chasingMob;
     private PlayerBehaviour _player;
     private Camera mainCam;
     private CinemachineVirtualCamera playerCam;
@@ -24,6 +24,7 @@ public class ChasingMobSpawner : MonoBehaviour
         aspectRatio = GetComponent<Camera>().aspect;
         leftScreen = orthoSize * aspectRatio;
         _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+        isRegressing = false;
     }
 
     private void Update()

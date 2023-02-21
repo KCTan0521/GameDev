@@ -15,7 +15,7 @@ public class ChasingMobBehavior : MonoBehaviour
     private float orthoSize;
     private float aspectRatio;
     private float warmupTimer;
-    private float attackTimer;
+    public float attackTimer;
     private int randAttack;
     private int stompCount;
     private int randStomp;
