@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class TutorialFlowController : MonoBehaviour
 {
+    [SerializeField] private GameObject _endScreen;
     [SerializeField] private GameObject _chasingMob;
     public Cinemachine.CinemachineVirtualCamera playerCam;
     public GameObject _player;
@@ -28,6 +29,7 @@ public class TutorialFlowController : MonoBehaviour
     private bool struggleTutorial = false;
     private bool isBossSpawned = false;
     private bool isRegressing;
+    private bool isTutorialEnded;
 
     private Camera mainCam;
     private CinemachineVirtualCamera player_Cam;
@@ -41,6 +43,7 @@ public class TutorialFlowController : MonoBehaviour
     {
         tutorialUI = GameObject.FindGameObjectsWithTag("Tutorial");
         showTutorialUI(false);
+        _endScreen.SetActive(false);
         mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
         player_Cam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
         orthoSize = playerCam.m_Lens.OrthographicSize;
@@ -107,12 +110,11 @@ public class TutorialFlowController : MonoBehaviour
                     _player.GetComponent<PlayerBehaviour>().isBossFight = false;
                     chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
                     isRegressing = true;
-
                 }
             }
         }
 
-        if (isRegressing)
+        if (isRegressing && !isTutorialEnded)
         {
             if (playerCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX > 0.15f)
             {
@@ -124,6 +126,9 @@ public class TutorialFlowController : MonoBehaviour
             else
             {
                 Destroy(chasingMob);
+                isTutorialEnded = true;
+                _endScreen.SetActive(true);
+                Time.timeScale = 0;
             }
         }
     }

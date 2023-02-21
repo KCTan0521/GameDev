@@ -72,9 +72,6 @@ public class TutorialPlayController : MonoBehaviour
         increaseDistanceValueByPlayerDistance();
         checkMaxDistanceValue();
         checkMobileBackButton();
-
-        
-
     }
 
     private void checkMobileBackButton()

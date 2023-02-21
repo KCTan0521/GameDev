@@ -15,6 +15,7 @@ TagManager:
   - Wind
   - Tutorial
   - Dash
+  - EndScreen
   layers:
   - Default
   - TransparentFX
