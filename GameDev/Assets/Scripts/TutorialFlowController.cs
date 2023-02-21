@@ -17,6 +17,7 @@ public class TutorialFlowController : MonoBehaviour
     public GameObject areaDash;
     public GameObject areaJump;
     public GameObject highlight;
+    public GameObject blur;
 
     private GameObject[] tutorialUI;
 
@@ -103,6 +104,10 @@ public class TutorialFlowController : MonoBehaviour
                     chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
                     _player.GetComponent<TouchDetector>().enabled = true;
                     _player.GetComponent<PlayerBehaviour>().isBossFight = true;
+
+                    finger.GetComponent<Animator>().SetBool("dash", true);
+                    showTutorialUI(true);
+                    blur.SetActive(false);
                 }
 
                 else
@@ -110,6 +115,8 @@ public class TutorialFlowController : MonoBehaviour
                     _player.GetComponent<PlayerBehaviour>().isBossFight = false;
                     chasingMob.GetComponent<ChasingMobBehavior>().attackTimer = 0f;
                     isRegressing = true;
+
+                    showTutorialUI(false);
                 }
             }
         }
@@ -129,6 +136,7 @@ public class TutorialFlowController : MonoBehaviour
                 isTutorialEnded = true;
                 _endScreen.SetActive(true);
                 Time.timeScale = 0;
+                showTutorialUI(false);
             }
         }
     }

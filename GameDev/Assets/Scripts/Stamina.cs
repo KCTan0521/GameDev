@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Stamina : MonoBehaviour
 {
     private const float MAX_STAMINA = 3;
-    private const float STAMINA_REGEN = 1f;
+    private const float STAMINA_REGEN = 1.5f;
     public float stamina;
     private Image staminaBar;
     private bool isStrangled;
