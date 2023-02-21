@@ -30,6 +30,7 @@ public class MainMenuController : MonoBehaviour
     
     private void Start()
     {
+        Time.timeScale = 1;
         FindObjectOfType<AudioManager>().Pause("Song2");
         FindObjectOfType<AudioManager>().Play("Song1");
         messageBox.SetActive(false);
@@ -146,6 +147,14 @@ public class MainMenuController : MonoBehaviour
 
     public static bool mobileBackButtonStatus()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            return true;
+        }    
+        return false;
+
+        /*
+        // for only detecting escape button for android phone
         if (Application.platform == RuntimePlatform.Android)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -154,6 +163,7 @@ public class MainMenuController : MonoBehaviour
             }
         }
         return false;
+        */
         
 
         // remove the code when processing into apk
